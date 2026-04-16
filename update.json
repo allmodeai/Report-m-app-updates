@@ -1,6 +1,6 @@
 {
-  "versionCode": 2,
-  "versionName": "1.0.1",
-  "updateUrl": "https://github.com/username/repo-name/raw/main/app-release.apk",
-  "releaseNotes": "Fixes local storage bugs and adds new UI badges."
+  "latestVersionCode": 2,
+  "latestVersionName": "1.1",
+  "apkUrl": "https://github.com/YOUR_USERNAME/YOUR_REPO/releases/download/v1.1/app-release.apk",
+  "releaseNotes": "Added new PDF export features and bug fixes."
 }

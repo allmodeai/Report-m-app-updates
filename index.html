@@ -35,10 +35,8 @@
         th { background: #0066cc; color: white; padding: 3px 2px; border: 1px solid #0052a3; font-size: 9px; white-space: nowrap; }
         td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
 
-        /* --- BOLD FINAL WEIGHTAGE COLUMNS --- */
         #tableBody td:nth-child(n+7) { font-weight: 900; font-size: 12px; }
 
-        /* --- SLIGHTLY LARGER SUBJECT NAMES (12.5px) --- */
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12.5px; white-space: nowrap; }
 
         .marks-input { width: 48px; height: 25px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; background: #fff; display: flex; align-items: center; justify-content: center; outline: none; margin: 0 auto; }
@@ -49,27 +47,45 @@
         .footer-row { background: #cbdff2; font-weight: bold; border-top: 2px solid #0066cc; position: sticky; bottom: 0; }
         .footer-row td { height: 25px; }
 
-        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 6px; padding: 4px 6px; background: #f4f7f6; border-top: 1.5px solid #e0e0e0; border-bottom: 1.5px solid #e0e0e0; z-index: 10; }
-        .stat-box { background: white; padding: 4px 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; overflow: hidden; min-height: 50px; }
+        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 6px; padding: 6px; background: #f4f7f6; border-top: 2px solid #e0e0e0; border-bottom: 2px solid #e0e0e0; z-index: 10; }
+        .stat-box { background: white; padding: 4px 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; overflow: hidden; min-height: 55px; }
         .stat-box.highlight { border: 1.5px solid #0066cc; background: #f9fbfd; }
 
-        .stat-label { font-size: 0.65rem; font-weight: bold; color: #0066cc; text-transform: uppercase; margin-bottom: 1px; }
-        .stat-value { font-size: 0.9rem; font-weight: 900; color: #000; line-height: 1.1; word-wrap: break-word; }
+        .stat-label { font-size: 0.7rem; font-weight: bold; color: #0066cc; text-transform: uppercase; margin-bottom: 2px; }
+        .stat-value { font-size: 0.95rem; font-weight: 900; color: #000; line-height: 1.1; word-wrap: break-word; }
 
         .text-green { color: #28a745 !important; }
         .text-danger { color: #dc3545 !important; }
 
-        /* --- OPTIMIZED BOTTOM SECTION TO SAVE SPACE --- */
-        .bottom-section { flex-shrink: 0; padding: 6px 6px 12px 6px; background: #fff; }
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
-        .btn { padding: 10px 2px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.7rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-transform: uppercase; }
+        /* --- ORIGINAL BUTTONS REVERTED + NEW CORNER BUTTON AREA --- */
+        .bottom-section { flex-shrink: 0; padding: 8px 6px 36px 6px; background: #fff; position: relative; } /* Added relative position and extra bottom padding */
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .btn { padding: 12px 4px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.8rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .btn:active { transform: scale(0.96); }
 
         .btn-save { background-color: #0066cc; }
         .btn-load { background-color: #6f42c1; }
         .btn-pdf { background-color: #28a745; }
         .btn-clear { background-color: #dc3545; }
-        .btn-update { background-color: #ff9800; } /* Removed span-2 to keep it narrow */
+
+        /* NARROW SMALL BUTTON IN BOTTOM RIGHT CORNER */
+        .btn-update-corner {
+            position: absolute;
+            bottom: 4px;
+            right: 6px;
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 4px 16px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            cursor: pointer;
+        }
+        .btn-update-corner:active { transform: scale(0.95); }
 
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
         .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: transform 0.2s ease-out; z-index: 1001; padding: 15px 15px 45px 15px; box-sizing: border-box; }
@@ -105,7 +121,7 @@
             <h3 class="header-title">Student Progress Report</h3>
             <div class="student-info">
                 <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
-                <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" oninput="autoSave()"></div>
+                <div class="info-field"><label>Roll No</label><input type="number" inputmode="numeric" id="stu-roll" oninput="autoSave()"></div>
                 <div class="info-field">
                     <label>Class</label>
                     <div id="stu-class-trigger" class="select-trigger" onclick="openSheet('Select Class', classOptions, 'stu-class-val')">-</div>
@@ -157,22 +173,22 @@
                 <div class="stat-value" id="dash-status">AWAITED</div>
             </div>
             <div class="stat-box" style="padding: 4px 2px; align-items: center;">
-                <span class="stat-label">Percentage</span>
-                <div id="dash-pct">--%</div>
-                <hr style="width: 85%; margin: 4px auto; border: 0; border-top: 1px solid #ddd;">
-                <span class="stat-label">Division</span>
-                <div id="dash-div">--</div>
+                <span class="stat-label" style="margin-bottom: 2px;">Percentage</span>
+                <div id="dash-pct" style="width: 100%; text-align: center;">--%</div>
+                <hr style="width: 85%; margin: 5px auto; border: 0; border-top: 1px solid #ddd;">
+                <span class="stat-label" style="margin-bottom: 2px;">Division</span>
+                <div id="dash-div" style="width: 100%; text-align: center;">--</div>
             </div>
         </div>
 
         <div class="bottom-section">
             <div class="btn-group">
-                <button class="btn btn-save" onclick="downloadBackup()">Backup</button>
-                <button class="btn btn-load" onclick="document.getElementById('file-loader').click()">Load</button>
-                <button class="btn btn-pdf" onclick="printReport()">PDF</button>
-                <button class="btn btn-clear" onclick="clearAllData()">Wipe</button>
-                <button class="btn btn-update" onclick="checkForUpdates()">Update</button>
+                <button class="btn btn-save" onclick="downloadBackup()">BACKUP DATA</button>
+                <button class="btn btn-load" onclick="document.getElementById('file-loader').click()">LOAD DATA</button>
+                <button class="btn btn-pdf" onclick="printReport()">SAVE AS PDF</button>
+                <button class="btn btn-clear" onclick="clearAllData()">WIPE ALL</button>
             </div>
+            <button class="btn-update-corner" onclick="checkForUpdates()">UPDATE APP</button>
         </div>
     </div>
 </div>
@@ -270,7 +286,8 @@
                 input.className = 'marks-input'; input.id = inputId;
                 input.onclick = function() { if (this.value === 'Ab' || this.value === '-') { this.value = ''; applyMarkStyling(this, subj.max); calculateAll(); autoSave(); } };
                 input.oninput = function() {
-                    if (this.value === '--') { this.value = 'Ab'; } else {
+                    if (this.value === '--') { this.value = 'Ab'; } 
+                    else {
                         this.value = this.value.replace(/[^0-9.\-]/g, '');
                         if (this.value.startsWith('0') && this.value.length > 2) { this.value = ''; }
                     }
@@ -355,7 +372,7 @@
             if (finalAvg >= 60) { pctBg = "#e6f9ed"; pctColor = "#28a745"; pctBorder = "#c3e6cb"; } 
             else if (finalAvg < 40) { pctBg = "#fde8e9"; pctColor = "#dc3545"; pctBorder = "#f8c3c7"; } 
             else { pctBg = "#e6f2ff"; pctColor = "#0056b3"; pctBorder = "#b8daff"; }
-            pctEl.innerHTML = createPill(`${finalAvg.toFixed(1)}%`, pctBg, pctColor, pctBorder, "0.8rem");
+            pctEl.innerHTML = createPill(`${finalAvg.toFixed(1)}%`, pctBg, pctColor, pctBorder, "0.85rem");
 
             if (isFailed) {
                 divEl.innerHTML = createPill("--", "#f8f9fa", "#6c757d", "#dae0e5", "0.75rem");
@@ -364,14 +381,16 @@
                 let divText = "3rd"; let divBg = "#fff3cd", divColor = "#856404", divBorder = "#ffeeba";
                 if (finalAvg >= 60) { divText = "1st"; divBg = "#e6f9ed"; divColor = "#28a745"; divBorder = "#c3e6cb"; } 
                 else if (finalAvg >= 45) { divText = "2nd"; divBg = "#e6f2ff"; divColor = "#0056b3"; divBorder = "#b8daff"; }
-                divEl.innerHTML = createPill(divText, divBg, divColor, divBorder, "0.7rem");
+                divEl.innerHTML = createPill(divText, divBg, divColor, divBorder, "0.75rem");
 
                 let currentClass = document.getElementById('stu-class-val').value;
                 let nextClassStr = "";
                 if (currentClass) {
                     let cIdx = classOptions.indexOf(currentClass);
                     if (cIdx !== -1 && cIdx < classOptions.length - 1) {
-                        nextClassStr = `<br><div class="print-badge" style="margin-top: 4px; display: inline-block; background: #e6f2ff; color: #0056b3; padding: 2px 10px; border-radius: 12px; font-size: 0.6rem; font-weight: 800; border: 1px solid #b8daff;">➔ Class ${classOptions[cIdx + 1]}</div>`;
+                        nextClassStr = `<br><div class="print-badge" style="margin-top: 4px; display: inline-block; background: #e6f2ff; color: #0056b3; padding: 2px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 800; border: 1px solid #b8daff; letter-spacing: 0.5px;">➔ Class <span style="font-size: 0.85rem; font-weight: 900; color: #000;">${classOptions[cIdx + 1]}</span></div>`;
+                    } else if (cIdx === classOptions.length - 1) {
+                        nextClassStr = `<br><div class="print-badge" style="margin-top: 4px; display: inline-block; background: #fff3cd; color: #856404; padding: 2px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; border: 1px solid #ffeeba; letter-spacing: 0.5px;">🎓 Graduated</div>`;
                     }
                 }
                 statusEl.innerHTML = `<span>PROMOTED</span>${nextClassStr}`;
@@ -384,9 +403,9 @@
     function renderFailedSubjects(list) {
         const failsEl = document.getElementById('dash-fails'); failsEl.innerHTML = '';
         failsEl.style.display = 'flex'; failsEl.style.flexWrap = 'wrap'; failsEl.style.justifyContent = 'center';
-        failsEl.style.gap = '4px'; failsEl.style.alignItems = 'center';
+        failsEl.style.gap = '4px'; failsEl.style.alignItems = 'center'; failsEl.style.paddingTop = '2px';
         if(list.length === 0) {
-            failsEl.innerHTML = `<div class="print-badge" style="background: #e6f9ed; color: #28a745; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 800; border: 1px solid #c3e6cb;">NONE</div>`;
+            failsEl.innerHTML = `<div class="print-badge" style="background: #e6f9ed; color: #28a745; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; border: 1px solid #c3e6cb;">NONE</div>`;
             return;
         }
         list.forEach((item) => {

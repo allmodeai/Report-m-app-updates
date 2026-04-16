@@ -68,6 +68,7 @@
         .btn-load { background-color: #6f42c1; }
         .btn-pdf { background-color: #28a745; }
         .btn-clear { background-color: #dc3545; }
+        .btn-update { background-color: #ff9800; color: white; grid-column: span 2; }
 
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
         .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: transform 0.2s ease-out; z-index: 1001; padding: 15px 15px 45px 15px; box-sizing: border-box; }
@@ -170,12 +171,14 @@
             </div>
         </div>
 
-        <div class="bottom-section">
+       <div class="bottom-section">
             <div class="btn-group">
                 <button class="btn btn-save" onclick="downloadBackup()">BACKUP DATA</button>
                 <button class="btn btn-load" onclick="document.getElementById('file-loader').click()">LOAD DATA</button>
                 <button class="btn btn-pdf" onclick="printReport()">SAVE AS PDF</button>
                 <button class="btn btn-clear" onclick="clearAllData()">WIPE ALL</button>
+                
+                <button class="btn btn-update" onclick="checkForUpdates()">CHECK FOR UPDATES</button>
             </div>
         </div>
     </div>
@@ -490,6 +493,13 @@
     }
 
     function clearAllData() { if(confirm("Wipe all?")) { localStorage.removeItem('marksDataCache'); location.reload(); } }
+    function checkForUpdates() {
+        if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) {
+            AndroidBridge.forceUpdate();
+        } else {
+            alert("This feature only works inside the Android App.");
+        }
+    }
     window.onload = loadCache;
 </script>
 </body>

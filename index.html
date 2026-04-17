@@ -21,7 +21,7 @@
         .container { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
         /* --- PROFESSIONAL HOME SCREEN STYLES --- */
-        #screen-home { padding: 20px; text-align: center; justify-content: space-between; align-items: center; z-index: 10; }
+        #screen-home { padding: 20px; text-align: center; justify-content: space-between; align-items: center; z-index: 10; position: relative; }
         .home-content-wrapper { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
         
         .home-logo { font-size: 4.5rem; margin-bottom: 5px; text-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -115,7 +115,7 @@
 
 <div class="app-wrapper">
     
-    <div id="screen-home" class="container">
+    <div id="screen-home" class="container" style="display: flex;">
         
         <div class="home-content-wrapper">
             <div class="home-logo">🎓</div>
@@ -123,7 +123,7 @@
             <div class="home-subtitle">Progress Report Tool</div>
 
             <div class="home-actions">
-                <button type="button" class="btn-home-primary" onclick="showScreen('screen-calc')">Start Grading</button>
+                <button type="button" class="btn-home-primary" onclick="document.getElementById('screen-home').style.display='none'; document.getElementById('screen-calc').style.display='flex';">Start Grading</button>
                 <button type="button" class="btn-home-secondary" onclick="document.getElementById('file-loader').click()">Load Data</button>
             </div>
         </div>
@@ -200,7 +200,7 @@
             <div class="btn-group">
                 <button type="button" class="btn btn-save" onclick="downloadBackup()">Save Data</button>
                 <button type="button" class="btn btn-pdf" onclick="printReport()">Save PDF</button>
-                <button type="button" class="btn btn-back" onclick="showScreen('screen-home')">⬅ Back</button>
+                <button type="button" class="btn btn-back" onclick="document.getElementById('screen-calc').style.display='none'; document.getElementById('screen-home').style.display='flex';">⬅ Back</button>
                 <button type="button" class="btn btn-clear" onclick="clearAllData()">Wipe All</button>
             </div>
         </div>
@@ -235,23 +235,7 @@
 
     const tableBody = document.getElementById('tableBody');
 
-    // --- LOGIC FUNCTIONS ---
-    function showScreen(screenId) {
-        try {
-            document.getElementById('screen-home').style.display = 'none';
-            document.getElementById('screen-calc').style.display = 'none';
-            
-            if(screenId === 'screen-calc') {
-                document.getElementById(screenId).style.display = 'flex';
-            } else {
-                // Ensure home screen maintains its flex settings
-                document.getElementById(screenId).style.display = 'flex';
-            }
-        } catch (e) {
-            alert("Error changing screens: " + e.message);
-        }
-    }
-
+    // --- UI FUNCTIONS ---
     function openSheet(title, options, targetId) {
         document.getElementById('sheet-title').innerText = title;
         const container = document.getElementById('options-container'); container.innerHTML = '';
@@ -315,4 +299,9 @@
             if(subj.type === 'numeric') {
                 let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
                 input.className = 'marks-input'; input.id = inputId;
-                input.onclick = function() { if (this.value === 'Ab' || this.va
+                input.onclick = function() { if (this.value === 'Ab' || this.value === '-') { this.value = ''; applyMarkStyling(this, subj.max); calculateAll(); autoSave(); } };
+                input.oninput = function() {
+                    if (this.value === '--') { this.value = 'Ab'; } 
+                    else {
+                        this.value = this.value.replace(/[^0-9.\-]/g, '');
+                        if (this.value.startsWith('0') && 

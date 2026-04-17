@@ -20,17 +20,24 @@
         .app-wrapper { display: flex; flex-direction: column; height: 100%; width: 100%; padding: 4px; box-sizing: border-box; }
         .container { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
-        /* --- HOME SCREEN STYLES --- */
-        #screen-home { justify-content: center; align-items: center; padding: 20px; text-align: center; position: relative; }
-        .home-logo { font-size: 4rem; margin-bottom: 10px; }
-        .home-title { color: #0066cc; font-size: 1.8rem; font-weight: 900; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 1px; }
-        .home-subtitle { color: #6c757d; font-size: 0.85rem; font-weight: bold; margin-bottom: 40px; text-transform: uppercase; }
+        /* --- PROFESSIONAL HOME SCREEN STYLES --- */
+        #screen-home { padding: 20px; text-align: center; justify-content: space-between; align-items: center; z-index: 10; }
+        .home-content-wrapper { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
         
-        .btn-start-huge { background-color: #28a745; color: white; border: none; border-radius: 12px; padding: 20px 40px; font-size: 1.2rem; font-weight: 900; box-shadow: 0 4px 10px rgba(40,167,69,0.3); width: 80%; max-width: 300px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
-        .btn-start-huge:active { transform: scale(0.96); }
+        .home-logo { font-size: 4.5rem; margin-bottom: 5px; text-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .home-title { color: #0066cc; font-size: 2rem; font-weight: 900; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 1px; }
+        .home-subtitle { color: #6c757d; font-size: 0.9rem; font-weight: 800; margin-bottom: 50px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .home-actions { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 280px; }
+        
+        .btn-home-primary { background: #0066cc; color: white; border: none; border-radius: 12px; padding: 18px; font-size: 1.1rem; font-weight: 900; box-shadow: 0 4px 15px rgba(0,102,204,0.3); text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; }
+        .btn-home-primary:active { transform: scale(0.96); box-shadow: 0 2px 8px rgba(0,102,204,0.2); }
+        
+        .btn-home-secondary { background: #f0f4f8; color: #0066cc; border: 2px solid #cce0ff; border-radius: 12px; padding: 16px; font-size: 0.95rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; }
+        .btn-home-secondary:active { transform: scale(0.96); background: #e0ebf5; }
 
-        .home-btn-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; width: 100%; max-width: 350px; }
-        .home-btn-grid .btn { padding: 15px 5px; font-size: 0.75rem; }
+        .btn-home-tertiary { background: transparent; color: #8898aa; border: none; padding: 15px; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-bottom: 10px; }
+        .btn-home-tertiary:active { color: #ff9800; }
 
         /* --- CALCULATOR STYLES --- */
         .header-section { padding: 4px 6px 2px 6px; background: white; flex-shrink: 0; }
@@ -66,19 +73,16 @@
         .text-green { color: #28a745 !important; }
         .text-danger { color: #dc3545 !important; }
 
-        .bottom-section { flex-shrink: 0; padding: 8px 6px 36px 6px; background: #fff; } 
+        /* --- 2x2 GRID FOR GRADING SCREEN BUTTONS --- */
+        .bottom-section { flex-shrink: 0; padding: 8px 6px 12px 6px; background: #fff; } 
         .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .btn { padding: 12px 4px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.8rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); cursor: pointer; }
+        .btn { padding: 12px 4px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.75rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
         .btn:active { transform: scale(0.96); }
 
         .btn-save { background-color: #0066cc; }
-        .btn-load { background-color: #6f42c1; }
         .btn-pdf { background-color: #28a745; }
         .btn-clear { background-color: #dc3545; }
         .btn-back { background-color: #6c757d; }
-
-        .btn-update-corner { position: absolute; bottom: 8px; right: 8px; background-color: #ff9800; color: white; border: none; border-radius: 12px; padding: 6px 16px; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.15); cursor: pointer; }
-        .btn-update-corner:active { transform: scale(0.95); }
 
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
         .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: transform 0.2s ease-out; z-index: 1001; padding: 15px 15px 45px 15px; box-sizing: border-box; }
@@ -89,7 +93,7 @@
             @page { size: auto; margin: 10mm; }
             html, body { height: auto !important; width: 100% !important; overflow: visible !important; position: static !important; background: white !important; }
             .app-wrapper { display: block !important; padding: 0 !important; }
-            #screen-home { display: none !important; } /* Hide home screen when printing */
+            #screen-home { display: none !important; } 
             #screen-calc { display: flex !important; box-shadow: none !important; border: none !important; }
             .bottom-section, .sheet-overlay, .bottom-sheet { display: none !important; }
             .table-wrap { overflow: visible !important; width: 100% !important; height: auto !important; border: 0.5pt solid #000 !important; }
@@ -112,19 +116,19 @@
 <div class="app-wrapper">
     
     <div id="screen-home" class="container">
-        <div class="home-logo">🎓</div>
-        <h1 class="home-title">Marks Calculator</h1>
-        <div class="home-subtitle">Progress Report Generator</div>
+        
+        <div class="home-content-wrapper">
+            <div class="home-logo">🎓</div>
+            <h1 class="home-title">Marks Calculator</h1>
+            <div class="home-subtitle">Progress Report Tool</div>
 
-        <button class="btn-start-huge" onclick="showScreen('screen-calc')">Start Grading</button>
-
-        <div class="home-btn-grid">
-            <button class="btn btn-save" onclick="downloadBackup()">BACKUP</button>
-            <button class="btn btn-load" onclick="document.getElementById('file-loader').click()">LOAD</button>
-            <button class="btn btn-clear" onclick="clearAllData()">WIPE</button>
+            <div class="home-actions">
+                <button type="button" class="btn-home-primary" onclick="showScreen('screen-calc')">Start Grading</button>
+                <button type="button" class="btn-home-secondary" onclick="document.getElementById('file-loader').click()">Load Data</button>
+            </div>
         </div>
 
-        <button class="btn-update-corner" onclick="checkForUpdates()">UPDATE APP</button>
+        <button type="button" class="btn-home-tertiary" onclick="checkForUpdates()">⟳ Check for App Updates</button>
     </div>
 
     <div id="screen-calc" class="container" style="display: none;">
@@ -194,8 +198,10 @@
 
         <div class="bottom-section">
             <div class="btn-group">
-                <button class="btn btn-back" onclick="showScreen('screen-home')">⬅ BACK TO HOME</button>
-                <button class="btn btn-pdf" onclick="printReport()">SAVE AS PDF</button>
+                <button type="button" class="btn btn-save" onclick="downloadBackup()">Save Data</button>
+                <button type="button" class="btn btn-pdf" onclick="printReport()">Save PDF</button>
+                <button type="button" class="btn btn-back" onclick="showScreen('screen-home')">⬅ Back</button>
+                <button type="button" class="btn btn-clear" onclick="clearAllData()">Wipe All</button>
             </div>
         </div>
     </div>
@@ -229,15 +235,20 @@
 
     const tableBody = document.getElementById('tableBody');
 
-    // --- NAVIGATION LOGIC ---
+    // --- LOGIC FUNCTIONS ---
     function showScreen(screenId) {
-        document.getElementById('screen-home').style.display = 'none';
-        document.getElementById('screen-calc').style.display = 'none';
-        
-        if (screenId === 'screen-calc') {
-            document.getElementById('screen-calc').style.display = 'flex';
-        } else {
-            document.getElementById('screen-home').style.display = 'flex';
+        try {
+            document.getElementById('screen-home').style.display = 'none';
+            document.getElementById('screen-calc').style.display = 'none';
+            
+            if(screenId === 'screen-calc') {
+                document.getElementById(screenId).style.display = 'flex';
+            } else {
+                // Ensure home screen maintains its flex settings
+                document.getElementById(screenId).style.display = 'flex';
+            }
+        } catch (e) {
+            alert("Error changing screens: " + e.message);
         }
     }
 
@@ -304,16 +315,4 @@
             if(subj.type === 'numeric') {
                 let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
                 input.className = 'marks-input'; input.id = inputId;
-                input.onclick = function() { if (this.value === 'Ab' || this.value === '-') { this.value = ''; applyMarkStyling(this, subj.max); calculateAll(); autoSave(); } };
-                input.oninput = function() {
-                    if (this.value === '--') { this.value = 'Ab'; } 
-                    else {
-                        this.value = this.value.replace(/[^0-9.\-]/g, '');
-                        if (this.value.startsWith('0') && this.value.length > 2) { this.value = ''; }
-                    }
-                    if(this.value !== '-' && this.value !== 'Ab' && this.value !== '' && parseFloat(this.value) > subj.max) this.value = '';
-                    applyMarkStyling(this, subj.max); calculateAll(); autoSave();
-                };
-                cell.appendChild(input);
-            } else {
-                let display = document.createElement('div'); display.className
+                input.onclick = function() { if (this.value === 'Ab' || this.va

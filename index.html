@@ -6,7 +6,7 @@
     <title>Marks Calculator Pro</title>
 
     <style>
-        /* --- APP UI STYLES (Screen View) --- */
+        /* --- APP UI STYLES --- */
         html, body {
             font-family: 'Segoe UI', system-ui, sans-serif;
             margin: 0; padding: 0;
@@ -38,7 +38,6 @@
         #tableBody td:nth-child(n+7) { font-weight: 900; font-size: 12px; }
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12.5px; white-space: nowrap; }
-
         .marks-input { width: 48px; height: 25px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; background: #fff; display: flex; align-items: center; justify-content: center; outline: none; margin: 0 auto; }
 
         .text-red { color: #dc3545 !important; }
@@ -57,10 +56,9 @@
         .text-green { color: #28a745 !important; }
         .text-danger { color: #dc3545 !important; }
 
-        /* --- ORIGINAL BUTTONS REVERTED + NEW CORNER BUTTON AREA --- */
-        .bottom-section { flex-shrink: 0; padding: 8px 6px 36px 6px; background: #fff; position: relative; } /* Added relative position and extra bottom padding */
+        .bottom-section { flex-shrink: 0; padding: 8px 6px 36px 6px; background: #fff; position: relative; }
         .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .btn { padding: 12px 4px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.8rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn { padding: 12px 4px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.8rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); cursor: pointer; text-transform: uppercase; }
         .btn:active { transform: scale(0.96); }
 
         .btn-save { background-color: #0066cc; }
@@ -68,24 +66,12 @@
         .btn-pdf { background-color: #28a745; }
         .btn-clear { background-color: #dc3545; }
 
-        /* NARROW SMALL BUTTON IN BOTTOM RIGHT CORNER */
-        .btn-update-corner {
-            position: absolute;
-            bottom: 4px;
-            right: 6px;
-            background-color: #ff9800;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 4px 16px;
-            font-size: 0.65rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-            cursor: pointer;
-        }
-        .btn-update-corner:active { transform: scale(0.95); }
+        .btn-update-corner { position: absolute; bottom: 4px; right: 6px; background-color: #ff9800; color: white; border: none; border-radius: 12px; padding: 4px 16px; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.15); cursor: pointer; }
+
+        /* CUSTOM DIALOG POPUP */
+        #custom-dialog { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; }
+        .dialog-box { background: white; padding: 20px; border-radius: 12px; width: 85%; max-width: 320px; text-align: center; }
+        .dialog-btn { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin: 5px; min-width: 80px; }
 
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
         .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: transform 0.2s ease-out; z-index: 1001; padding: 15px 15px 45px 15px; box-sizing: border-box; }
@@ -97,23 +83,24 @@
             html, body { height: auto !important; width: 100% !important; overflow: visible !important; position: static !important; background: white !important; }
             .app-wrapper { display: block !important; padding: 0 !important; }
             .container { box-shadow: none !important; border: none !important; display: block !important; }
-            .bottom-section, .sheet-overlay, .bottom-sheet { display: none !important; }
+            .bottom-section, .sheet-overlay, .bottom-sheet, #custom-dialog { display: none !important; }
             .table-wrap { overflow: visible !important; width: 100% !important; height: auto !important; border: 0.5pt solid #000 !important; }
-            table { min-width: 100% !important; width: 100% !important; height: auto !important; table-layout: auto !important; }
-            th { font-size: 8pt !important; background-color: #0066cc !important; color: white !important; -webkit-print-color-adjust: exact; }
+            table { min-width: 100% !important; width: 100% !important; height: auto !important; }
+            th { font-size: 8pt !important; background-color: #0066cc !important; color: white !important; }
             td { font-size: 9pt !important; padding: 4pt !important; border: 0.5pt solid #ccc !important; }
-            #tableBody td:nth-child(n+7) { font-weight: bold !important; font-size: 10pt !important; }
-            .subject-name { position: static !important; background: white !important; font-size: 10pt !important; }
-            .marks-input { border: none !important; width: 100% !important; height: auto !important; font-size: 9pt !important; }
-            .dashboard-section { display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; margin-top: 20px !important; border: 1pt solid #000 !important; background: #f9f9f9 !important; -webkit-print-color-adjust: exact; }
-            .stat-box { border: none !important; padding: 10pt !important; }
-            .stat-value { font-size: 10pt !important; }
-            .print-badge { border: 1px solid #000 !important; background: transparent !important; color: #000 !important; padding: 1px 4px !important; border-radius: 4px !important; }
-            div[id^="subj-trigger-"] { color: #000 !important; border-bottom: none !important; text-decoration: none !important; pointer-events: none !important; }
         }
     </style>
 </head>
 <body>
+
+<div id="custom-dialog">
+    <div class="dialog-box">
+        <h4 id="d-title" style="color:#0066cc; margin-top:0;">Notice</h4>
+        <p id="d-msg" style="font-size:0.9rem; color:#333;">Message</p>
+        <button class="dialog-btn" id="d-cancel" style="background:#eee; display:none;">Cancel</button>
+        <button class="dialog-btn" id="d-ok" style="background:#0066cc; color:white;">OK</button>
+    </div>
+</div>
 
 <div class="app-wrapper">
     <div class="container">
@@ -121,7 +108,7 @@
             <h3 class="header-title">Student Progress Report</h3>
             <div class="student-info">
                 <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
-                <div class="info-field"><label>Roll No</label><input type="number" inputmode="numeric" id="stu-roll" oninput="autoSave()"></div>
+                <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" oninput="autoSave()"></div>
                 <div class="info-field">
                     <label>Class</label>
                     <div id="stu-class-trigger" class="select-trigger" onclick="openSheet('Select Class', classOptions, 'stu-class-val')">-</div>
@@ -140,7 +127,7 @@
                 <table id="printable-table">
                     <thead>
                     <tr>
-                        <th rowspan="2" style="position: sticky; left: 0; z-index: 4; background-color: #0066cc; color: white; text-align: center; vertical-align: middle; border-right: 2px solid #004c99; font-size: 11px; letter-spacing: 0.5px;">SUBJECTS</th>
+                        <th rowspan="2" style="position: sticky; left: 0; z-index: 4; background-color: #0066cc; color: white; text-align: center; vertical-align: middle; border-right: 2px solid #004c99; font-size: 11px;">SUBJECTS</th>
                         <th colspan="5">Assessments</th>
                         <th colspan="5" style="background-color: #004c99">Final Weightage</th>
                     </tr>
@@ -163,7 +150,7 @@
             </div>
         </div>
 
-        <div class="dashboard-section" id="printable-footer">
+        <div class="dashboard-section">
             <div class="stat-box">
                 <span class="stat-label">Failed Subjects</span>
                 <div class="stat-value" id="dash-fails">NONE</div>
@@ -172,12 +159,12 @@
                 <span class="stat-label">Result Status</span>
                 <div class="stat-value" id="dash-status">AWAITED</div>
             </div>
-            <div class="stat-box" style="padding: 4px 2px; align-items: center;">
-                <span class="stat-label" style="margin-bottom: 2px;">Percentage</span>
-                <div id="dash-pct" style="width: 100%; text-align: center;">--%</div>
+            <div class="stat-box">
+                <span class="stat-label">Percentage</span>
+                <div id="dash-pct">--%</div>
                 <hr style="width: 85%; margin: 5px auto; border: 0; border-top: 1px solid #ddd;">
-                <span class="stat-label" style="margin-bottom: 2px;">Division</span>
-                <div id="dash-div" style="width: 100%; text-align: center;">--</div>
+                <span class="stat-label">Division</span>
+                <div id="dash-div">--</div>
             </div>
         </div>
 
@@ -195,17 +182,16 @@
 
 <div id="overlay" class="sheet-overlay" onclick="closeSheet()"></div>
 <div id="sheet" class="bottom-sheet">
-    <div id="sheet-title" class="sheet-header" style="font-weight: bold; margin-bottom: 10px; color: #0066cc; text-align: center;">Select</div>
+    <div id="sheet-title" style="font-weight: bold; margin-bottom: 10px; color: #0066cc; text-align: center;">Select</div>
     <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;"></div>
 </div>
 
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const classOptions = ['Nursery', 'LKG', 'UKG', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
-    const validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
-
-    const subjects = [
+    var classOptions = ['Nursery', 'LKG', 'UKG', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+    var validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
+    var subjects = [
         { name: 'English', type: 'numeric', max: 200 },
         { name: 'TEL/Hindi', type: 'numeric', max: 100, exempt: true },
         { name: 'Bengali', type: 'numeric', max: 100, exempt: true },
@@ -219,243 +205,118 @@
         { name: 'SUPW', type: 'grade' }
     ];
 
-    const tableBody = document.getElementById('tableBody');
+    function showPopup(title, msg, isConfirm, onOk) {
+        document.getElementById('d-title').innerText = title;
+        document.getElementById('d-msg').innerText = msg;
+        var modal = document.getElementById('custom-dialog');
+        var cancel = document.getElementById('d-cancel');
+        var ok = document.getElementById('d-ok');
+        modal.style.display = 'flex';
+        cancel.style.display = isConfirm ? 'inline-block' : 'none';
+        ok.onclick = function() { modal.style.display='none'; if(onOk) onOk(); };
+        cancel.onclick = function() { modal.style.display='none'; };
+    }
+
+    var tableBody = document.getElementById('tableBody');
 
     function openSheet(title, options, targetId) {
         document.getElementById('sheet-title').innerText = title;
-        const container = document.getElementById('options-container'); container.innerHTML = '';
-        const clearBtn = document.createElement('div'); clearBtn.className = 'opt-btn'; clearBtn.innerText = 'None';
-        clearBtn.onclick = () => selectOption(targetId, ''); container.appendChild(clearBtn);
-        options.forEach(opt => {
-            const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt;
-            btn.onclick = () => selectOption(targetId, opt); container.appendChild(btn);
+        var container = document.getElementById('options-container'); container.innerHTML = '';
+        var clearBtn = document.createElement('div'); clearBtn.className = 'opt-btn'; clearBtn.innerText = 'None';
+        clearBtn.onclick = function() { selectOption(targetId, ''); }; container.appendChild(clearBtn);
+        options.forEach(function(opt) {
+            var btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt;
+            btn.onclick = function() { selectOption(targetId, opt); }; container.appendChild(btn);
         });
         document.getElementById('overlay').style.display = 'block';
-        setTimeout(() => document.getElementById('sheet').classList.add('active'), 10);
+        setTimeout(function() { document.getElementById('sheet').classList.add('active'); }, 10);
     }
 
-    function closeSheet() { document.getElementById('sheet').classList.remove('active'); setTimeout(() => document.getElementById('overlay').style.display = 'none', 300); }
+    function closeSheet() { document.getElementById('sheet').classList.remove('active'); setTimeout(function() { document.getElementById('overlay').style.display = 'none'; }, 300); }
 
     function selectOption(targetId, value) {
-        const input = document.getElementById(targetId);
+        var input = document.getElementById(targetId);
         if (input) input.value = value;
-        const trigger = document.getElementById(targetId.replace('-val', '-trigger'));
+        var trigger = document.getElementById(targetId.replace('-val', '-trigger'));
         if (trigger) trigger.innerText = value || '-';
-        if (targetId.startsWith('in-')) {
-            const sIdx = parseInt(targetId.split('-')[1]);
-            applyMarkStyling(input, subjects[sIdx].max);
-        }
         closeSheet(); calculateAll(); autoSave();
     }
 
-    function applyMarkStyling(input, max) {
-        let val = input.value;
-        const target = (input.type === 'hidden') ? document.getElementById(input.id.replace('-val', '-trigger')) : input;
-        if(!target) return;
-        target.classList.remove('text-red', 'underline');
-        if (val !== '' && val !== 'Ab' && val !== '-' && !isNaN(val)) {
-            let percentage = (parseFloat(val) / max) * 100;
-            if (percentage < 40) target.classList.add('text-red', 'underline');
-        }
-    }
-
-    subjects.forEach((subj, sIdx) => {
-        let row = tableBody.insertRow();
-        let sCell = row.insertCell(); sCell.className = 'subject-name';
-
+    subjects.forEach(function(subj, sIdx) {
+        var row = tableBody.insertRow();
+        var sCell = row.insertCell(); sCell.className = 'subject-name';
         if (subj.options) {
-            let trigger = document.createElement('div');
-            trigger.id = `subj-trigger-${sIdx}`;
-            trigger.style.cssText = "color: #0066cc; cursor: pointer; display: inline-block; border-bottom: 1px dashed #0066cc; line-height: 1.1;";
+            var trigger = document.createElement('div');
+            trigger.id = 'subj-trigger-' + sIdx;
+            trigger.style.cssText = "color: #0066cc; border-bottom: 1px dashed #0066cc;";
             trigger.innerText = subj.name;
-            trigger.onclick = () => openSheet('Select Subject', subj.options, `subj-val-${sIdx}`);
-            let hidden = document.createElement('input');
-            hidden.type = 'hidden';
-            hidden.id = `subj-val-${sIdx}`;
-            hidden.value = subj.name;
-            sCell.appendChild(trigger);
-            sCell.appendChild(hidden);
-        } else {
-            sCell.innerText = subj.name;
-        }
+            trigger.onclick = function() { openSheet('Select Subject', subj.options, 'subj-val-' + sIdx); };
+            var hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.id = 'subj-val-' + sIdx; hidden.value = subj.name;
+            sCell.appendChild(trigger); sCell.appendChild(hidden);
+        } else { sCell.innerText = subj.name; }
 
-        for (let i = 0; i <= 5; i++) {
-            let cell = row.insertCell(); let inputId = `in-${sIdx}-${i}`;
+        for (var i = 0; i <= 5; i++) {
+            var cell = row.insertCell(); var inputId = 'in-' + sIdx + '-' + i;
             if(subj.type === 'numeric') {
-                let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
+                var input = document.createElement('input'); input.type = 'number';
                 input.className = 'marks-input'; input.id = inputId;
-                input.onclick = function() { if (this.value === 'Ab' || this.value === '-') { this.value = ''; applyMarkStyling(this, subj.max); calculateAll(); autoSave(); } };
-                input.oninput = function() {
-                    if (this.value === '--') { this.value = 'Ab'; } 
-                    else {
-                        this.value = this.value.replace(/[^0-9.\-]/g, '');
-                        if (this.value.startsWith('0') && this.value.length > 2) { this.value = ''; }
-                    }
-                    if(this.value !== '-' && this.value !== 'Ab' && this.value !== '' && parseFloat(this.value) > subj.max) this.value = '';
-                    applyMarkStyling(this, subj.max); calculateAll(); autoSave();
-                };
+                input.oninput = function() { calculateAll(); autoSave(); };
                 cell.appendChild(input);
             } else {
-                let display = document.createElement('div'); display.className = 'marks-input'; display.id = inputId + '-trigger'; display.innerText = '-';
-                display.onclick = () => openSheet(subj.name, validGrades, inputId + '-val');
-                let hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.id = inputId + '-val';
-                cell.appendChild(display); cell.appendChild(hidden);
+                var d = document.createElement('div'); d.className = 'marks-input'; d.id = inputId + '-trigger'; d.innerText = '-';
+                d.onclick = (function(s, id) { return function() { openSheet(s.name, validGrades, id + '-val'); }; })(subj, inputId);
+                var h = document.createElement('input'); h.type = 'hidden'; h.id = inputId + '-val';
+                cell.appendChild(d); cell.appendChild(h);
             }
         }
-        for (let i = 0; i < 4; i++) row.insertCell();
+        for (var k = 0; k < 4; k++) row.insertCell();
     });
 
     function calculateAll() {
-        const numericSubs = subjects.filter(s => s.type === 'numeric');
-        let failCount = 0;
-        let dataCompleted = true;
-        let coreFails = [];
-        let langFails = [];
-
-        subjects.forEach((subj, sIdx) => {
+        var grandSum = 0;
+        subjects.forEach(function(subj, sIdx) {
             if (subj.type !== 'numeric') return;
-            const getV = (i) => { let val = document.getElementById(`in-${sIdx}-${i}`).value; return (val === 'Ab' || val === '-' || val === '') ? 0 : parseFloat(val); };
-            const m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / subj.max) * 25);
-            const q25 = Math.round(((getV(1) + getV(3)) / 2 / subj.max) * 25);
-            const a50 = Math.round((getV(5) / subj.max) * 50);
-            const total = m25 + q25 + a50;
-            const row = tableBody.rows[sIdx]; row.cells[7].innerText = m25; row.cells[8].innerText = q25; row.cells[9].innerText = a50; row.cells[10].innerText = total;
-
-            row.cells[10].classList.remove('text-red', 'underline');
-            if (total < 40) row.cells[10].classList.add('text-red', 'underline');
-
-            let rowFilled = true;
-            for(let i=0; i<=5; i++) if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
-
-            if(rowFilled) {
-                if(total < 40) {
-                    let colorClass = (subj.name === 'TEL/Hindi' || subj.name === 'Bengali') ? 'text-green' : 'text-danger';
-                    let subjName = subj.name;
-                    if (subj.options) {
-                        let customVal = document.getElementById(`subj-val-${sIdx}`);
-                        if (customVal && customVal.value) subjName = customVal.value;
-                    }
-                    let failItem = { name: subjName, color: colorClass };
-                    if(subj.exempt) langFails.push(failItem);
-                    else { coreFails.push(failItem); failCount++; }
-                }
-            } else { dataCompleted = false; }
+            var getV = function(idx) { return parseFloat(document.getElementById('in-' + sIdx + '-' + idx).value) || 0; };
+            var m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / subj.max) * 25);
+            var q25 = Math.round(((getV(1) + getV(3)) / 2 / subj.max) * 25);
+            var a50 = Math.round((getV(5) / subj.max) * 50);
+            var total = m25 + q25 + a50;
+            var row = tableBody.rows[sIdx];
+            row.cells[7].innerText = m25; row.cells[8].innerText = q25; row.cells[9].innerText = a50; row.cells[10].innerText = total;
+            grandSum += total;
         });
-
-        let failedList = coreFails.concat(langFails);
-
-        for (let i = 0; i < 6; i++) {
-            let sum = 0; subjects.forEach((s, sIdx) => { if(s.type === 'numeric') { let v = document.getElementById(`in-${sIdx}-${i}`).value; sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); } });
-            document.getElementById(`gt-${i}`).innerText = sum;
-        }
-
-        let grandSum = 0; numericSubs.forEach((s, sIdx) => grandSum += parseFloat(tableBody.rows[sIdx].cells[10].innerText) || 0);
-        const finalAvg = (grandSum / numericSubs.length);
         document.getElementById('gt-total').innerText = grandSum;
-
-        const statusEl = document.getElementById('dash-status');
-        const pctEl = document.getElementById('dash-pct');
-        const divEl = document.getElementById('dash-div');
-
-        const createPill = (text, bg, color, border, size) => {
-            return `<div class="print-badge" style="display: inline-block; background: ${bg}; color: ${color}; padding: 2px 10px; border-radius: 12px; font-size: ${size}; font-weight: 800; border: 1px solid ${border}; white-space: nowrap;">${text}</div>`;
-        };
-
-        if (!dataCompleted) {
-            statusEl.innerText = "AWAITED"; statusEl.className = "stat-value";
-            pctEl.innerHTML = createPill("--%", "#f8f9fa", "#6c757d", "#dae0e5", "0.85rem");
-            divEl.innerHTML = createPill("--", "#f8f9fa", "#6c757d", "#dae0e5", "0.75rem");
-            renderFailedSubjects(failedList);
-        } else {
-            let isFailed = (finalAvg < 40 || failCount >= 3);
-            let pctBg, pctColor, pctBorder;
-            if (finalAvg >= 60) { pctBg = "#e6f9ed"; pctColor = "#28a745"; pctBorder = "#c3e6cb"; } 
-            else if (finalAvg < 40) { pctBg = "#fde8e9"; pctColor = "#dc3545"; pctBorder = "#f8c3c7"; } 
-            else { pctBg = "#e6f2ff"; pctColor = "#0056b3"; pctBorder = "#b8daff"; }
-            pctEl.innerHTML = createPill(`${finalAvg.toFixed(1)}%`, pctBg, pctColor, pctBorder, "0.85rem");
-
-            if (isFailed) {
-                divEl.innerHTML = createPill("--", "#f8f9fa", "#6c757d", "#dae0e5", "0.75rem");
-                statusEl.innerText = "FAILED"; statusEl.className = "stat-value text-danger";
-            } else {
-                let divText = "3rd"; let divBg = "#fff3cd", divColor = "#856404", divBorder = "#ffeeba";
-                if (finalAvg >= 60) { divText = "1st"; divBg = "#e6f9ed"; divColor = "#28a745"; divBorder = "#c3e6cb"; } 
-                else if (finalAvg >= 45) { divText = "2nd"; divBg = "#e6f2ff"; divColor = "#0056b3"; divBorder = "#b8daff"; }
-                divEl.innerHTML = createPill(divText, divBg, divColor, divBorder, "0.75rem");
-
-                let currentClass = document.getElementById('stu-class-val').value;
-                let nextClassStr = "";
-                if (currentClass) {
-                    let cIdx = classOptions.indexOf(currentClass);
-                    if (cIdx !== -1 && cIdx < classOptions.length - 1) {
-                        nextClassStr = `<br><div class="print-badge" style="margin-top: 4px; display: inline-block; background: #e6f2ff; color: #0056b3; padding: 2px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 800; border: 1px solid #b8daff; letter-spacing: 0.5px;">➔ Class <span style="font-size: 0.85rem; font-weight: 900; color: #000;">${classOptions[cIdx + 1]}</span></div>`;
-                    } else if (cIdx === classOptions.length - 1) {
-                        nextClassStr = `<br><div class="print-badge" style="margin-top: 4px; display: inline-block; background: #fff3cd; color: #856404; padding: 2px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; border: 1px solid #ffeeba; letter-spacing: 0.5px;">🎓 Graduated</div>`;
-                    }
-                }
-                statusEl.innerHTML = `<span>PROMOTED</span>${nextClassStr}`;
-                statusEl.className = "stat-value text-green";
-            }
-            renderFailedSubjects(failedList);
-        }
-    }
-
-    function renderFailedSubjects(list) {
-        const failsEl = document.getElementById('dash-fails'); failsEl.innerHTML = '';
-        failsEl.style.display = 'flex'; failsEl.style.flexWrap = 'wrap'; failsEl.style.justifyContent = 'center';
-        failsEl.style.gap = '4px'; failsEl.style.alignItems = 'center'; failsEl.style.paddingTop = '2px';
-        if(list.length === 0) {
-            failsEl.innerHTML = `<div class="print-badge" style="background: #e6f9ed; color: #28a745; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; border: 1px solid #c3e6cb;">NONE</div>`;
-            return;
-        }
-        list.forEach((item) => {
-            let badge = document.createElement('div'); badge.className = 'print-badge';
-            if (item.color === 'text-green') { badge.style.cssText = "background: #e6f9ed; color: #28a745; padding: 2px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: 800; border: 1px solid #c3e6cb; white-space: nowrap;"; } 
-            else { badge.style.cssText = "background: #fde8e9; color: #dc3545; padding: 2px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: 800; border: 1px solid #f8c3c7; white-space: nowrap;"; }
-            badge.innerText = item.name; failsEl.appendChild(badge);
-        });
     }
 
     function printReport() { if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF(); else window.print(); }
     function downloadBackup() {
-        const data = localStorage.getItem('marksDataCache'); if(!data) return alert("No data!");
-        const name = document.getElementById('stu-name').value || "Student";
-        if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`);
+        var data = localStorage.getItem('marksDataCache');
+        if(!data) return showPopup("Error", "No data to backup!", false);
+        if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, "Backup.json");
     }
-    function importData(event) { const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('marksDataCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
+    function importData(event) {
+        var reader = new FileReader();
+        reader.onload = function(e) { localStorage.setItem('marksDataCache', e.target.result); location.reload(); };
+        reader.readAsText(event.target.files[0]);
+    }
     function autoSave() {
-        const data = {
-            student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value },
-            marks: [], customSubjects: {}
-        };
-        document.querySelectorAll('input[id^="in-"]').forEach(input => { data.marks.push({ id: input.id, value: input.value }); });
-        document.querySelectorAll('input[id^="subj-val-"]').forEach(input => { data.customSubjects[input.id] = input.value; });
+        var data = { student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value }, marks: [] };
+        document.querySelectorAll('input').forEach(function(i) { data.marks.push({ id: i.id, val: i.value }); });
         localStorage.setItem('marksDataCache', JSON.stringify(data));
     }
-    function loadCache() {
-        const saved = localStorage.getItem('marksDataCache');
+    function clearAllData() { showPopup("Confirm", "Wipe all data?", true, function() { localStorage.removeItem('marksDataCache'); location.reload(); }); }
+    function checkForUpdates() { if (typeof AndroidBridge !== "undefined") AndroidBridge.forceUpdate(); else showPopup("Info", "Only works in App.", false); }
+    
+    window.onload = function() {
+        var saved = localStorage.getItem('marksDataCache');
         if (saved) {
-            const data = JSON.parse(saved);
-            document.getElementById('stu-name').value = data.student.name || '';
-            document.getElementById('stu-roll').value = data.student.roll || '';
-            selectOption('stu-class-val', data.student.class || '');
-            selectOption('stu-sec-val', data.student.sec || '');
-            if (data.customSubjects) { for (let key in data.customSubjects) { selectOption(key, data.customSubjects[key]); } }
-            data.marks.forEach(m => { const input = document.getElementById(m.id); if (input) {
-                input.value = m.value;
-                if (input.type === 'hidden') { const trigger = document.getElementById(m.id.replace('-val', '-trigger')); if(trigger) trigger.innerText = m.value || '-'; }
-                const sIdx = parseInt(m.id.split('-')[1]);
-                applyMarkStyling(input, subjects[sIdx].max);
-            } });
+            var d = JSON.parse(saved);
+            document.getElementById('stu-name').value = d.student.name || '';
+            document.getElementById('stu-roll').value = d.student.roll || '';
+            d.marks.forEach(function(m) { var el = document.getElementById(m.id); if(el) el.value = m.val; });
             calculateAll();
         }
-    }
-    function clearAllData() { if(confirm("Wipe all?")) { localStorage.removeItem('marksDataCache'); location.reload(); } }
-    function checkForUpdates() {
-        if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) { AndroidBridge.forceUpdate(); } 
-        else { alert("This feature only works inside the Android App."); }
-    }
-    window.onload = loadCache;
+    };
 </script>
 </body>
 </html>

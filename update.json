@@ -1,6 +1,6 @@
 {
-  "latestVersionCode": 2,
-  "latestVersionName": "1.1",
-  "apkUrl": "https://github.com/YOUR_USERNAME/YOUR_REPO/releases/download/v1.1/app-release.apk",
-  "releaseNotes": "Added new PDF export features and bug fixes."
+  "versionCode": 1,
+  "versionName": "1.0.0",
+  "url": "https://your-username.github.io/your-repo-name/",
+  "changelog": "Official Version 1.0 release."
 }

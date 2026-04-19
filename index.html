@@ -21,7 +21,7 @@
         .container { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
         .header-section { padding: 4px 6px 2px 6px; background: white; flex-shrink: 0; }
-        h3.header-title { text-align: center; color: #0066cc; margin: 0 0 6px 0; font-size: 0.95rem; text-transform: uppercase; font-weight: 900; letter-spacing: 0.5px; }
+        h3.header-title { text-align: center; color: #0066cc; margin: 0 0 4px 0; font-size: 0.95rem; text-transform: uppercase; font-weight: 900; letter-spacing: 0.5px; }
 
         .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 6px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
@@ -185,7 +185,7 @@
                 <button class="btn btn-clear" onclick="clearAllData()">Wipe</button>
                 <button class="btn btn-update" onclick="checkForUpdates()">
                     Update <br>
-                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.0.4</span>
+                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.0.6</span>
                 </button>
             </div>
         </div>
@@ -211,7 +211,7 @@
         { name: 'Bengali', type: 'numeric', max: 100, exempt: true },
         { name: 'Mathematics', type: 'numeric', max: 100 },
         { name: 'Science', type: 'numeric', max: 100 },
-        { name: 'G.K.', type: 'numeric', max: 100 },
+        { name: 'Rhymes & G.K.', type: 'numeric', max: 100, options: ['Rhymes & G.K.', 'Rhymes', 'G.K.'] },
         { name: 'Social Study', type: 'numeric', max: 100 },
         { name: 'Computer', type: 'numeric', max: 100 },
         { name: 'Moral', type: 'numeric', max: 100 },
@@ -219,13 +219,14 @@
         { name: 'SUPW', type: 'grade' }
     ];
 
+    // Added "N/A" options for G.K. and Computer
     const subjectsPRE = [
         { name: 'English', type: 'numeric', max: 100 },
         { name: 'Hindi', type: 'numeric', max: 100, exempt: true },
         { name: 'Mathematics', type: 'numeric', max: 100 },
         { name: 'Rhymes', type: 'numeric', max: 100 },
-        { name: 'G.K.', type: 'numeric', max: 100, options: ['G.K.', 'P.G.', 'None'] },
-        { name: 'Computer', type: 'numeric', max: 100, options: ['Computer', 'None'] },
+        { name: 'G.K.', type: 'numeric', max: 100, options: ['G.K.', 'P.G.', 'N/A'] },
+        { name: 'Computer', type: 'numeric', max: 100, options: ['Computer', 'N/A'] },
         { name: 'Drawing', type: 'grade' }
     ];
 
@@ -341,8 +342,8 @@
             applyMarkStyling(input, activeSubjects[sIdx].max);
         }
         
-        // If "None" was selected for Computer, we should blank out its fields so they aren't confusing
-        if (targetId.startsWith('subj-val-') && value === 'None') {
+        // If "N/A" was selected for a subject, we should blank out its fields so they aren't confusing
+        if (targetId.startsWith('subj-val-') && value === 'N/A') {
             const sIdx = parseInt(targetId.split('-')[2]);
             for(let i=0; i<=5; i++) {
                 let cellInput = document.getElementById(`in-${sIdx}-${i}`);
@@ -383,8 +384,8 @@
 
             const row = tableBody.rows[sIdx];
 
-            // --- IF SUBJECT IS NONE, IGNORE COMPLETELY ---
-            if (subjName === 'None') {
+            // --- IF SUBJECT IS N/A, IGNORE COMPLETELY ---
+            if (subjName === 'N/A') {
                 row.cells[7].innerText = '-'; row.cells[8].innerText = '-'; row.cells[9].innerText = '-'; row.cells[10].innerText = '-';
                 row.cells[10].classList.remove('text-red', 'underline');
                 for(let i=0; i<=5; i++) { 
@@ -438,7 +439,8 @@
                         let cVal = document.getElementById(`subj-val-${sIdx}`);
                         if (cVal && cVal.value) sName = cVal.value;
                     }
-                    if (sName !== 'None') {
+                    // Prevent N/A subjects from messing up grand totals
+                    if (sName !== 'N/A') {
                         let v = document.getElementById(`in-${sIdx}-${i}`).value; 
                         sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); 
                     }

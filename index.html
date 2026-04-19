@@ -13,13 +13,12 @@
             background-color: #f4f7f6; color: #000;
             height: 100%; width: 100%; 
             overflow: hidden;
-            position: fixed;
         }
 
         /* Absolute positioning clears the Android Navigation bar securely */
         .app-wrapper { position: absolute; top: 0; bottom: 0; left: 0; right: 0; display: flex; flex-direction: column; padding: 4px; box-sizing: border-box; }
         
-        .container { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+        .container { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
 
         .header-section { padding: 4px 6px 2px 6px; background: white; flex-shrink: 0; }
         h3.header-title { text-align: center; color: #0066cc; margin: 0 0 4px 0; font-size: 0.95rem; text-transform: uppercase; font-weight: 900; letter-spacing: 0.5px; }
@@ -29,11 +28,12 @@
         .info-field label { font-size: 0.55rem; font-weight: bold; color: #0066cc; text-transform: uppercase; margin-bottom: 0px; }
         .info-field input, .info-field .select-trigger { border: none; background: transparent; font-size: 0.9rem !important; padding: 0; outline: none; font-weight: 900; color: #000; }
 
-        /* --- BULLETPROOF TABLE LAYOUT --- */
-        .table-container { flex: 0 1 auto; padding: 2px 6px 6px 6px; background: #fff; min-height: 0; display: flex; flex-direction: column; }
-        .table-wrap { flex: 0 1 auto; min-height: 0; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; box-sizing: border-box; }
+        /* --- BULLETPROOF ANDROID 5.1 TABLE LAYOUT --- */
+        /* Takes up middle space, but DOES NOT stretch the rows */
+        .table-container { flex: 1; display: flex; flex-direction: column; min-height: 0; padding: 2px 6px 6px 6px; background: #fff; }
+        .table-wrap { flex: 1; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; box-sizing: border-box; background: #fff; }
         
-        /* Table has no height constraints, allowing it to perfectly wrap its rows */
+        /* No height property here. This prevents the ugly row stretching! */
         table { border-collapse: collapse; min-width: 850px; width: 100%; }
 
         th { background: #0066cc; color: white; padding: 3px 2px; border: 1px solid #0052a3; font-size: 9px; white-space: nowrap; }
@@ -67,20 +67,18 @@
         .text-green { color: #28a745 !important; }
         .text-danger { color: #dc3545 !important; }
 
-        .bottom-section { flex-shrink: 0; padding: 6px 6px 12px 6px; background: #fff; }
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
-        .btn { padding: 10px 2px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.7rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-transform: uppercase; cursor: pointer; }
+        /* --- PERFECT 2x3 GRID SECTION Pinned to Bottom --- */
+        .bottom-section { flex-shrink: 0; padding: 6px 6px 16px 6px; background: #fff; position: relative; z-index: 10; }
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 6px; width: 100%; height: 100%; box-sizing: border-box; }
+        
+        .btn { padding: 10px 2px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.7rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-transform: uppercase; cursor: pointer; position: relative; z-index: 10; width: 100%; height: 100%; display: block; line-height: 1.2; box-sizing: border-box; }
         .btn:active { transform: scale(0.96); }
 
-        .btn-save { background-color: #0066cc; }
-        .btn-load { background-color: #6f42c1; }
         .btn-pdf { background-color: #28a745; }
+        .btn-load { background-color: #6f42c1; }
+        .btn-save { background-color: #0066cc; }
         .btn-clear { background-color: #dc3545; }
         .btn-update { background-color: #ff9800; } 
-
-        /* --- THE INVISIBLE SPRING --- */
-        /* Absorbs all leftover screen height so the layout packs upward naturally */
-        .flex-spacer { flex: 1; background: transparent; pointer-events: none; }
 
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
         .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: transform 0.2s ease-out; z-index: 1001; padding: 15px 15px 45px 15px; box-sizing: border-box; }
@@ -92,7 +90,7 @@
             html, body { height: auto !important; width: 100% !important; overflow: visible !important; position: static !important; background: white !important; }
             .app-wrapper { display: block !important; padding: 0 !important; }
             .container { box-shadow: none !important; border: none !important; display: block !important; }
-            .bottom-section, .flex-spacer, .sheet-overlay, .bottom-sheet, .header-toggle { display: none !important; } 
+            .bottom-section, .sheet-overlay, .bottom-sheet { display: none !important; }
             .table-wrap { overflow: visible !important; width: 100% !important; height: auto !important; border: 0.5pt solid #000 !important; }
             table { min-width: 100% !important; width: 100% !important; height: auto !important; table-layout: auto !important; }
             th { font-size: 8pt !important; background-color: #0066cc !important; color: white !important; -webkit-print-color-adjust: exact; }
@@ -186,19 +184,17 @@
 
         <div class="bottom-section">
             <div class="btn-group">
-                <button class="btn btn-save" onclick="downloadBackup()">Backup</button>
-                <button class="btn btn-load" onclick="document.getElementById('file-loader').click()">Load</button>
                 <button class="btn btn-pdf" onclick="printReport()">PDF</button>
-                <button class="btn btn-clear" onclick="clearAllData()">Wipe</button>
-                <button class="btn btn-update" onclick="checkForUpdates()">
+                <button class="btn btn-load" onclick="document.getElementById('file-loader').click()">Load</button>
+                <button class="btn btn-save" onclick="downloadBackup()">Save</button>
+                
+                <button class="btn btn-clear" onclick="clearAllData()">Erase</button>
+                <button class="btn btn-update" style="grid-column: span 2;" onclick="checkForUpdates()">
                     Update <br>
-                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.0.9</span>
+                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.1.0</span>
                 </button>
             </div>
         </div>
-
-        <div class="flex-spacer"></div>
-
     </div>
 </div>
 
@@ -322,7 +318,4 @@
         
         if (!targetId.startsWith('subj-val-')) {
             const clearBtn = document.createElement('div'); clearBtn.className = 'opt-btn'; clearBtn.innerText = 'None';
-            clearBtn.onclick = () => selectOption(targetId, ''); container.appendChild(clearBtn);
-        }
-
-        options
+            clearBtn.onclick = () => selec

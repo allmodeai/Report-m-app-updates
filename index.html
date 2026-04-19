@@ -28,18 +28,22 @@
         .info-field label { font-size: 0.55rem; font-weight: bold; color: #0066cc; text-transform: uppercase; margin-bottom: 0px; }
         .info-field input, .info-field .select-trigger { border: none; background: transparent; font-size: 0.9rem !important; padding: 0; outline: none; font-weight: 900; color: #000; }
 
-        /* --- FIXED TABLE CONTAINER (Stops Stretching) --- */
-        .table-container { flex: 1; padding: 2px 6px 6px 6px; background: #fff; min-height: 0; min-width: 0; overflow: hidden; position: relative; }
-        .table-wrap { width: 100%; height: 100%; overflow-x: auto; overflow-y: auto; -webkit-overflow-scrolling: touch; border: 1.5px solid #0066cc; border-radius: 4px; box-sizing: border-box; }
+        .table-container { flex: 1; padding: 2px 6px 6px 6px; background: #fff; min-height: 0; }
+        .table-wrap { width: 100%; height: 100%; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; box-sizing: border-box; }
         table { border-collapse: collapse; min-width: 850px; width: 100%; height: 100%; }
 
         th { background: #0066cc; color: white; padding: 3px 2px; border: 1px solid #0052a3; font-size: 9px; white-space: nowrap; }
         td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
 
+        /* --- VERTICAL STACKED ORANGE & GREEN MODE TOGGLE --- */
+        .header-toggle { background: #ff9800; border-radius: 6px; display: inline-flex; flex-direction: column; overflow: hidden; padding: 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); border: 1px solid #e68a00; }
+        .header-toggle-btn { padding: 4px 6px; border: none; background: transparent; color: #fff; opacity: 0.8; border-radius: 5px; font-weight: 900; cursor: pointer; font-size: 0.55rem; text-transform: uppercase; transition: all 0.2s; line-height: 1; margin-bottom: 1px;}
+        .header-toggle-btn:last-child { margin-bottom: 0; }
+        .header-toggle-btn.active { background: #28a745; color: white; opacity: 1; box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+
         #tableBody td:nth-child(n+7) { font-weight: 900; font-size: 12px; }
 
-        /* --- FIXED STICKY COLUMN (For Old Android WebViews) --- */
-        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: -webkit-sticky; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12.5px; white-space: nowrap; }
+        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12.5px; white-space: nowrap; }
 
         .marks-input { width: 48px; height: 25px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; background: #fff; display: flex; align-items: center; justify-content: center; outline: none; margin: 0 auto; }
         .marks-input:disabled { background: #f0f0f0; color: #999; border: 1px dashed #ccc; }
@@ -47,10 +51,10 @@
         .text-red { color: #dc3545 !important; }
         .underline { text-decoration: underline; }
 
-        .footer-row { background: #cbdff2; font-weight: bold; border-top: 2px solid #0066cc; position: -webkit-sticky; position: sticky; bottom: 0; z-index: 3; }
+        .footer-row { background: #cbdff2; font-weight: bold; border-top: 2px solid #0066cc; position: sticky; bottom: 0; }
         .footer-row td { height: 25px; }
 
-        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 6px; padding: 4px 6px; background: #f4f7f6; border-top: 1.5px solid #e0e0e0; border-bottom: 1.5px solid #e0e0e0; z-index: 10; position: relative; }
+        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 6px; padding: 4px 6px; background: #f4f7f6; border-top: 1.5px solid #e0e0e0; border-bottom: 1.5px solid #e0e0e0; z-index: 10; }
         .stat-box { background: white; padding: 4px 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; overflow: hidden; min-height: 50px; }
         .stat-box.highlight { border: 1.5px solid #0066cc; background: #f9fbfd; }
 
@@ -60,23 +64,16 @@
         .text-green { color: #28a745 !important; }
         .text-danger { color: #dc3545 !important; }
 
-        /* --- PERFECT 2x3 GRID SECTION --- */
-        .bottom-section { flex-shrink: 0; padding: 6px 6px 12px 6px; background: #fff; position: relative; z-index: 10; }
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 6px; width: 100%; height: 100%; box-sizing: border-box; }
-        
-        .btn { padding: 10px 2px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.7rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-transform: uppercase; cursor: pointer; position: relative; z-index: 10; width: 100%; height: 100%; display: block; line-height: 1.2; box-sizing: border-box; }
+        .bottom-section { flex-shrink: 0; padding: 6px 6px 12px 6px; background: #fff; }
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+        .btn { padding: 10px 2px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.7rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-transform: uppercase; cursor: pointer; }
         .btn:active { transform: scale(0.96); }
 
-        .btn-pdf { background-color: #28a745; }
-        .btn-load { background-color: #6f42c1; }
         .btn-save { background-color: #0066cc; }
+        .btn-load { background-color: #6f42c1; }
+        .btn-pdf { background-color: #28a745; }
         .btn-clear { background-color: #dc3545; }
         .btn-update { background-color: #ff9800; } 
-
-        /* GRID-FITTED TOGGLE */
-        .grid-toggle { background: #ff9800; border-radius: 6px; padding: 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); border: 1px solid #e68a00; position: relative; z-index: 10; width: 100%; height: 100%; display: block; font-size: 0; white-space: nowrap; box-sizing: border-box; }
-        .grid-toggle-btn { display: inline-block; width: 50%; height: 100%; border: none; background: transparent; color: #fff; opacity: 0.8; border-radius: 4px; font-weight: 900; cursor: pointer; font-size: 0.75rem; text-transform: uppercase; transition: all 0.2s; padding: 8px 0; margin: 0; vertical-align: middle; box-sizing: border-box; }
-        .grid-toggle-btn.active { background: #28a745; color: white; opacity: 1; box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
 
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
         .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: transform 0.2s ease-out; z-index: 1001; padding: 15px 15px 45px 15px; box-sizing: border-box; }
@@ -88,7 +85,7 @@
             html, body { height: auto !important; width: 100% !important; overflow: visible !important; position: static !important; background: white !important; }
             .app-wrapper { display: block !important; padding: 0 !important; }
             .container { box-shadow: none !important; border: none !important; display: block !important; }
-            .bottom-section, .sheet-overlay, .bottom-sheet { display: none !important; }
+            .bottom-section, .sheet-overlay, .bottom-sheet, .header-toggle { display: none !important; } /* Hide toggle on print */
             .table-wrap { overflow: visible !important; width: 100% !important; height: auto !important; border: 0.5pt solid #000 !important; }
             table { min-width: 100% !important; width: 100% !important; height: auto !important; table-layout: auto !important; }
             th { font-size: 8pt !important; background-color: #0066cc !important; color: white !important; -webkit-print-color-adjust: exact; }
@@ -131,7 +128,15 @@
                 <table id="printable-table">
                     <thead>
                     <tr>
-                        <th rowspan="2" style="position: -webkit-sticky; position: sticky; left: 0; z-index: 4; background-color: #0066cc; color: white; text-align: center; vertical-align: middle; border-right: 2px solid #004c99; font-size: 11px; letter-spacing: 0.5px;">SUBJECTS</th>
+                        <th rowspan="2" style="position: sticky; left: 0; z-index: 4; background-color: #0066cc; color: white; text-align: center; vertical-align: middle; border-right: 2px solid #004c99;">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 5px; padding: 0 2px;">
+                                <div class="header-toggle">
+                                    <button id="btn-pre" class="header-toggle-btn" onclick="switchMode('PRE')">Pre</button>
+                                    <button id="btn-pms" class="header-toggle-btn active" onclick="switchMode('PMS')">PMS</button>
+                                </div>
+                                <span style="font-size: 9px; font-weight: 900; letter-spacing: 0;">SUBJECTS</span>
+                            </div>
+                        </th>
                         <th colspan="5">Assessments</th>
                         <th colspan="5" style="background-color: #004c99">Final Weightage</th>
                     </tr>
@@ -174,18 +179,13 @@
 
         <div class="bottom-section">
             <div class="btn-group">
-                <button class="btn btn-pdf" onclick="printReport()">PDF</button>
+                <button class="btn btn-save" onclick="downloadBackup()">Backup</button>
                 <button class="btn btn-load" onclick="document.getElementById('file-loader').click()">Load</button>
-                <button class="btn btn-save" onclick="downloadBackup()">Save</button>
-                
-                <div class="grid-toggle">
-                    <button id="btn-pre" class="grid-toggle-btn" onclick="switchMode('PRE')">PRE</button>
-                    <button id="btn-pms" class="grid-toggle-btn active" onclick="switchMode('PMS')">PMS</button>
-                </div>
-                <button class="btn btn-clear" onclick="clearAllData()">Erase</button>
+                <button class="btn btn-pdf" onclick="printReport()">PDF</button>
+                <button class="btn btn-clear" onclick="clearAllData()">Wipe</button>
                 <button class="btn btn-update" onclick="checkForUpdates()">
                     Update <br>
-                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.0.4</span>
+                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.0.3</span>
                 </button>
             </div>
         </div>
@@ -211,7 +211,7 @@
         { name: 'Bengali', type: 'numeric', max: 100, exempt: true },
         { name: 'Mathematics', type: 'numeric', max: 100 },
         { name: 'Science', type: 'numeric', max: 100 },
-        { name: 'G.K.', type: 'numeric', max: 100 },
+        { name: 'Rhymes & G.K.', type: 'numeric', max: 100, options: ['Rhymes & G.K.', 'Rhymes', 'G.K.'] },
         { name: 'Social Study', type: 'numeric', max: 100 },
         { name: 'Computer', type: 'numeric', max: 100 },
         { name: 'Moral', type: 'numeric', max: 100 },
@@ -319,4 +319,7 @@
     function openSheet(title, options, targetId) {
         document.getElementById('sheet-title').innerText = title;
         const container = document.getElementById('options-container'); container.innerHTML = '';
-        const clearBtn = document.createElement
+        const clearBtn = document.createElement('div'); clearBtn.className = 'opt-btn'; clearBtn.innerText = 'None';
+        clearBtn.onclick = () => selectOption(targetId, ''); container.appendChild(clearBtn);
+        options.forEach(opt => {
+            const btn = document.createElement('di

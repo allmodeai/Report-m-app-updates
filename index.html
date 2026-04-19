@@ -30,7 +30,9 @@
 
         .table-container { flex: 1; padding: 2px 6px 6px 6px; background: #fff; min-height: 0; }
         .table-wrap { width: 100%; height: 100%; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; box-sizing: border-box; }
-        table { border-collapse: collapse; min-width: 850px; width: 100%; height: 100%; }
+        
+        /* --- FIXED WOBBLE --- */
+        table { border-collapse: collapse; min-width: 850px; width: 100%; table-layout: fixed; }
 
         th { background: #0066cc; color: white; padding: 3px 2px; border: 1px solid #0052a3; font-size: 9px; white-space: nowrap; }
         td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
@@ -43,7 +45,7 @@
 
         #tableBody td:nth-child(n+7) { font-weight: 900; font-size: 12px; }
 
-        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12.5px; white-space: nowrap; }
+        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12.5px; white-space: nowrap; width: 120px; overflow: hidden; text-overflow: ellipsis; }
 
         .marks-input { width: 48px; height: 25px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; background: #fff; display: flex; align-items: center; justify-content: center; outline: none; margin: 0 auto; }
         .marks-input:disabled { background: #f0f0f0; color: #999; border: 1px dashed #ccc; }
@@ -85,7 +87,7 @@
             html, body { height: auto !important; width: 100% !important; overflow: visible !important; position: static !important; background: white !important; }
             .app-wrapper { display: block !important; padding: 0 !important; }
             .container { box-shadow: none !important; border: none !important; display: block !important; }
-            .bottom-section, .sheet-overlay, .bottom-sheet, .header-toggle { display: none !important; } /* Hide toggle on print */
+            .bottom-section, .sheet-overlay, .bottom-sheet, .header-toggle { display: none !important; } 
             .table-wrap { overflow: visible !important; width: 100% !important; height: auto !important; border: 0.5pt solid #000 !important; }
             table { min-width: 100% !important; width: 100% !important; height: auto !important; table-layout: auto !important; }
             th { font-size: 8pt !important; background-color: #0066cc !important; color: white !important; -webkit-print-color-adjust: exact; }
@@ -128,7 +130,7 @@
                 <table id="printable-table">
                     <thead>
                     <tr>
-                        <th rowspan="2" style="position: sticky; left: 0; z-index: 4; background-color: #0066cc; color: white; text-align: center; vertical-align: middle; border-right: 2px solid #004c99;">
+                        <th rowspan="2" style="position: sticky; left: 0; z-index: 4; background-color: #0066cc; color: white; text-align: center; vertical-align: middle; border-right: 2px solid #004c99; width: 120px;">
                             <div style="display: flex; align-items: center; justify-content: center; gap: 5px; padding: 0 2px;">
                                 <div class="header-toggle">
                                     <button id="btn-pre" class="header-toggle-btn" onclick="switchMode('PRE')">Pre</button>
@@ -185,7 +187,7 @@
                 <button class="btn btn-clear" onclick="clearAllData()">Wipe</button>
                 <button class="btn btn-update" onclick="checkForUpdates()">
                     Update <br>
-                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.0.6</span>
+                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.0.8</span>
                 </button>
             </div>
         </div>
@@ -204,14 +206,13 @@
     const classOptions = ['Nursery', 'LKG', 'UKG', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
     const validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
 
-    // --- TWO SEPARATE SUBJECT LISTS ---
     const subjectsPMS = [
         { name: 'English', type: 'numeric', max: 200 },
         { name: 'TEL/Hindi', type: 'numeric', max: 100, exempt: true },
         { name: 'Bengali', type: 'numeric', max: 100, exempt: true },
         { name: 'Mathematics', type: 'numeric', max: 100 },
         { name: 'Science', type: 'numeric', max: 100 },
-        { name: 'Rhymes & G.K.', type: 'numeric', max: 100, options: ['Rhymes & G.K.', 'Rhymes', 'G.K.'] },
+        { name: 'G.K.', type: 'numeric', max: 100 }, 
         { name: 'Social Study', type: 'numeric', max: 100 },
         { name: 'Computer', type: 'numeric', max: 100 },
         { name: 'Moral', type: 'numeric', max: 100 },
@@ -219,7 +220,6 @@
         { name: 'SUPW', type: 'grade' }
     ];
 
-    // Added "N/A" options for G.K. and Computer
     const subjectsPRE = [
         { name: 'English', type: 'numeric', max: 100 },
         { name: 'Hindi', type: 'numeric', max: 100, exempt: true },
@@ -230,11 +230,10 @@
         { name: 'Drawing', type: 'grade' }
     ];
 
-    let currentMode = 'PMS'; // Default
+    let currentMode = 'PMS'; 
     let activeSubjects = subjectsPMS;
     const tableBody = document.getElementById('tableBody');
 
-    // --- DYNAMIC RENDERING FUNCTION ---
     function renderTable() {
         tableBody.innerHTML = '';
         activeSubjects = (currentMode === 'PMS') ? subjectsPMS : subjectsPRE;
@@ -285,43 +284,39 @@
         });
     }
 
-    // --- SMART TOGGLE MODE LOGIC ---
     function switchMode(newMode) {
         if (currentMode === newMode) return;
         
-        // Scan the table to see if any data has been entered
         let hasData = false;
         document.querySelectorAll('input[id^="in-"]').forEach(inp => {
             if(inp.type === 'text' && inp.value !== '') hasData = true;
             if(inp.type === 'hidden' && inp.value !== '' && inp.value !== '-') hasData = true;
         });
 
-        // Only prompt if there is data to lose
         if (hasData) {
-            if (!confirm("Changing modes will clear the current marks on the table. Continue?")) {
-                return; // Cancel the switch
-            }
+            if (!confirm("Changing modes will clear the current marks on the table. Continue?")) return; 
         }
 
         currentMode = newMode;
         
-        // Update Button Styles
         document.getElementById('btn-pms').classList.remove('active');
         document.getElementById('btn-pre').classList.remove('active');
         document.getElementById(newMode === 'PMS' ? 'btn-pms' : 'btn-pre').classList.add('active');
 
         renderTable();
         calculateAll();
-        
-        // Wipe marks but keep student info
         autoSave(); 
     }
 
     function openSheet(title, options, targetId) {
         document.getElementById('sheet-title').innerText = title;
         const container = document.getElementById('options-container'); container.innerHTML = '';
-        const clearBtn = document.createElement('div'); clearBtn.className = 'opt-btn'; clearBtn.innerText = 'None';
-        clearBtn.onclick = () => selectOption(targetId, ''); container.appendChild(clearBtn);
+        
+        if (!targetId.startsWith('subj-val-')) {
+            const clearBtn = document.createElement('div'); clearBtn.className = 'opt-btn'; clearBtn.innerText = 'None';
+            clearBtn.onclick = () => selectOption(targetId, ''); container.appendChild(clearBtn);
+        }
+
         options.forEach(opt => {
             const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt;
             btn.onclick = () => selectOption(targetId, opt); container.appendChild(btn);
@@ -342,7 +337,6 @@
             applyMarkStyling(input, activeSubjects[sIdx].max);
         }
         
-        // If "N/A" was selected for a subject, we should blank out its fields so they aren't confusing
         if (targetId.startsWith('subj-val-') && value === 'N/A') {
             const sIdx = parseInt(targetId.split('-')[2]);
             for(let i=0; i<=5; i++) {
@@ -384,7 +378,6 @@
 
             const row = tableBody.rows[sIdx];
 
-            // --- IF SUBJECT IS N/A, IGNORE COMPLETELY ---
             if (subjName === 'N/A') {
                 row.cells[7].innerText = '-'; row.cells[8].innerText = '-'; row.cells[9].innerText = '-'; row.cells[10].innerText = '-';
                 row.cells[10].classList.remove('text-red', 'underline');
@@ -439,7 +432,6 @@
                         let cVal = document.getElementById(`subj-val-${sIdx}`);
                         if (cVal && cVal.value) sName = cVal.value;
                     }
-                    // Prevent N/A subjects from messing up grand totals
                     if (sName !== 'N/A') {
                         let v = document.getElementById(`in-${sIdx}-${i}`).value; 
                         sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); 
@@ -537,14 +529,13 @@
         if (saved) {
             const data = JSON.parse(saved);
             
-            // Restore Mode
             if (data.mode && data.mode !== currentMode) {
                 currentMode = data.mode;
                 document.getElementById('btn-pms').classList.remove('active');
                 document.getElementById('btn-pre').classList.remove('active');
                 document.getElementById(currentMode === 'PMS' ? 'btn-pms' : 'btn-pre').classList.add('active');
             }
-            renderTable(); // Make sure the table matches the saved mode
+            renderTable(); 
 
             document.getElementById('stu-name').value = data.student?.name || '';
             document.getElementById('stu-roll').value = data.student?.roll || '';
@@ -561,7 +552,7 @@
             } });
             calculateAll();
         } else {
-            renderTable(); // First time load
+            renderTable(); 
         }
     }
 
@@ -571,7 +562,6 @@
         else { alert("This feature only works inside the Android App."); }
     }
     
-    // Initialize the app
     window.onload = loadCache;
 </script>
 </body>

@@ -35,9 +35,10 @@
         th { background: #0066cc; color: white; padding: 3px 2px; border: 1px solid #0052a3; font-size: 9px; white-space: nowrap; }
         td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
 
-        /* --- ORANGE & GREEN HEADER MODE TOGGLE --- */
-        .header-toggle { background: #ff9800; border-radius: 12px; display: inline-flex; overflow: hidden; padding: 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); border: 1px solid #e68a00; }
-        .header-toggle-btn { padding: 3px 6px; border: none; background: transparent; color: #fff; opacity: 0.8; border-radius: 10px; font-weight: 900; cursor: pointer; font-size: 0.6rem; text-transform: uppercase; transition: all 0.2s; }
+        /* --- VERTICAL STACKED ORANGE & GREEN MODE TOGGLE --- */
+        .header-toggle { background: #ff9800; border-radius: 6px; display: inline-flex; flex-direction: column; overflow: hidden; padding: 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); border: 1px solid #e68a00; }
+        .header-toggle-btn { padding: 4px 6px; border: none; background: transparent; color: #fff; opacity: 0.8; border-radius: 5px; font-weight: 900; cursor: pointer; font-size: 0.55rem; text-transform: uppercase; transition: all 0.2s; line-height: 1; margin-bottom: 1px;}
+        .header-toggle-btn:last-child { margin-bottom: 0; }
         .header-toggle-btn.active { background: #28a745; color: white; opacity: 1; box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
 
         #tableBody td:nth-child(n+7) { font-weight: 900; font-size: 12px; }
@@ -128,7 +129,7 @@
                     <thead>
                     <tr>
                         <th rowspan="2" style="position: sticky; left: 0; z-index: 4; background-color: #0066cc; color: white; text-align: center; vertical-align: middle; border-right: 2px solid #004c99;">
-                            <div style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 2px;">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 5px; padding: 0 2px;">
                                 <div class="header-toggle">
                                     <button id="btn-pre" class="header-toggle-btn" onclick="switchMode('PRE')">Pre</button>
                                     <button id="btn-pms" class="header-toggle-btn active" onclick="switchMode('PMS')">PMS</button>
@@ -184,7 +185,7 @@
                 <button class="btn btn-clear" onclick="clearAllData()">Wipe</button>
                 <button class="btn btn-update" onclick="checkForUpdates()">
                     Update <br>
-                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.0.2</span>
+                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.0.3</span>
                 </button>
             </div>
         </div>
@@ -283,23 +284,36 @@
         });
     }
 
-    // --- TOGGLE MODE LOGIC ---
+    // --- SMART TOGGLE MODE LOGIC ---
     function switchMode(newMode) {
         if (currentMode === newMode) return;
-        if (confirm("Changing modes will clear the current marks on the table. Continue?")) {
-            currentMode = newMode;
-            
-            // Update Button Styles
-            document.getElementById('btn-pms').classList.remove('active');
-            document.getElementById('btn-pre').classList.remove('active');
-            document.getElementById(newMode === 'PMS' ? 'btn-pms' : 'btn-pre').classList.add('active');
+        
+        // Scan the table to see if any data has been entered
+        let hasData = false;
+        document.querySelectorAll('input[id^="in-"]').forEach(inp => {
+            if(inp.type === 'text' && inp.value !== '') hasData = true;
+            if(inp.type === 'hidden' && inp.value !== '' && inp.value !== '-') hasData = true;
+        });
 
-            renderTable();
-            calculateAll();
-            
-            // Wipe marks but keep student info
-            autoSave(); 
+        // Only prompt if there is data to lose
+        if (hasData) {
+            if (!confirm("Changing modes will clear the current marks on the table. Continue?")) {
+                return; // Cancel the switch
+            }
         }
+
+        currentMode = newMode;
+        
+        // Update Button Styles
+        document.getElementById('btn-pms').classList.remove('active');
+        document.getElementById('btn-pre').classList.remove('active');
+        document.getElementById(newMode === 'PMS' ? 'btn-pms' : 'btn-pre').classList.add('active');
+
+        renderTable();
+        calculateAll();
+        
+        // Wipe marks but keep student info
+        autoSave(); 
     }
 
     function openSheet(title, options, targetId) {

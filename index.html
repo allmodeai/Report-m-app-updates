@@ -11,14 +11,13 @@
             font-family: 'Segoe UI', system-ui, sans-serif;
             margin: 0; padding: 0;
             background-color: #f4f7f6; color: #000;
-            height: 100%; width: 100%; /* Fixed Nav Bar Issue */
+            height: 100vh; width: 100vw;
+            display: flex; flex-direction: column;
             overflow: hidden;
             position: fixed;
         }
 
-        /* Absolute bounding forces the app to respect the Android Navigation Bar */
-        .app-wrapper { position: absolute; top: 0; bottom: 0; left: 0; right: 0; display: flex; flex-direction: column; padding: 4px; box-sizing: border-box; }
-        
+        .app-wrapper { display: flex; flex-direction: column; height: 100%; width: 100%; padding: 4px; box-sizing: border-box; }
         .container { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
         .header-section { padding: 4px 6px 2px 6px; background: white; flex-shrink: 0; }
@@ -29,10 +28,9 @@
         .info-field label { font-size: 0.55rem; font-weight: bold; color: #0066cc; text-transform: uppercase; margin-bottom: 0px; }
         .info-field input, .info-field .select-trigger { border: none; background: transparent; font-size: 0.9rem !important; padding: 0; outline: none; font-weight: 900; color: #000; }
 
-        .table-container { flex: 1; padding: 2px 6px 6px 6px; background: #fff; min-height: 0; }
-        .table-wrap { width: 100%; height: 100%; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; box-sizing: border-box; }
-        
-        /* height: 100% REMOVED so rows never stretch or distort */
+        /* --- MODIFIED TO PACK UPWARDS & LEAVE SPACE AT BOTTOM --- */
+        .table-container { flex: 0 1 auto; padding: 2px 6px 6px 6px; background: #fff; min-height: 0; display: flex; flex-direction: column; }
+        .table-wrap { flex: 1 1 auto; min-height: 0; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; box-sizing: border-box; }
         table { border-collapse: collapse; min-width: 850px; width: 100%; }
 
         th { background: #0066cc; color: white; padding: 3px 2px; border: 1px solid #0052a3; font-size: 9px; white-space: nowrap; }
@@ -67,8 +65,7 @@
         .text-green { color: #28a745 !important; }
         .text-danger { color: #dc3545 !important; }
 
-        /* Extra bottom padding completely clears the Android Navigation bar */
-        .bottom-section { flex-shrink: 0; padding: 6px 6px 20px 6px; background: #fff; }
+        .bottom-section { flex-shrink: 0; padding: 6px 6px 12px 6px; background: #fff; }
         .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
         .btn { padding: 10px 2px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.7rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-transform: uppercase; cursor: pointer; }
         .btn:active { transform: scale(0.96); }
@@ -189,7 +186,7 @@
                 <button class="btn btn-clear" onclick="clearAllData()">Wipe</button>
                 <button class="btn btn-update" onclick="checkForUpdates()">
                     Update <br>
-                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.0.8</span>
+                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.0.9</span>
                 </button>
             </div>
         </div>
@@ -326,259 +323,4 @@
         
         // Prevent the auto-generated generic "None" button from showing up in Subject dropdowns
         if (!targetId.startsWith('subj-val-')) {
-            const clearBtn = document.createElement('div'); clearBtn.className = 'opt-btn'; clearBtn.innerText = 'None';
-            clearBtn.onclick = () => selectOption(targetId, ''); container.appendChild(clearBtn);
-        }
-
-        options.forEach(opt => {
-            const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt;
-            btn.onclick = () => selectOption(targetId, opt); container.appendChild(btn);
-        });
-        document.getElementById('overlay').style.display = 'block';
-        setTimeout(() => document.getElementById('sheet').classList.add('active'), 10);
-    }
-
-    function closeSheet() { document.getElementById('sheet').classList.remove('active'); setTimeout(() => document.getElementById('overlay').style.display = 'none', 300); }
-
-    function selectOption(targetId, value) {
-        const input = document.getElementById(targetId);
-        if (input) input.value = value;
-        const trigger = document.getElementById(targetId.replace('-val', '-trigger'));
-        if (trigger) trigger.innerText = value || '-';
-        if (targetId.startsWith('in-')) {
-            const sIdx = parseInt(targetId.split('-')[1]);
-            applyMarkStyling(input, activeSubjects[sIdx].max);
-        }
-        
-        // If "N/A" was selected for a subject, we should blank out its fields so they aren't confusing
-        if (targetId.startsWith('subj-val-') && value === 'N/A') {
-            const sIdx = parseInt(targetId.split('-')[2]);
-            for(let i=0; i<=5; i++) {
-                let cellInput = document.getElementById(`in-${sIdx}-${i}`);
-                if(cellInput) { cellInput.value = ''; cellInput.classList.remove('text-red', 'underline'); }
-            }
-        }
-
-        closeSheet(); calculateAll(); autoSave();
-    }
-
-    function applyMarkStyling(input, max) {
-        let val = input.value;
-        const target = (input.type === 'hidden') ? document.getElementById(input.id.replace('-val', '-trigger')) : input;
-        if(!target) return;
-        target.classList.remove('text-red', 'underline');
-        if (val !== '' && val !== 'Ab' && val !== '-' && !isNaN(val)) {
-            let percentage = (parseFloat(val) / max) * 100;
-            if (percentage < 40) target.classList.add('text-red', 'underline');
-        }
-    }
-
-    function calculateAll() {
-        let activeNumericCount = 0;
-        let failCount = 0;
-        let dataCompleted = true;
-        let coreFails = [];
-        let langFails = [];
-        let grandSum = 0;
-
-        activeSubjects.forEach((subj, sIdx) => {
-            if (subj.type !== 'numeric') return;
-
-            let subjName = subj.name;
-            if (subj.options) {
-                let customVal = document.getElementById(`subj-val-${sIdx}`);
-                if (customVal && customVal.value) subjName = customVal.value;
-            }
-
-            const row = tableBody.rows[sIdx];
-
-            // --- IF SUBJECT IS N/A, IGNORE COMPLETELY ---
-            if (subjName === 'N/A') {
-                row.cells[7].innerText = '-'; row.cells[8].innerText = '-'; row.cells[9].innerText = '-'; row.cells[10].innerText = '-';
-                row.cells[10].classList.remove('text-red', 'underline');
-                for(let i=0; i<=5; i++) { 
-                    let box = document.getElementById(`in-${sIdx}-${i}`);
-                    if(box) box.disabled = true; 
-                }
-                return; 
-            } else {
-                for(let i=0; i<=5; i++) { 
-                    let box = document.getElementById(`in-${sIdx}-${i}`);
-                    if(box) box.disabled = false; 
-                }
-            }
-
-            activeNumericCount++;
-
-            const getV = (i) => { let val = document.getElementById(`in-${sIdx}-${i}`).value; return (val === 'Ab' || val === '-' || val === '') ? 0 : parseFloat(val); };
-            const m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / subj.max) * 25);
-            const q25 = Math.round(((getV(1) + getV(3)) / 2 / subj.max) * 25);
-            const a50 = Math.round((getV(5) / subj.max) * 50);
-            const total = m25 + q25 + a50;
-            
-            row.cells[7].innerText = m25; row.cells[8].innerText = q25; row.cells[9].innerText = a50; row.cells[10].innerText = total;
-
-            row.cells[10].classList.remove('text-red', 'underline');
-            if (total < 40) row.cells[10].classList.add('text-red', 'underline');
-
-            let rowFilled = true;
-            for(let i=0; i<=5; i++) if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
-
-            if(rowFilled) {
-                if(total < 40) {
-                    let colorClass = (subjName === 'TEL/Hindi' || subjName === 'Hindi' || subjName === 'Bengali') ? 'text-green' : 'text-danger';
-                    let failItem = { name: subjName, color: colorClass };
-                    if(subj.exempt) langFails.push(failItem);
-                    else { coreFails.push(failItem); failCount++; }
-                }
-            } else { dataCompleted = false; }
-            
-            grandSum += total;
-        });
-
-        let failedList = coreFails.concat(langFails);
-
-        for (let i = 0; i < 6; i++) {
-            let sum = 0; 
-            activeSubjects.forEach((s, sIdx) => { 
-                if(s.type === 'numeric') { 
-                    let sName = s.name;
-                    if (s.options) {
-                        let cVal = document.getElementById(`subj-val-${sIdx}`);
-                        if (cVal && cVal.value) sName = cVal.value;
-                    }
-                    // Prevent N/A subjects from messing up grand totals
-                    if (sName !== 'N/A') {
-                        let v = document.getElementById(`in-${sIdx}-${i}`).value; 
-                        sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); 
-                    }
-                } 
-            });
-            document.getElementById(`gt-${i}`).innerText = sum;
-        }
-
-        const finalAvg = activeNumericCount > 0 ? (grandSum / activeNumericCount) : 0;
-        document.getElementById('gt-total').innerText = grandSum;
-
-        const statusEl = document.getElementById('dash-status');
-        const pctEl = document.getElementById('dash-pct');
-        const divEl = document.getElementById('dash-div');
-
-        const createPill = (text, bg, color, border, size) => {
-            return `<div class="print-badge" style="display: inline-block; background: ${bg}; color: ${color}; padding: 2px 10px; border-radius: 12px; font-size: ${size}; font-weight: 800; border: 1px solid ${border}; white-space: nowrap;">${text}</div>`;
-        };
-
-        if (!dataCompleted) {
-            statusEl.innerText = "AWAITED"; statusEl.className = "stat-value";
-            pctEl.innerHTML = createPill("--%", "#f8f9fa", "#6c757d", "#dae0e5", "0.85rem");
-            divEl.innerHTML = createPill("--", "#f8f9fa", "#6c757d", "#dae0e5", "0.75rem");
-            renderFailedSubjects(failedList);
-        } else {
-            let isFailed = (finalAvg < 40 || failCount >= 3);
-            let pctBg, pctColor, pctBorder;
-            if (finalAvg >= 60) { pctBg = "#e6f9ed"; pctColor = "#28a745"; pctBorder = "#c3e6cb"; } 
-            else if (finalAvg < 40) { pctBg = "#fde8e9"; pctColor = "#dc3545"; pctBorder = "#f8c3c7"; } 
-            else { pctBg = "#e6f2ff"; pctColor = "#0056b3"; pctBorder = "#b8daff"; }
-            pctEl.innerHTML = createPill(`${finalAvg.toFixed(1)}%`, pctBg, pctColor, pctBorder, "0.8rem");
-
-            if (isFailed) {
-                divEl.innerHTML = createPill("--", "#f8f9fa", "#6c757d", "#dae0e5", "0.75rem");
-                statusEl.innerText = "FAILED"; statusEl.className = "stat-value text-danger";
-            } else {
-                let divText = "3rd"; let divBg = "#fff3cd", divColor = "#856404", divBorder = "#ffeeba";
-                if (finalAvg >= 60) { divText = "1st"; divBg = "#e6f9ed"; divColor = "#28a745"; divBorder = "#c3e6cb"; } 
-                else if (finalAvg >= 45) { divText = "2nd"; divBg = "#e6f2ff"; divColor = "#0056b3"; divBorder = "#b8daff"; }
-                divEl.innerHTML = createPill(divText, divBg, divColor, divBorder, "0.7rem");
-
-                let currentClass = document.getElementById('stu-class-val').value;
-                let nextClassStr = "";
-                if (currentClass) {
-                    let cIdx = classOptions.indexOf(currentClass);
-                    if (cIdx !== -1 && cIdx < classOptions.length - 1) {
-                        nextClassStr = `<br><div class="print-badge" style="margin-top: 4px; display: inline-block; background: #e6f2ff; color: #0056b3; padding: 2px 10px; border-radius: 12px; font-size: 0.6rem; font-weight: 800; border: 1px solid #b8daff;">➔ Class ${classOptions[cIdx + 1]}</div>`;
-                    }
-                }
-                statusEl.innerHTML = `<span>PROMOTED</span>${nextClassStr}`;
-                statusEl.className = "stat-value text-green";
-            }
-            renderFailedSubjects(failedList);
-        }
-    }
-
-    function renderFailedSubjects(list) {
-        const failsEl = document.getElementById('dash-fails'); failsEl.innerHTML = '';
-        failsEl.style.display = 'flex'; failsEl.style.flexWrap = 'wrap'; failsEl.style.justifyContent = 'center';
-        failsEl.style.gap = '4px'; failsEl.style.alignItems = 'center';
-        if(list.length === 0) {
-            failsEl.innerHTML = `<div class="print-badge" style="background: #e6f9ed; color: #28a745; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 800; border: 1px solid #c3e6cb;">NONE</div>`;
-            return;
-        }
-        list.forEach((item) => {
-            let badge = document.createElement('div'); badge.className = 'print-badge';
-            if (item.color === 'text-green') { badge.style.cssText = "background: #e6f9ed; color: #28a745; padding: 2px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: 800; border: 1px solid #c3e6cb; white-space: nowrap;"; } 
-            else { badge.style.cssText = "background: #fde8e9; color: #dc3545; padding: 2px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: 800; border: 1px solid #f8c3c7; white-space: nowrap;"; }
-            badge.innerText = item.name; failsEl.appendChild(badge);
-        });
-    }
-
-    function printReport() { if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF(); else window.print(); }
-    function downloadBackup() {
-        const data = localStorage.getItem('marksDataCache'); if(!data) return alert("No data!");
-        const name = document.getElementById('stu-name').value || "Student";
-        if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`);
-    }
-    function importData(event) { const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('marksDataCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
-    
-    function autoSave() {
-        const data = {
-            mode: currentMode,
-            student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value },
-            marks: [], customSubjects: {}
-        };
-        document.querySelectorAll('input[id^="in-"]').forEach(input => { data.marks.push({ id: input.id, value: input.value }); });
-        document.querySelectorAll('input[id^="subj-val-"]').forEach(input => { data.customSubjects[input.id] = input.value; });
-        localStorage.setItem('marksDataCache', JSON.stringify(data));
-    }
-
-    function loadCache() {
-        const saved = localStorage.getItem('marksDataCache');
-        if (saved) {
-            const data = JSON.parse(saved);
-            
-            if (data.mode && data.mode !== currentMode) {
-                currentMode = data.mode;
-                document.getElementById('btn-pms').classList.remove('active');
-                document.getElementById('btn-pre').classList.remove('active');
-                document.getElementById(currentMode === 'PMS' ? 'btn-pms' : 'btn-pre').classList.add('active');
-            }
-            renderTable(); 
-
-            document.getElementById('stu-name').value = data.student?.name || '';
-            document.getElementById('stu-roll').value = data.student?.roll || '';
-            selectOption('stu-class-val', data.student?.class || '');
-            selectOption('stu-sec-val', data.student?.sec || '');
-            
-            if (data.customSubjects) { for (let key in data.customSubjects) { selectOption(key, data.customSubjects[key]); } }
-            
-            data.marks?.forEach(m => { const input = document.getElementById(m.id); if (input) {
-                input.value = m.value;
-                if (input.type === 'hidden') { const trigger = document.getElementById(m.id.replace('-val', '-trigger')); if(trigger) trigger.innerText = m.value || '-'; }
-                const sIdx = parseInt(m.id.split('-')[1]);
-                applyMarkStyling(input, activeSubjects[sIdx].max);
-            } });
-            calculateAll();
-        } else {
-            renderTable(); 
-        }
-    }
-
-    function clearAllData() { if(confirm("Wipe all?")) { localStorage.removeItem('marksDataCache'); location.reload(); } }
-    function checkForUpdates() {
-        if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) { AndroidBridge.forceUpdate(); } 
-        else { alert("This feature only works inside the Android App."); }
-    }
-    
-    window.onload = loadCache;
-</script>
-</body>
-</html>
+            const clearBtn = document.createElem

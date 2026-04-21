@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Marks Calculator Pro</title>
+    <title>Report Maker</title>
 
     <style>
         /* --- APP UI STYLES (Screen View) --- */
@@ -17,6 +17,59 @@
             position: fixed;
         }
 
+        /* --- TITLE SCREEN STYLES --- */
+        #title-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            background: linear-gradient(135deg, #0066cc, #004c99);
+            color: white;
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .app-main-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .title-btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 85%;
+            max-width: 320px;
+        }
+
+        .title-btn {
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .title-btn:active { transform: scale(0.96); }
+        .title-btn.start { background-color: #28a745; color: white; }
+        .title-btn.load { background-color: #ff9800; color: white; }
+        .title-btn.update { background-color: #6c757d; color: white; line-height: 1.2; }
+        .title-version { font-size: 0.8rem; font-weight: normal; opacity: 0.8; }
+
+        /* --- MAIN APP WRAPPER --- */
         .app-wrapper { display: flex; flex-direction: column; height: 100%; width: 100%; padding: 4px; box-sizing: border-box; }
         .container { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
@@ -31,13 +84,10 @@
         .table-container { flex: 1; padding: 2px 6px 6px 6px; background: #fff; min-height: 0; }
         .table-wrap { width: 100%; height: 100%; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; box-sizing: border-box; }
         
-        /* --- FIXED WOBBLE --- */
         table { border-collapse: collapse; min-width: 850px; width: 100%; table-layout: fixed; }
-
         th { background: #0066cc; color: white; padding: 3px 2px; border: 1px solid #0052a3; font-size: 9px; white-space: nowrap; }
         td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
 
-        /* --- VERTICAL STACKED ORANGE & GREEN MODE TOGGLE --- */
         .header-toggle { background: #ff9800; border-radius: 6px; display: inline-flex; flex-direction: column; overflow: hidden; padding: 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); border: 1px solid #e68a00; }
         .header-toggle-btn { padding: 4px 6px; border: none; background: transparent; color: #fff; opacity: 0.8; border-radius: 5px; font-weight: 900; cursor: pointer; font-size: 0.55rem; text-transform: uppercase; transition: all 0.2s; line-height: 1; margin-bottom: 1px;}
         .header-toggle-btn:last-child { margin-bottom: 0; }
@@ -85,6 +135,7 @@
         @media print {
             @page { size: auto; margin: 10mm; }
             html, body { height: auto !important; width: 100% !important; overflow: visible !important; position: static !important; background: white !important; }
+            #title-screen { display: none !important; } /* Hide title screen on print */
             .app-wrapper { display: block !important; padding: 0 !important; }
             .container { box-shadow: none !important; border: none !important; display: block !important; }
             .bottom-section, .sheet-overlay, .bottom-sheet, .header-toggle { display: none !important; } 
@@ -105,7 +156,19 @@
 </head>
 <body>
 
-<div class="app-wrapper">
+<div id="title-screen">
+    <h1 class="app-main-title">Report Maker</h1>
+    <div class="title-btn-group">
+        <button class="title-btn start" onclick="startApp()">Start Grading</button>
+        <button class="title-btn load" onclick="document.getElementById('file-loader').click()">Load Grades</button>
+        <button class="title-btn update" onclick="checkForUpdates()">
+            App Update <br>
+            <span class="title-version">v1.1.0</span>
+        </button>
+    </div>
+</div>
+
+<div class="app-wrapper" id="main-app" style="display: none;">
     <div class="container">
         <div class="header-section">
             <h3 class="header-title">Student Progress Report</h3>
@@ -234,6 +297,13 @@
     let activeSubjects = subjectsPMS;
     const tableBody = document.getElementById('tableBody');
 
+    // Start App & Hide Title Screen
+    function startApp() {
+        document.getElementById('title-screen').style.display = 'none';
+        document.getElementById('main-app').style.display = 'flex';
+        renderTable(); 
+    }
+
     function renderTable() {
         tableBody.innerHTML = '';
         activeSubjects = (currentMode === 'PMS') ? subjectsPMS : subjectsPRE;
@@ -270,299 +340,4 @@
                             if (this.value.startsWith('0') && this.value.length > 2) { this.value = ''; }
                         }
                         if(this.value !== '-' && this.value !== 'Ab' && this.value !== '' && parseFloat(this.value) > subj.max) this.value = '';
-                        applyMarkStyling(this, subj.max); calculateAll(); autoSave();
-                    };
-                    cell.appendChild(input);
-                } else {
-                    let display = document.createElement('div'); display.className = 'marks-input'; display.id = inputId + '-trigger'; display.innerText = '-';
-                    display.onclick = () => openSheet(subj.name, validGrades, inputId + '-val');
-                    let hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.id = inputId + '-val';
-                    cell.appendChild(display); cell.appendChild(hidden);
-                }
-            }
-            for (let i = 0; i < 4; i++) row.insertCell();
-        });
-    }
-
-    function switchMode(newMode) {
-        if (currentMode === newMode) return;
-        
-        let hasData = false;
-        document.querySelectorAll('input[id^="in-"]').forEach(inp => {
-            if(inp.type === 'text' && inp.value !== '') hasData = true;
-            if(inp.type === 'hidden' && inp.value !== '' && inp.value !== '-') hasData = true;
-        });
-
-        if (hasData) {
-            if (!confirm("Changing modes will clear the current marks on the table. Continue?")) return; 
-        }
-
-        currentMode = newMode;
-        
-        document.getElementById('btn-pms').classList.remove('active');
-        document.getElementById('btn-pre').classList.remove('active');
-        document.getElementById(newMode === 'PMS' ? 'btn-pms' : 'btn-pre').classList.add('active');
-
-        renderTable();
-        calculateAll();
-        autoSave(); 
-    }
-
-    function openSheet(title, options, targetId) {
-        document.getElementById('sheet-title').innerText = title;
-        const container = document.getElementById('options-container'); container.innerHTML = '';
-        
-        if (!targetId.startsWith('subj-val-')) {
-            const clearBtn = document.createElement('div'); clearBtn.className = 'opt-btn'; clearBtn.innerText = 'None';
-            clearBtn.onclick = () => selectOption(targetId, ''); container.appendChild(clearBtn);
-        }
-
-        options.forEach(opt => {
-            const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt;
-            btn.onclick = () => selectOption(targetId, opt); container.appendChild(btn);
-        });
-        document.getElementById('overlay').style.display = 'block';
-        setTimeout(() => document.getElementById('sheet').classList.add('active'), 10);
-    }
-
-    function closeSheet() { document.getElementById('sheet').classList.remove('active'); setTimeout(() => document.getElementById('overlay').style.display = 'none', 300); }
-
-    function selectOption(targetId, value) {
-        const input = document.getElementById(targetId);
-        if (input) input.value = value;
-        const trigger = document.getElementById(targetId.replace('-val', '-trigger'));
-        if (trigger) trigger.innerText = value || '-';
-        if (targetId.startsWith('in-')) {
-            const sIdx = parseInt(targetId.split('-')[1]);
-            applyMarkStyling(input, activeSubjects[sIdx].max);
-        }
-        
-        if (targetId.startsWith('subj-val-') && value === 'N/A') {
-            const sIdx = parseInt(targetId.split('-')[2]);
-            for(let i=0; i<=5; i++) {
-                let cellInput = document.getElementById(`in-${sIdx}-${i}`);
-                if(cellInput) { cellInput.value = ''; cellInput.classList.remove('text-red', 'underline'); }
-            }
-        }
-
-        closeSheet(); calculateAll(); autoSave();
-    }
-
-    function applyMarkStyling(input, max) {
-        let val = input.value;
-        const target = (input.type === 'hidden') ? document.getElementById(input.id.replace('-val', '-trigger')) : input;
-        if(!target) return;
-        target.classList.remove('text-red', 'underline');
-        if (val !== '' && val !== 'Ab' && val !== '-' && !isNaN(val)) {
-            let percentage = (parseFloat(val) / max) * 100;
-            if (percentage < 40) target.classList.add('text-red', 'underline');
-        }
-    }
-
-    function calculateAll() {
-        let activeNumericCount = 0;
-        let failCount = 0;
-        let dataCompleted = true;
-        let coreFails = [];
-        let langFails = [];
-        let grandSum = 0;
-
-        activeSubjects.forEach((subj, sIdx) => {
-            if (subj.type !== 'numeric') return;
-
-            let subjName = subj.name;
-            if (subj.options) {
-                let customVal = document.getElementById(`subj-val-${sIdx}`);
-                if (customVal && customVal.value) subjName = customVal.value;
-            }
-
-            const row = tableBody.rows[sIdx];
-
-            if (subjName === 'N/A') {
-                row.cells[7].innerText = '-'; row.cells[8].innerText = '-'; row.cells[9].innerText = '-'; row.cells[10].innerText = '-';
-                row.cells[10].classList.remove('text-red', 'underline');
-                for(let i=0; i<=5; i++) { 
-                    let box = document.getElementById(`in-${sIdx}-${i}`);
-                    if(box) box.disabled = true; 
-                }
-                return; 
-            } else {
-                for(let i=0; i<=5; i++) { 
-                    let box = document.getElementById(`in-${sIdx}-${i}`);
-                    if(box) box.disabled = false; 
-                }
-            }
-
-            activeNumericCount++;
-
-            const getV = (i) => { let val = document.getElementById(`in-${sIdx}-${i}`).value; return (val === 'Ab' || val === '-' || val === '') ? 0 : parseFloat(val); };
-            const m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / subj.max) * 25);
-            const q25 = Math.round(((getV(1) + getV(3)) / 2 / subj.max) * 25);
-            const a50 = Math.round((getV(5) / subj.max) * 50);
-            const total = m25 + q25 + a50;
             
-            row.cells[7].innerText = m25; row.cells[8].innerText = q25; row.cells[9].innerText = a50; row.cells[10].innerText = total;
-
-            row.cells[10].classList.remove('text-red', 'underline');
-            if (total < 40) row.cells[10].classList.add('text-red', 'underline');
-
-            let rowFilled = true;
-            for(let i=0; i<=5; i++) if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
-
-            if(rowFilled) {
-                if(total < 40) {
-                    let colorClass = (subjName === 'TEL/Hindi' || subjName === 'Hindi' || subjName === 'Bengali') ? 'text-green' : 'text-danger';
-                    let failItem = { name: subjName, color: colorClass };
-                    if(subj.exempt) langFails.push(failItem);
-                    else { coreFails.push(failItem); failCount++; }
-                }
-            } else { dataCompleted = false; }
-            
-            grandSum += total;
-        });
-
-        let failedList = coreFails.concat(langFails);
-
-        for (let i = 0; i < 6; i++) {
-            let sum = 0; 
-            activeSubjects.forEach((s, sIdx) => { 
-                if(s.type === 'numeric') { 
-                    let sName = s.name;
-                    if (s.options) {
-                        let cVal = document.getElementById(`subj-val-${sIdx}`);
-                        if (cVal && cVal.value) sName = cVal.value;
-                    }
-                    if (sName !== 'N/A') {
-                        let v = document.getElementById(`in-${sIdx}-${i}`).value; 
-                        sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); 
-                    }
-                } 
-            });
-            document.getElementById(`gt-${i}`).innerText = sum;
-        }
-
-        const finalAvg = activeNumericCount > 0 ? (grandSum / activeNumericCount) : 0;
-        document.getElementById('gt-total').innerText = grandSum;
-
-        const statusEl = document.getElementById('dash-status');
-        const pctEl = document.getElementById('dash-pct');
-        const divEl = document.getElementById('dash-div');
-
-        const createPill = (text, bg, color, border, size) => {
-            return `<div class="print-badge" style="display: inline-block; background: ${bg}; color: ${color}; padding: 2px 10px; border-radius: 12px; font-size: ${size}; font-weight: 800; border: 1px solid ${border}; white-space: nowrap;">${text}</div>`;
-        };
-
-        if (!dataCompleted) {
-            statusEl.innerText = "AWAITED"; statusEl.className = "stat-value";
-            pctEl.innerHTML = createPill("--%", "#f8f9fa", "#6c757d", "#dae0e5", "0.85rem");
-            divEl.innerHTML = createPill("--", "#f8f9fa", "#6c757d", "#dae0e5", "0.75rem");
-            renderFailedSubjects(failedList);
-        } else {
-            let isFailed = (finalAvg < 40 || failCount >= 3);
-            let pctBg, pctColor, pctBorder;
-            if (finalAvg >= 60) { pctBg = "#e6f9ed"; pctColor = "#28a745"; pctBorder = "#c3e6cb"; } 
-            else if (finalAvg < 40) { pctBg = "#fde8e9"; pctColor = "#dc3545"; pctBorder = "#f8c3c7"; } 
-            else { pctBg = "#e6f2ff"; pctColor = "#0056b3"; pctBorder = "#b8daff"; }
-            pctEl.innerHTML = createPill(`${finalAvg.toFixed(1)}%`, pctBg, pctColor, pctBorder, "0.8rem");
-
-            if (isFailed) {
-                divEl.innerHTML = createPill("--", "#f8f9fa", "#6c757d", "#dae0e5", "0.75rem");
-                statusEl.innerText = "FAILED"; statusEl.className = "stat-value text-danger";
-            } else {
-                let divText = "3rd"; let divBg = "#fff3cd", divColor = "#856404", divBorder = "#ffeeba";
-                if (finalAvg >= 60) { divText = "1st"; divBg = "#e6f9ed"; divColor = "#28a745"; divBorder = "#c3e6cb"; } 
-                else if (finalAvg >= 45) { divText = "2nd"; divBg = "#e6f2ff"; divColor = "#0056b3"; divBorder = "#b8daff"; }
-                divEl.innerHTML = createPill(divText, divBg, divColor, divBorder, "0.7rem");
-
-                let currentClass = document.getElementById('stu-class-val').value;
-                let nextClassStr = "";
-                if (currentClass) {
-                    let cIdx = classOptions.indexOf(currentClass);
-                    if (cIdx !== -1 && cIdx < classOptions.length - 1) {
-                        nextClassStr = `<br><div class="print-badge" style="margin-top: 4px; display: inline-block; background: #e6f2ff; color: #0056b3; padding: 2px 10px; border-radius: 12px; font-size: 0.6rem; font-weight: 800; border: 1px solid #b8daff;">➔ Class ${classOptions[cIdx + 1]}</div>`;
-                    }
-                }
-                statusEl.innerHTML = `<span>PROMOTED</span>${nextClassStr}`;
-                statusEl.className = "stat-value text-green";
-            }
-            renderFailedSubjects(failedList);
-        }
-    }
-
-    function renderFailedSubjects(list) {
-        const failsEl = document.getElementById('dash-fails'); failsEl.innerHTML = '';
-        failsEl.style.display = 'flex'; failsEl.style.flexWrap = 'wrap'; failsEl.style.justifyContent = 'center';
-        failsEl.style.gap = '4px'; failsEl.style.alignItems = 'center';
-        if(list.length === 0) {
-            failsEl.innerHTML = `<div class="print-badge" style="background: #e6f9ed; color: #28a745; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 800; border: 1px solid #c3e6cb;">NONE</div>`;
-            return;
-        }
-        list.forEach((item) => {
-            let badge = document.createElement('div'); badge.className = 'print-badge';
-            if (item.color === 'text-green') { badge.style.cssText = "background: #e6f9ed; color: #28a745; padding: 2px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: 800; border: 1px solid #c3e6cb; white-space: nowrap;"; } 
-            else { badge.style.cssText = "background: #fde8e9; color: #dc3545; padding: 2px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: 800; border: 1px solid #f8c3c7; white-space: nowrap;"; }
-            badge.innerText = item.name; failsEl.appendChild(badge);
-        });
-    }
-
-    function printReport() { if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF(); else window.print(); }
-    function downloadBackup() {
-        const data = localStorage.getItem('marksDataCache'); if(!data) return alert("No data!");
-        const name = document.getElementById('stu-name').value || "Student";
-        if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`);
-    }
-    function importData(event) { const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('marksDataCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
-    
-    function autoSave() {
-        const data = {
-            mode: currentMode,
-            student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value },
-            marks: [], customSubjects: {}
-        };
-        document.querySelectorAll('input[id^="in-"]').forEach(input => { data.marks.push({ id: input.id, value: input.value }); });
-        document.querySelectorAll('input[id^="subj-val-"]').forEach(input => { data.customSubjects[input.id] = input.value; });
-        localStorage.setItem('marksDataCache', JSON.stringify(data));
-    }
-
-    function loadCache() {
-        const saved = localStorage.getItem('marksDataCache');
-        if (saved) {
-            const data = JSON.parse(saved);
-            
-            if (data.mode && data.mode !== currentMode) {
-                currentMode = data.mode;
-                document.getElementById('btn-pms').classList.remove('active');
-                document.getElementById('btn-pre').classList.remove('active');
-                document.getElementById(currentMode === 'PMS' ? 'btn-pms' : 'btn-pre').classList.add('active');
-            }
-            renderTable(); 
-
-            document.getElementById('stu-name').value = data.student?.name || '';
-            document.getElementById('stu-roll').value = data.student?.roll || '';
-            selectOption('stu-class-val', data.student?.class || '');
-            selectOption('stu-sec-val', data.student?.sec || '');
-            
-            if (data.customSubjects) { for (let key in data.customSubjects) { selectOption(key, data.customSubjects[key]); } }
-            
-            data.marks?.forEach(m => { const input = document.getElementById(m.id); if (input) {
-                input.value = m.value;
-                if (input.type === 'hidden') { const trigger = document.getElementById(m.id.replace('-val', '-trigger')); if(trigger) trigger.innerText = m.value || '-'; }
-                const sIdx = parseInt(m.id.split('-')[1]);
-                applyMarkStyling(input, activeSubjects[sIdx].max);
-            } });
-            calculateAll();
-        } else {
-            renderTable(); 
-        }
-    }
-
-    function clearAllData() { if(confirm("Wipe all?")) { localStorage.removeItem('marksDataCache'); location.reload(); } }
-    function checkForUpdates() {
-        if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) { AndroidBridge.forceUpdate(); } 
-        else { alert("This feature only works inside the Android App."); }
-    }
-    
-    window.onload = loadCache;
-</script>
-</body>
-</html>

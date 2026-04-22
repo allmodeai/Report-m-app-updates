@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Report Maker</title>
+    <title>Report Maker Pro</title>
 
     <style>
         /* --- GLOBAL & SAFE AREA --- */
@@ -38,7 +38,6 @@
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 4px; }
         .header-section { padding: 6px; flex-shrink: 0; border-bottom: 1px solid #eee; }
         
-        /* SYMMETRICAL TOP ROW */
         .top-row { 
             display: flex; 
             justify-content: space-between; 
@@ -60,9 +59,10 @@
             text-transform: uppercase; text-align: center;
         }
 
-        .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 2px; min-width: 70px; justify-content: center; }
-        .header-toggle-btn { padding: 3px 8px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.55rem; text-transform: uppercase; border-radius: 15px; }
-        .header-toggle-btn.active { background: #28a745; color: white; }
+        /* 1. ENLARGED MODE TOGGLE */
+        .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 3px; min-width: 85px; justify-content: center; border: 1px solid #e68a00; }
+        .header-toggle-btn { padding: 5px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.65rem; text-transform: uppercase; border-radius: 15px; transition: 0.2s; }
+        .header-toggle-btn.active { background: #28a745; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
         .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 6px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
@@ -79,7 +79,10 @@
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12px; white-space: nowrap; width: 120px; overflow: hidden; text-overflow: ellipsis; }
         .marks-input { width: 45px; height: 24px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; }
 
-        .footer-row { background: #cbdff2; font-weight: bold; border-top: 2px solid #0066cc; position: sticky; bottom: 0; }
+        /* 2. ENLARGED GRAND TOTAL ROW */
+        .footer-row { background: #cbdff2; font-weight: 900; border-top: 2.5px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
+        .footer-row td { height: 32px; font-size: 13px; color: #000; }
+
         .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 6px; padding: 4px 6px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
         .stat-box { background: white; padding: 4px 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 48px; }
         .stat-label { font-size: 0.6rem; font-weight: bold; color: #0066cc; text-transform: uppercase; }
@@ -131,9 +134,7 @@
             <div class="header-section">
                 <div class="top-row">
                     <button class="btn-menu" onclick="showPage('page-title')">Menu</button>
-                    
                     <div class="grading-title">Grading Table</div>
-                    
                     <div class="header-toggle">
                         <button id="btn-pms" class="header-toggle-btn active" onclick="switchMode('PMS')">PMS</button>
                         <button id="btn-pre" class="header-toggle-btn" onclick="switchMode('PRE')">Pre</button>
@@ -308,7 +309,6 @@
         let coreFails = [];
         let langFails = [];
         let dataCompleted = true;
-
         const tableBody = document.getElementById('tableBody');
 
         activeSubjects.forEach((subj, sIdx) => {
@@ -428,16 +428,12 @@
 
     function closeSheet() { document.getElementById('sheet').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; }
 
-    // --- UPDATED: DYNAMIC SWITCH MODE (NO RELOAD) ---
     function switchMode(m) { 
         if (currentMode === m) return;
         if (!confirm("Switching modes will clear current data. Continue?")) return;
-        
         currentMode = m; 
         document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
         document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); 
-        
-        // Reset local data specifically
         resetLocalInputs();
         renderTable(); 
         calculateAll();
@@ -446,10 +442,7 @@
 
     function resetLocalInputs() {
         localStorage.removeItem('marksCache');
-        // Clear student names too if necessary, or just marks
-        document.querySelectorAll('input').forEach(inp => {
-            if(inp.type !== 'hidden') inp.value = '';
-        });
+        document.querySelectorAll('input').forEach(inp => { if(inp.type !== 'hidden') inp.value = ''; });
         document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-');
     }
 
@@ -471,18 +464,15 @@
     function loadCache() {
         const saved = localStorage.getItem('marksCache'); if(!saved) return;
         const data = JSON.parse(saved);
-        
         currentMode = data.mode || 'PMS';
         document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
         document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); 
-
         document.getElementById('stu-name').value = data.student.name || '';
         document.getElementById('stu-roll').value = data.student.roll || '';
         document.getElementById('stu-class-val').value = data.student.class || '';
         document.getElementById('stu-class-trigger').innerText = data.student.class || '-';
         document.getElementById('stu-sec-val').value = data.student.sec || '';
         document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-';
-
         data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; });
         calculateAll();
     }
@@ -500,7 +490,6 @@
         reader.readAsText(event.target.files[0]);
     }
 
-    // --- UPDATED: ERASE WITHOUT RELOAD ---
     function clearAllData() { 
         if(confirm("Erase all data?")) { 
             resetLocalInputs();

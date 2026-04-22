@@ -45,10 +45,11 @@
         .header-toggle-btn { padding: 5px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.65rem; text-transform: uppercase; border-radius: 15px; }
         .header-toggle-btn.active { background: #28a745; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
+        /* 3. BIGGER BOLD LABELS */
         .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 6px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
-        .info-field label { font-size: 0.5rem; font-weight: bold; color: #0066cc; text-transform: uppercase; }
-        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.85rem; outline: none; font-weight: 900; color: #000; padding: 0; }
+        .info-field label { font-size: 0.65rem; font-weight: 900; color: #0066cc; text-transform: uppercase; margin-bottom: 1px; }
+        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.95rem; outline: none; font-weight: 900; color: #000; padding: 0; display: flex; align-items: center; }
 
         .table-container { flex: 1; padding: 2px 6px; overflow: hidden; display: flex; flex-direction: column; }
         .table-wrap { width: 100%; height: 100%; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; }
@@ -58,19 +59,25 @@
         td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12px; white-space: nowrap; width: 120px; overflow: hidden; text-overflow: ellipsis; }
-        .marks-input { width: 45px; height: 24px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; }
+        
+        /* 1. CENTERED MARKS & GRADES */
+        .marks-input { 
+            width: 45px; height: 26px; border: 1px solid #bbb; border-radius: 4px; 
+            text-align: center; font-size: 12px; font-weight: 900; outline: none; 
+            margin: 0 auto; display: flex; align-items: center; justify-content: center;
+        }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2.5px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
         .footer-row td { height: 32px; font-size: 13px; color: #000; }
 
+        /* 3. BIGGER DASHBOARD LABELS */
         .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 6px; padding: 4px 6px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
-        .stat-box { background: white; padding: 4px 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 48px; }
-        .stat-label { font-size: 0.6rem; font-weight: bold; color: #0066cc; text-transform: uppercase; }
-        .stat-value { font-size: 0.85rem; font-weight: 900; }
+        .stat-box { background: white; padding: 4px 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 52px; }
+        .stat-label { font-size: 0.72rem; font-weight: 900; color: #0066cc; text-transform: uppercase; margin-bottom: 2px; }
+        .stat-value { font-size: 0.9rem; font-weight: 900; }
         
-        .print-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-weight: 800; border: 1px solid #ccc; }
+        .print-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-weight: 800; border: 1px solid rgba(0,0,0,0.1); }
 
-        /* UPDATED BUTTON COLORS */
         .bottom-section { flex-shrink: 0; padding: 8px 6px 15px 6px; background: #fff; }
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
         .btn { padding: 12px 2px; border: none; border-radius: 6px; font-weight: 900; font-size: 0.65rem; color: white; text-transform: uppercase; cursor: pointer; }
@@ -117,8 +124,8 @@
                 </div>
 
                 <div class="student-info">
-                    <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
-                    <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" oninput="autoSave()"></div>
+                    <div class="info-field"><label>Name</label><input type="text" id="stu-name" placeholder="Name" oninput="autoSave()"></div>
+                    <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" placeholder="0" oninput="autoSave()"></div>
                     <div class="info-field"><label>Class</label><div id="stu-class-trigger" class="select-trigger" onclick="openSheet('Select Class', classOptions, 'stu-class-val')">-</div><input type="hidden" id="stu-class-val"></div>
                     <div class="info-field"><label>Section</label><div id="stu-sec-trigger" class="select-trigger" onclick="openSheet('Select Section', ['A', 'B', 'C'], 'stu-sec-val')">-</div><input type="hidden" id="stu-sec-val"></div>
                 </div>
@@ -153,7 +160,7 @@
             </div>
 
             <div class="dashboard-section">
-                <div class="stat-box"><span class="stat-label">Failed Subjects</span><div class="stat-value" id="dash-fails" style="font-size:0.55rem">NONE</div></div>
+                <div class="stat-box"><span class="stat-label">Failed Subjects</span><div class="stat-value" id="dash-fails" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3px;">NONE</div></div>
                 <div class="stat-box" style="border: 1.5px solid #0066cc; background: #f9fbfd;"><span class="stat-label">Result Status</span><div class="stat-value" id="dash-status">AWAITED</div></div>
                 <div class="stat-box" style="align-items: center;"><span class="stat-label">Percentage</span><div id="dash-pct">--%</div><hr style="width: 80%; margin: 2px 0; border: 0; border-top: 1px solid #ddd;"><span class="stat-label">Division</span><div id="dash-div">--</div></div>
             </div>
@@ -182,7 +189,6 @@
     const classOptions = ['Nursery', 'LKG', 'UKG', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
     const validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
 
-    // RULE: ENG MAX 200 IN PMS, OTHERS 100
     const subjectsPMS = [
         { name: 'English', type: 'numeric', max: 200 },
         { name: 'TEL/Hindi', type: 'numeric', max: 100, exempt: true },
@@ -242,7 +248,6 @@
                     input.className = 'marks-input'; input.id = inputId;
                     input.onkeydown = (e) => { if(e.key === '.') e.preventDefault(); };
                     input.oninput = function() {
-                        // RULE: "--" INPUT AS "Ab"
                         if (this.value === '--') { this.value = 'Ab'; }
                         this.value = this.value.replace(/[^0-9Ab\-]/g, '');
                         if(this.value !== 'Ab' && this.value !== '-' && this.value !== '' && parseFloat(this.value) > subj.max) this.value = '';
@@ -280,7 +285,7 @@
             row.cells[10].classList.remove('text-red', 'underline');
             if (total < 40) row.cells[10].classList.add('text-red', 'underline');
             let rowFilled = true; for(let i=0; i<=5; i++) if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
-            if(rowFilled) { if(total < 40) { let color = (subjName.includes('Hindi') || subjName.includes('Bengali')) ? 'text-green' : 'text-danger'; if(subj.exempt) langFails.push({ name: subjName, color: color }); else { coreFails.push({ name: subjName, color: color }); failCount++; } } } else { dataCompleted = false; }
+            if(rowFilled) { if(total < 40) { let color = (subjName.includes('Hindi') || subjName.includes('Bengali')) ? 'text-green' : 'text-danger'; if(subj.exempt) langFails.push({ name: subjName, type: 'exempt' }); else { coreFails.push({ name: subjName, type: 'core' }); failCount++; } } } else { dataCompleted = false; }
             grandSum += total;
         });
         for (let i = 0; i < 6; i++) { let sum = 0; activeSubjects.forEach((s, sIdx) => { if(s.type === 'numeric') { let v = document.getElementById(`in-${sIdx}-${i}`).value; sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); } }); document.getElementById(`gt-${i}`).innerText = sum; }
@@ -297,7 +302,19 @@
         renderFails(failedList);
     }
 
-    function renderFails(list) { const el = document.getElementById('dash-fails'); el.innerHTML = ''; if(list.length === 0) { el.innerText = "NONE"; return; } list.forEach(item => { let b = document.createElement('span'); b.className = 'print-badge'; b.style.fontSize = '0.55rem'; b.style.margin = '1px'; b.style.color = item.color === 'text-green' ? '#28a745' : '#dc3545'; b.innerText = item.name; el.appendChild(b); }); }
+    // 2. FAILED SUBJECTS FILLED PILLS
+    function renderFails(list) { 
+        const el = document.getElementById('dash-fails'); el.innerHTML = ''; 
+        if(list.length === 0) { el.innerText = "NONE"; return; } 
+        list.forEach(item => { 
+            let b = document.createElement('span'); b.className = 'print-badge'; 
+            b.style.fontSize = '0.58rem'; b.style.margin = '1px'; b.style.color = 'white'; 
+            b.style.backgroundColor = item.type === 'exempt' ? '#28a745' : '#dc3545';
+            b.style.borderColor = 'transparent';
+            b.innerText = item.name; el.appendChild(b); 
+        }); 
+    }
+
     function applyMarkStyling(input, max) { input.classList.remove('text-red', 'underline'); if (input.value !== '' && !isNaN(input.value)) { if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red', 'underline'); } }
     function openSheet(title, options, targetId) { document.getElementById('sheet-title').innerText = title; const container = document.getElementById('options-container'); container.innerHTML = ''; options.forEach(opt => { const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt; btn.onclick = () => { let input = document.getElementById(targetId); if(input) input.value = opt; let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt; closeSheet(); calculateAll(); autoSave(); }; container.appendChild(btn); }); document.getElementById('overlay').style.display = 'block'; document.getElementById('sheet').classList.add('active'); }
     function closeSheet() { document.getElementById('sheet').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; }

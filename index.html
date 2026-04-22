@@ -25,12 +25,56 @@
         .page { display: none; height: 100%; width: 100%; flex-direction: column; overflow: hidden; }
         .page.active { display: flex; }
 
-        /* --- TITLE SCREEN --- */
+        /* --- TITLE SCREEN (Updated with Watermark & Bottom Buttons) --- */
         #page-title { justify-content: center; align-items: center; background: #0066cc; }
-        .launch-card { background: white; padding: 40px 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); width: 85%; text-align: center; }
-        .launch-card h1 { margin: 0 0 30px 0; color: #0066cc; font-weight: 900; text-transform: uppercase; font-size: 1.4rem; }
         
-        .title-btn { width: 100%; padding: 16px; margin-bottom: 12px; border: none; border-radius: 12px; font-weight: 900; font-size: 1rem; text-transform: uppercase; cursor: pointer; }
+        .launch-card { 
+            background: white; 
+            padding: 30px 20px; 
+            border-radius: 24px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
+            width: 88%; 
+            height: 60vh;
+            text-align: center; 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Pushes buttons to bottom */
+            overflow: hidden;
+        }
+
+        /* Watermark Styles */
+        .launch-card::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px; height: 220px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230066cc' opacity='0.06'%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .launch-card h1 { 
+            margin: 10px 0; 
+            color: #0066cc; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            font-size: 1.6rem; 
+            z-index: 1;
+        }
+        
+        .title-btn-group { width: 100%; z-index: 1; }
+
+        .title-btn { 
+            width: 100%; padding: 18px; margin-top: 12px; 
+            border: none; border-radius: 14px; 
+            font-weight: 900; font-size: 1.1rem; 
+            text-transform: uppercase; cursor: pointer; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
         .btn-go { background-color: #28a745; color: white; }
         .btn-up { background-color: #ff9800; color: white; }
 
@@ -39,41 +83,39 @@
         .header-section { padding: 4px; flex-shrink: 0; border-bottom: 1px solid #eee; }
         
         .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 0 4px; }
-        .btn-menu { background: #004c99; color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; }
-        .grading-title { font-weight: 900; color: #0066cc; font-size: 0.75rem; text-transform: uppercase; }
+        .btn-menu { background: #004c99; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; }
+        .grading-title { font-weight: 900; color: #0066cc; font-size: 0.8rem; text-transform: uppercase; }
         .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 2px; border: 1px solid #e68a00; }
-        .header-toggle-btn { padding: 4px 10px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.6rem; text-transform: uppercase; border-radius: 15px; }
+        .header-toggle-btn { padding: 4px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.65rem; text-transform: uppercase; border-radius: 15px; }
         .header-toggle-btn.active { background: #28a745; color: white; }
 
         .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 4px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
-        .info-field label { font-size: 0.6rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
-        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.85rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 18px; display: flex; align-items: center; }
+        .info-field label { font-size: 0.65rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
+        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.95rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 20px; display: flex; align-items: center; }
 
-        /* 2. NO-SCROLL TABLE AREA */
         .table-container { flex: 1; padding: 0 4px; overflow: hidden; display: flex; flex-direction: column; }
         .table-wrap { width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; border: 1.5px solid #0066cc; border-radius: 4px; }
 
         table { border-collapse: collapse; min-width: 850px; width: 100%; table-layout: fixed; }
-        th { background: #0066cc; color: white; padding: 2px; border: 1px solid #0052a3; font-size: 8px; }
-        td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 10px; vertical-align: middle; }
+        th { background: #0066cc; color: white; padding: 3px 2px; border: 1px solid #0052a3; font-size: 9px; }
+        td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
 
-        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 1px 4px; font-size: 11px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
-        .marks-input { width: 40px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 1px 4px; font-size: 12px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
+        .marks-input { width: 45px; height: 24px; border: 1px solid #bbb; border-radius: 4px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
 
-        .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
-        .footer-row td { height: 26px; font-size: 11px; color: #000; }
+        .footer-row { background: #cbdff2; font-weight: 900; border-top: 2.5px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
+        .footer-row td { height: 28px; font-size: 12px; color: #000; }
 
-        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; padding: 2px 4px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
-        .stat-box { background: white; padding: 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 45px; overflow: hidden; }
-        .stat-label { font-size: 0.55rem; font-weight: 900; color: #0066cc; text-transform: uppercase; line-height: 1; }
-        .stat-value { font-size: 0.8rem; font-weight: 900; }
-        .print-badge { display: inline-block; padding: 1px 5px; border-radius: 6px; font-weight: 800; border: 1px solid rgba(0,0,0,0.1); font-size: 0.5rem; margin: 1px; }
+        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; padding: 4px 6px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
+        .stat-box { background: white; padding: 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 50px; overflow: hidden; }
+        .stat-label { font-size: 0.58rem; font-weight: 900; color: #0066cc; text-transform: uppercase; margin-bottom: 2px; }
+        .stat-value { font-size: 0.85rem; font-weight: 900; }
+        .print-badge { display: inline-block; padding: 2px 6px; border-radius: 8px; font-weight: 800; border: 1px solid rgba(0,0,0,0.1); font-size: 0.52rem; margin: 1px; }
 
-        /* 1. REDUCED BOTTOM BUTTON SIZE */
-        .bottom-section { flex-shrink: 0; padding: 4px 4px 10px 4px; background: #fff; }
-        .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
-        .btn { padding: 6px 2px; border: none; border-radius: 5px; font-weight: 900; font-size: 0.6rem; color: white; text-transform: uppercase; cursor: pointer; }
+        .bottom-section { flex-shrink: 0; padding: 6px 4px 12px 4px; background: #fff; }
+        .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+        .btn { padding: 10px 2px; border: none; border-radius: 6px; font-weight: 900; font-size: 0.65rem; color: white; text-transform: uppercase; cursor: pointer; }
         
         .btn-save { background: #28a745 !important; }
         .btn-load { background: #0066cc !important; }
@@ -81,9 +123,9 @@
         .btn-erase { background: #dc3545 !important; }
 
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
-        .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; z-index: 1001; padding: 15px; box-sizing: border-box; max-height: 80vh; overflow-y: auto; }
+        .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; z-index: 1001; padding: 15px 15px calc(15px + env(safe-area-inset-bottom)) 15px; box-sizing: border-box; max-height: 80vh; overflow-y: auto; }
         .bottom-sheet.active { transform: translateY(0); }
-        .opt-btn { padding: 12px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 0.9rem; text-align: center; margin-bottom: 6px; }
+        .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
 
         .text-red { color: #dc3545 !important; }
         .text-green { color: #28a745 !important; }
@@ -99,8 +141,11 @@
     <div id="page-title" class="page active">
         <div class="launch-card">
             <h1>Report Maker</h1>
-            <button class="title-btn btn-go" onclick="showPage('page-grading')">Start Grading</button>
-            <button class="title-btn btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
+            
+            <div class="title-btn-group">
+                <button class="title-btn btn-go" onclick="showPage('page-grading')">Start Grading</button>
+                <button class="title-btn btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
+            </div>
         </div>
     </div>
 
@@ -118,7 +163,7 @@
 
                 <div class="student-info">
                     <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
-                    <div class="info-field"><label>Roll No</label><div id="stu-roll-trigger" class="select-trigger" onclick="promptRoll()">-</div><input type="hidden" id="stu-roll"></div>
+                    <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" inputmode="numeric" pattern="[0-9]*" oninput="autoSave()"></div>
                     <div class="info-field"><label>Class</label><div id="stu-class-trigger" class="select-trigger" onclick="openSheet('Select Class', classOptions, 'stu-class-val')">-</div><input type="hidden" id="stu-class-val"></div>
                     <div class="info-field"><label>Section</label><div id="stu-sec-trigger" class="select-trigger" onclick="openSheet('Select Section', ['A', 'B', 'C'], 'stu-sec-val')">-</div><input type="hidden" id="stu-sec-val"></div>
                 </div>
@@ -153,9 +198,9 @@
             </div>
 
             <div class="dashboard-section">
-                <div class="stat-box"><span class="stat-label">Failed Subjects</span><div class="stat-value" id="dash-fails" style="display: flex; flex-wrap: wrap; justify-content: center;">NONE</div></div>
+                <div class="stat-box"><span class="stat-label">Failed Subjects</span><div class="stat-value" id="dash-fails" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">NONE</div></div>
                 <div class="stat-box" style="border: 1.5px solid #0066cc; background: #f9fbfd;"><span class="stat-label">Result Status</span><div class="stat-value" id="dash-status">AWAITED</div></div>
-                <div class="stat-box" style="align-items: center;"><span class="stat-label">Percentage</span><div id="dash-pct">--%</div><hr style="width: 80%; margin: 1px 0; border: 0; border-top: 1px solid #ddd;"><span class="stat-label">Division</span><div id="dash-div">--</div></div>
+                <div class="stat-box" style="align-items: center;"><span class="stat-label">Percentage</span><div id="dash-pct">--%</div><hr style="width: 80%; margin: 2px 0; border: 0; border-top: 1px solid #ddd;"><span class="stat-label">Division</span><div id="dash-div">--</div></div>
             </div>
 
             <div class="bottom-section">
@@ -172,8 +217,8 @@
 
 <div id="overlay" class="sheet-overlay" onclick="closeSheet()"></div>
 <div id="sheet" class="bottom-sheet">
-    <div id="sheet-title" style="font-weight: 900; margin-bottom: 8px; color: #0066cc; text-align: center; text-transform: uppercase; font-size: 0.75rem;">Select</div>
-    <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;"></div>
+    <div id="sheet-title" style="font-weight: 900; margin-bottom: 12px; color: #0066cc; text-align: center; text-transform: uppercase; font-size: 0.8rem;">Select</div>
+    <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;"></div>
 </div>
 
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
@@ -213,15 +258,6 @@
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
         if(pageId === 'page-grading') { renderTable(); loadCache(); }
-    }
-
-    function promptRoll() {
-        let r = prompt("Enter Roll No:");
-        if (r !== null) {
-            document.getElementById('stu-roll').value = r;
-            document.getElementById('stu-roll-trigger').innerText = r || '-';
-            autoSave();
-        }
     }
 
     function renderTable() {
@@ -314,7 +350,7 @@
     function switchMode(m) { if (currentMode === m) return; if (!confirm("Switching modes will clear current data. Continue?")) return; currentMode = m; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); resetLocalInputs(); renderTable(); calculateAll(); autoSave(); }
     function resetLocalInputs() { localStorage.removeItem('marksCache'); document.querySelectorAll('input').forEach(inp => { if(inp.type !== 'hidden') inp.value = ''; }); document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-'); }
     function autoSave() { const data = { mode: currentMode, student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value }, marks: [] }; document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value})); localStorage.setItem('marksCache', JSON.stringify(data)); }
-    function loadCache() { const saved = localStorage.getItem('marksCache'); if(!saved) return; const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); document.getElementById('stu-name').value = data.student.name || ''; document.getElementById('stu-roll').value = data.student.roll || ''; document.getElementById('stu-roll-trigger').innerText = data.student.roll || '-'; document.getElementById('stu-class-val').value = data.student.class || ''; document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; document.getElementById('stu-sec-val').value = data.student.sec || ''; document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); calculateAll(); }
+    function loadCache() { const saved = localStorage.getItem('marksCache'); if(!saved) return; const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); document.getElementById('stu-name').value = data.student.name || ''; document.getElementById('stu-roll').value = data.student.roll || ''; document.getElementById('stu-class-val').value = data.student.class || ''; document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; document.getElementById('stu-sec-val').value = data.student.sec || ''; document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); calculateAll(); }
     function downloadBackup() { const data = localStorage.getItem('marksCache'); if(!data) { alert("No data to save!"); return; } const name = document.getElementById('stu-name').value || "Report"; if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`); }
     function importData(event) { const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('marksCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
     function clearAllData() { if(confirm("Erase all data?")) { resetLocalInputs(); renderTable(); calculateAll(); } }

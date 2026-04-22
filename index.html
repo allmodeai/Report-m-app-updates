@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Report Maker</title>
     <style>
-        /* --- CORE APP LAYOUT --- */
+        /* --- GLOBAL LAYOUT --- */
         html, body {
             font-family: 'Segoe UI', system-ui, sans-serif;
             margin: 0; padding: 0;
@@ -14,72 +14,51 @@
             overflow: hidden; position: fixed;
         }
 
-        .page {
-            display: none; height: 100%; width: 100%;
-            flex-direction: column; overflow: hidden;
-        }
+        /* --- PAGE SWITCHING --- */
+        .page { display: none; height: 100%; width: 100%; flex-direction: column; }
         .page.active { display: flex; }
 
-        /* --- SCREEN 1: TITLE/INFO PAGE --- */
-        #page-info {
-            background: #0066cc;
-            justify-content: center; align-items: center;
-        }
-        .info-card {
-            background: white; width: 85%; padding: 20px;
-            border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        .info-card h2 { color: #0066cc; margin-top: 0; text-align: center; font-size: 1.2rem; }
+        /* --- SCREEN 1: TITLE PAGE --- */
+        #page-info { background: #0066cc; justify-content: center; align-items: center; }
+        .info-card { background: white; width: 88%; padding: 25px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); box-sizing: border-box; }
+        .info-card h2 { color: #0066cc; margin: 0 0 20px 0; text-align: center; font-weight: 900; text-transform: uppercase; font-size: 1.1rem; }
         
-        .input-box { margin-bottom: 12px; }
-        .input-box label { display: block; font-size: 0.65rem; font-weight: bold; color: #666; text-transform: uppercase; }
+        .input-box { margin-bottom: 15px; }
+        .input-box label { display: block; font-size: 0.6rem; font-weight: bold; color: #666; text-transform: uppercase; margin-bottom: 4px; }
         .input-box input { 
-            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; 
-            box-sizing: border-box; font-weight: bold; font-size: 1rem;
+            width: 100%; padding: 12px; border: 1.5px solid #ddd; border-radius: 8px; 
+            box-sizing: border-box; font-weight: 900; font-size: 1rem; outline: none;
         }
+        .input-box input:focus { border-color: #0066cc; }
 
-        .btn-main {
+        .btn-start {
             width: 100%; padding: 15px; background: #28a745; color: white;
-            border: none; border-radius: 8px; font-weight: 900; cursor: pointer;
+            border: none; border-radius: 30px; font-weight: 900; cursor: pointer;
+            font-size: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* --- SCREEN 2: GRADING PAGE --- */
-        .top-nav {
-            background: white; padding: 6px 12px; display: flex;
-            justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd;
-        }
-        .mode-toggle { background: #eee; border-radius: 20px; padding: 2px; display: flex; }
-        .m-btn { padding: 4px 12px; border: none; background: transparent; font-size: 0.7rem; font-weight: bold; border-radius: 15px; }
+        /* --- SCREEN 2: GRADING TABLE --- */
+        .top-nav { background: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid #ddd; }
+        .mode-toggle { background: #eee; border-radius: 20px; padding: 2px; display: flex; border: 1px solid #ccc; }
+        .m-btn { padding: 5px 15px; border: none; background: transparent; font-size: 0.7rem; font-weight: 900; border-radius: 15px; cursor: pointer; }
         .m-btn.active { background: #0066cc; color: white; }
 
-        .table-container { flex: 1; overflow: auto; padding: 4px; }
+        .table-container { flex: 1; overflow: auto; padding: 4px; background: #fff; }
         table { border-collapse: collapse; width: 100%; min-width: 850px; table-layout: fixed; }
-        th { background: #0066cc; color: white; font-size: 9px; padding: 4px 0; border: 1px solid #0052a3; }
+        th { background: #0066cc; color: white; font-size: 9px; padding: 6px 0; border: 1px solid #0052a3; position: sticky; top: 0; z-index: 5; }
         td { border: 1px solid #ddd; padding: 2px; text-align: center; font-size: 11px; }
-        .subject-name { position: sticky; left: 0; background: #f9fbfd; font-weight: 900; text-align: left; border-right: 2px solid #0066cc; padding-left: 5px; }
+        .subject-name { position: sticky; left: 0; background: #f9fbfd; font-weight: 900; text-align: left; border-right: 2.3px solid #0066cc; padding-left: 8px; z-index: 2; }
 
-        .marks-input { width: 90%; border: 1px solid #ccc; text-align: center; font-weight: 900; padding: 2px 0; border-radius: 3px; }
+        .marks-input { width: 85%; border: 1px solid #bbb; text-align: center; font-weight: 900; padding: 4px 0; border-radius: 4px; font-size: 13px; }
 
-        /* --- DASHBOARD --- */
-        .dash { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; padding: 6px; background: #fff; border-top: 1px solid #ddd; }
-        .stat { text-align: center; border: 1px solid #eee; padding: 4px; border-radius: 6px; }
-        .stat label { font-size: 0.55rem; color: #666; display: block; }
-        .stat b { font-size: 0.85rem; }
+        /* --- DASHBOARD & ACTIONS --- */
+        .dash { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 6px; padding: 6px; background: #f4f7f6; border-top: 1.5px solid #ddd; }
+        .stat { background: white; text-align: center; border: 1px solid #ddd; padding: 5px; border-radius: 6px; }
+        .stat label { font-size: 0.55rem; font-weight: bold; color: #0066cc; display: block; text-transform: uppercase; }
+        .stat b { font-size: 0.9rem; font-weight: 900; }
 
-        .bottom-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 6px; background: #fff; }
-        .action-btn { padding: 8px 0; border: none; color: white; border-radius: 4px; font-size: 0.6rem; font-weight: bold; }
-
-        /* --- PRINT STYLES --- */
-        @media print {
-            body, html { overflow: visible; position: static; height: auto; background: white; }
-            .page { display: block !important; height: auto !important; }
-            #page-info { background: white !important; padding: 0; }
-            .info-card { box-shadow: none; border: 1pt solid #000; width: 100%; margin-bottom: 20px; }
-            .top-nav, .bottom-actions, .btn-main { display: none !important; }
-            .table-container { overflow: visible; }
-            table { min-width: 100%; width: 100%; }
-            /* No page-break-after here as requested */
-        }
+        .bottom-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; padding: 8px; background: #fff; }
+        .action-btn { padding: 12px 0; border: none; color: white; border-radius: 6px; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; }
 
         .text-red { color: #dc3545 !important; text-decoration: underline; }
         .text-green { color: #28a745 !important; }
@@ -89,53 +68,53 @@
 
     <div id="page-info" class="page active">
         <div class="info-card">
-            <h2>Student Progress Report</h2>
+            <h2>Student Report</h2>
             <div class="input-box">
-                <label>Full Name</label>
-                <input type="text" id="stu-name" oninput="autoSave()">
+                <label>Student Name</label>
+                <input type="text" id="stu-name" placeholder="Full Name" oninput="autoSave()">
             </div>
             <div style="display: flex; gap: 10px;">
                 <div class="input-box" style="flex:1">
                     <label>Roll No</label>
-                    <input type="number" id="stu-roll" oninput="autoSave()">
+                    <input type="number" id="stu-roll" placeholder="00" oninput="autoSave()">
                 </div>
                 <div class="input-box" style="flex:1">
                     <label>Class</label>
-                    <input type="text" id="stu-class" oninput="autoSave()">
+                    <input type="text" id="stu-class" placeholder="VI" oninput="autoSave()">
                 </div>
             </div>
-            <button class="btn-main" onclick="goToGrading()">START GRADING →</button>
+            <button class="btn-start" onclick="goToGrading()">START GRADING →</button>
         </div>
     </div>
 
     <div id="page-grading" class="page">
         <div class="top-nav">
-            <button onclick="goToInfo()" style="border:none; background:#666; color:white; padding:5px 10px; border-radius:4px; font-size:0.6rem;">← BACK</button>
+            <button onclick="goToInfo()" style="border:none; background:#666; color:white; padding:6px 12px; border-radius:6px; font-size:0.65rem; font-weight:bold;">← BACK</button>
             <div class="mode-toggle">
                 <button id="m-pms" class="m-btn active" onclick="switchMode('PMS')">PMS</button>
                 <button id="m-pre" class="m-btn" onclick="switchMode('PRE')">PRE</button>
             </div>
-            <button onclick="calculateAll()" style="border:none; background:#28a745; color:white; padding:5px 10px; border-radius:4px; font-size:0.6rem; font-weight:bold;">CALC</button>
+            <button onclick="calculateAll()" style="border:none; background:#28a745; color:white; padding:6px 12px; border-radius:6px; font-size:0.65rem; font-weight:bold;">CALC</button>
         </div>
 
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th rowspan="2" style="width:120px; position:sticky; left:0; z-index:10;">SUBJECTS</th>
+                        <th rowspan="2" style="width:130px; position:sticky; left:0; z-index:10;">SUBJECTS</th>
                         <th colspan="5">Assessments</th>
                         <th colspan="4" style="background:#004c99">Final Weightage</th>
                     </tr>
                     <tr>
                         <th>U1</th><th>QT</th><th>U2</th><th>HY</th><th>U3</th>
-                        <th style="background:#004c99">M 25%</th>
+                        <th style="background:#004c99">Mon 25%</th>
                         <th style="background:#004c99">QH 25%</th>
-                        <th style="background:#004c99">A 50%</th>
+                        <th style="background:#004c99">Ann 50%</th>
                         <th style="background:#004c99">Total</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
-                <tfoot style="background:#e6f2ff; font-weight:bold;">
+                <tfoot style="background:#cbdff2; font-weight:900;">
                     <tr>
                         <td class="subject-name">Grand Total</td>
                         <td id="gt-0">0</td><td id="gt-1">0</td><td id="gt-2">0</td><td id="gt-3">0</td><td id="gt-4">0</td>
@@ -147,15 +126,15 @@
 
         <div class="dash">
             <div class="stat"><label>Status</label><b id="dash-status">AWAITED</b></div>
-            <div class="stat" style="border: 1px solid #0066cc;"><label>Percentage</label><b id="dash-pct">--%</b></div>
-            <div class="stat"><label>Failed</label><b id="dash-fails" style="font-size:0.6rem; color:red;">NONE</b></div>
+            <div class="stat" style="border: 1.5px solid #0066cc;"><label>Percentage</label><b id="dash-pct">--%</b></div>
+            <div class="stat"><label>Result</label><b id="dash-res">--</b></div>
         </div>
 
         <div class="bottom-actions">
-            <button class="action-btn" style="background:#0066cc" onclick="downloadBackup()">BACKUP</button>
-            <button class="action-btn" style="background:#6f42c1" onclick="document.getElementById('file-loader').click()">LOAD</button>
+            <button class="action-btn" style="background:#0066cc" onclick="downloadBackup()">Backup</button>
+            <button class="action-btn" style="background:#6f42c1" onclick="document.getElementById('file-loader').click()">Load</button>
             <button class="action-btn" style="background:#28a745" onclick="printReport()">PDF</button>
-            <button class="action-btn" style="background:#dc3545" onclick="clearAllData()">WIPE</button>
+            <button class="action-btn" style="background:#dc3545" onclick="clearAllData()">Wipe</button>
         </div>
     </div>
 
@@ -165,15 +144,17 @@
     const subjectsPMS = [
         { name: 'English', max: 100 }, { name: 'Mathematics', max: 100 },
         { name: 'Science', max: 100 }, { name: 'Social Study', max: 100 },
-        { name: 'Hindi/Bengali', max: 100 }, { name: 'Computer', max: 100 }
+        { name: 'Hindi/Bengali', max: 100 }, { name: 'Computer', max: 100 },
+        { name: 'G.K.', max: 100 }, { name: 'Moral Sci.', max: 100 }
     ];
 
     let currentMode = 'PMS';
 
+    // NAVIGATION LOGIC
     function goToGrading() { 
         document.getElementById('page-info').classList.remove('active');
         document.getElementById('page-grading').classList.add('active');
-        renderTable();
+        renderTable(); 
     }
 
     function goToInfo() {
@@ -183,7 +164,8 @@
 
     function renderTable() {
         const body = document.getElementById('tableBody');
-        body.innerHTML = '';
+        if (body.innerHTML !== '') return; // Prevent re-rendering and losing focus
+
         subjectsPMS.forEach((subj, sIdx) => {
             let row = body.insertRow();
             let nameCell = row.insertCell();
@@ -193,32 +175,35 @@
             for (let i = 0; i < 5; i++) {
                 let cell = row.insertCell();
                 let input = document.createElement('input');
-                input.type = 'number'; input.className = 'marks-input';
+                input.type = 'number'; 
+                input.className = 'marks-input';
                 input.id = `in-${sIdx}-${i}`;
+                // EXCLUDE DECIMALS
+                input.onkeydown = (e) => { if(e.key === '.') e.preventDefault(); };
                 input.oninput = autoSave;
                 cell.appendChild(input);
             }
-            // Weightage Cells
             row.insertCell().id = `m25-${sIdx}`;
             row.insertCell().id = `qh25-${sIdx}`;
             row.insertCell().id = `a50-${sIdx}`;
             row.insertCell().id = `tot-${sIdx}`;
         });
-        loadMarks();
+        loadCache();
     }
 
     function calculateAll() {
         let grandTotal = 0;
         let failCount = 0;
-        let subjectsCount = subjectsPMS.length;
 
         subjectsPMS.forEach((subj, sIdx) => {
-            const getV = (i) => parseFloat(document.getElementById(`in-${sIdx}-${i}`).value) || 0;
+            const getV = (i) => {
+                let v = document.getElementById(`in-${sIdx}-${i}`).value;
+                return v === '' ? 0 : parseInt(v);
+            };
             
-            // Weightage Logic (Your original logic)
             let m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / subj.max) * 25);
             let qh25 = Math.round(((getV(1) + getV(3)) / 2 / subj.max) * 25);
-            let a50 = 0; // Assuming Annual is column 5 if you added it, for now using 0
+            let a50 = 0; // Space for Annual exam 50% weightage
 
             let total = m25 + qh25 + a50;
             
@@ -226,7 +211,7 @@
             document.getElementById(`qh25-${sIdx}`).innerText = qh25;
             document.getElementById(`tot-${sIdx}`).innerText = total;
 
-            if(total < 40) {
+            if(total < 40 && total > 0) {
                 document.getElementById(`tot-${sIdx}`).classList.add('text-red');
                 failCount++;
             } else {
@@ -236,10 +221,10 @@
         });
 
         document.getElementById('gt-total').innerText = grandTotal;
-        let pct = (grandTotal / (subjectsCount * 100)) * 100;
+        let pct = (grandTotal / (subjectsPMS.length * 100)) * 100;
         document.getElementById('dash-pct').innerText = pct.toFixed(1) + '%';
-        document.getElementById('dash-status').innerText = (failCount > 2) ? "FAILED" : "PROMOTED";
-        document.getElementById('dash-status').className = (failCount > 2) ? "text-red" : "text-green";
+        document.getElementById('dash-status').innerText = (failCount > 0) ? "FAIL" : "PASS";
+        document.getElementById('dash-status').className = (failCount > 0) ? "text-red" : "text-green";
     }
 
     function autoSave() {
@@ -252,11 +237,11 @@
         document.querySelectorAll('.marks-input').forEach(inp => {
             data.marks.push({ id: inp.id, val: inp.value });
         });
-        localStorage.setItem('report_cache', JSON.stringify(data));
+        localStorage.setItem('marks_data_v2', JSON.stringify(data));
     }
 
-    function loadMarks() {
-        const saved = localStorage.getItem('report_cache');
+    function loadCache() {
+        const saved = localStorage.getItem('marks_data_v2');
         if (!saved) return;
         const data = JSON.parse(saved);
         document.getElementById('stu-name').value = data.name || '';
@@ -266,6 +251,7 @@
             const inp = document.getElementById(m.id);
             if (inp) inp.value = m.val;
         });
+        calculateAll();
     }
 
     function printReport() {
@@ -273,9 +259,10 @@
         else window.print();
     }
 
-    function clearAllData() { if(confirm("Clear everything?")) { localStorage.clear(); location.reload(); } }
+    function clearAllData() { if(confirm("Wipe all data?")) { localStorage.clear(); location.reload(); } }
 
-    window.onload = renderTable;
+    // Init table if data exists on refresh
+    window.onload = () => { if(localStorage.getItem('marks_data_v2')) goToGrading(); };
 </script>
 </body>
 </html>

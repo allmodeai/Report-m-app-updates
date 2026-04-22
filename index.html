@@ -38,30 +38,11 @@
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 4px; }
         .header-section { padding: 6px; flex-shrink: 0; border-bottom: 1px solid #eee; }
         
-        .top-row { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 6px; 
-            padding: 0 4px;
-        }
-        
-        .btn-menu { 
-            background: #004c99; color: white; border: none; 
-            padding: 8px 12px; border-radius: 6px; 
-            font-size: 0.7rem; font-weight: 900; 
-            text-transform: uppercase;
-            min-width: 70px;
-        }
-
-        .grading-title { 
-            font-weight: 900; color: #0066cc; font-size: 0.8rem; 
-            text-transform: uppercase; text-align: center;
-        }
-
-        /* 1. ENLARGED MODE TOGGLE */
+        .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; padding: 0 4px; }
+        .btn-menu { background: #004c99; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; min-width: 70px; }
+        .grading-title { font-weight: 900; color: #0066cc; font-size: 0.8rem; text-transform: uppercase; text-align: center; }
         .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 3px; min-width: 85px; justify-content: center; border: 1px solid #e68a00; }
-        .header-toggle-btn { padding: 5px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.65rem; text-transform: uppercase; border-radius: 15px; transition: 0.2s; }
+        .header-toggle-btn { padding: 5px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.65rem; text-transform: uppercase; border-radius: 15px; }
         .header-toggle-btn.active { background: #28a745; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
         .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 6px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
@@ -79,7 +60,6 @@
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12px; white-space: nowrap; width: 120px; overflow: hidden; text-overflow: ellipsis; }
         .marks-input { width: 45px; height: 24px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; }
 
-        /* 2. ENLARGED GRAND TOTAL ROW */
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2.5px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
         .footer-row td { height: 32px; font-size: 13px; color: #000; }
 
@@ -90,17 +70,18 @@
         
         .print-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-weight: 800; border: 1px solid #ccc; }
 
+        /* UPDATED BUTTON COLORS */
         .bottom-section { flex-shrink: 0; padding: 8px 6px 15px 6px; background: #fff; }
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
         .btn { padding: 12px 2px; border: none; border-radius: 6px; font-weight: 900; font-size: 0.65rem; color: white; text-transform: uppercase; cursor: pointer; }
+        
+        .btn-save { background: #28a745 !important; }
+        .btn-load { background: #0066cc !important; }
+        .btn-pdf { background: #6f42c1 !important; }
+        .btn-erase { background: #dc3545 !important; }
 
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
-        .bottom-sheet { 
-            position: fixed; bottom: 0; left: 0; width: 100%; background: white; 
-            border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; 
-            z-index: 1001; padding: 15px 15px calc(15px + env(safe-area-inset-bottom)) 15px; 
-            box-sizing: border-box; max-height: 80vh; overflow-y: auto;
-        }
+        .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; z-index: 1001; padding: 15px 15px calc(15px + env(safe-area-inset-bottom)) 15px; box-sizing: border-box; max-height: 80vh; overflow-y: auto; }
         .bottom-sheet.active { transform: translateY(0); }
         .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
 
@@ -108,10 +89,7 @@
         .text-green { color: #28a745 !important; }
         .underline { text-decoration: underline; }
 
-        @media print {
-            #page-title, .bottom-section, .top-row { display: none !important; }
-            .page { display: block !important; height: auto !important; position: static !important; }
-        }
+        @media print { #page-title, .bottom-section, .top-row { display: none !important; } .page { display: block !important; height: auto !important; position: static !important; } }
     </style>
 </head>
 <body>
@@ -122,10 +100,7 @@
         <div class="launch-card">
             <h1>Report Maker</h1>
             <button class="title-btn btn-go" onclick="showPage('page-grading')">Start Grading</button>
-            <button class="title-btn btn-up" onclick="checkForUpdates()">
-                Update App <br>
-                <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span>
-            </button>
+            <button class="title-btn btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
         </div>
     </div>
 
@@ -144,16 +119,8 @@
                 <div class="student-info">
                     <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
                     <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" oninput="autoSave()"></div>
-                    <div class="info-field">
-                        <label>Class</label>
-                        <div id="stu-class-trigger" class="select-trigger" onclick="openSheet('Select Class', classOptions, 'stu-class-val')">-</div>
-                        <input type="hidden" id="stu-class-val">
-                    </div>
-                    <div class="info-field">
-                        <label>Section</label>
-                        <div id="stu-sec-trigger" class="select-trigger" onclick="openSheet('Select Section', ['A', 'B', 'C'], 'stu-sec-val')">-</div>
-                        <input type="hidden" id="stu-sec-val">
-                    </div>
+                    <div class="info-field"><label>Class</label><div id="stu-class-trigger" class="select-trigger" onclick="openSheet('Select Class', classOptions, 'stu-class-val')">-</div><input type="hidden" id="stu-class-val"></div>
+                    <div class="info-field"><label>Section</label><div id="stu-sec-trigger" class="select-trigger" onclick="openSheet('Select Section', ['A', 'B', 'C'], 'stu-sec-val')">-</div><input type="hidden" id="stu-sec-val"></div>
                 </div>
             </div>
 
@@ -186,29 +153,17 @@
             </div>
 
             <div class="dashboard-section">
-                <div class="stat-box">
-                    <span class="stat-label">Failed Subjects</span>
-                    <div class="stat-value" id="dash-fails" style="font-size:0.55rem">NONE</div>
-                </div>
-                <div class="stat-box" style="border: 1.5px solid #0066cc; background: #f9fbfd;">
-                    <span class="stat-label">Result Status</span>
-                    <div class="stat-value" id="dash-status">AWAITED</div>
-                </div>
-                <div class="stat-box" style="align-items: center;">
-                    <span class="stat-label">Percentage</span>
-                    <div id="dash-pct">--%</div>
-                    <hr style="width: 80%; margin: 2px 0; border: 0; border-top: 1px solid #ddd;">
-                    <span class="stat-label">Division</span>
-                    <div id="dash-div">--</div>
-                </div>
+                <div class="stat-box"><span class="stat-label">Failed Subjects</span><div class="stat-value" id="dash-fails" style="font-size:0.55rem">NONE</div></div>
+                <div class="stat-box" style="border: 1.5px solid #0066cc; background: #f9fbfd;"><span class="stat-label">Result Status</span><div class="stat-value" id="dash-status">AWAITED</div></div>
+                <div class="stat-box" style="align-items: center;"><span class="stat-label">Percentage</span><div id="dash-pct">--%</div><hr style="width: 80%; margin: 2px 0; border: 0; border-top: 1px solid #ddd;"><span class="stat-label">Division</span><div id="dash-div">--</div></div>
             </div>
 
             <div class="bottom-section">
                 <div class="btn-group">
-                    <button class="btn" style="background:#0066cc" onclick="downloadBackup()">Save</button>
-                    <button class="btn" style="background:#6f42c1" onclick="document.getElementById('file-loader').click()">Load</button>
-                    <button class="btn" style="background:#28a745" onclick="printReport()">PDF</button>
-                    <button class="btn" style="background:#dc3545" onclick="clearAllData()">Erase</button>
+                    <button class="btn btn-save" onclick="downloadBackup()">Save</button>
+                    <button class="btn btn-load" onclick="document.getElementById('file-loader').click()">Load</button>
+                    <button class="btn btn-pdf" onclick="printReport()">PDF</button>
+                    <button class="btn btn-erase" onclick="clearAllData()">Erase</button>
                 </div>
             </div>
         </div>
@@ -227,6 +182,7 @@
     const classOptions = ['Nursery', 'LKG', 'UKG', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
     const validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
 
+    // RULE: ENG MAX 200 IN PMS, OTHERS 100
     const subjectsPMS = [
         { name: 'English', type: 'numeric', max: 200 },
         { name: 'TEL/Hindi', type: 'numeric', max: 100, exempt: true },
@@ -268,7 +224,6 @@
         activeSubjects.forEach((subj, sIdx) => {
             let row = tableBody.insertRow();
             let sCell = row.insertCell(); sCell.className = 'subject-name';
-
             if (subj.options) {
                 let trigger = document.createElement('div');
                 trigger.id = `subj-trigger-${sIdx}`;
@@ -287,7 +242,10 @@
                     input.className = 'marks-input'; input.id = inputId;
                     input.onkeydown = (e) => { if(e.key === '.') e.preventDefault(); };
                     input.oninput = function() {
+                        // RULE: "--" INPUT AS "Ab"
+                        if (this.value === '--') { this.value = 'Ab'; }
                         this.value = this.value.replace(/[^0-9Ab\-]/g, '');
+                        if(this.value !== 'Ab' && this.value !== '-' && this.value !== '' && parseFloat(this.value) > subj.max) this.value = '';
                         applyMarkStyling(this, subj.max); calculateAll(); autoSave();
                     };
                     cell.appendChild(input);
@@ -303,204 +261,55 @@
     }
 
     function calculateAll() {
-        let activeNumericCount = 0;
-        let failCount = 0;
-        let grandSum = 0;
-        let coreFails = [];
-        let langFails = [];
-        let dataCompleted = true;
+        let activeNumericCount = 0; let failCount = 0; let grandSum = 0; let coreFails = []; let langFails = []; let dataCompleted = true;
         const tableBody = document.getElementById('tableBody');
-
         activeSubjects.forEach((subj, sIdx) => {
             if (subj.type !== 'numeric') return;
             let subjName = subj.name;
             let hiddenInp = document.getElementById(`subj-val-${sIdx}`);
             if(hiddenInp) subjName = hiddenInp.value;
-            
             const row = tableBody.rows[sIdx];
-            if (subjName === 'N/A') {
-                for(let i=7; i<=10; i++) row.cells[i].innerText = '-';
-                return;
-            }
-
+            if (subjName === 'N/A') { for(let i=7; i<=10; i++) row.cells[i].innerText = '-'; return; }
             activeNumericCount++;
-            const getV = (i) => { 
-                let val = document.getElementById(`in-${sIdx}-${i}`).value; 
-                return (val === 'Ab' || val === '-' || val === '') ? 0 : parseFloat(val); 
-            };
-
+            const getV = (i) => { let val = document.getElementById(`in-${sIdx}-${i}`).value; return (val === 'Ab' || val === '-' || val === '') ? 0 : parseFloat(val); };
             const m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / subj.max) * 25);
             const q25 = Math.round(((getV(1) + getV(3)) / 2 / subj.max) * 25);
             const a50 = Math.round((getV(5) / subj.max) * 50);
             const total = m25 + q25 + a50;
-
             row.cells[7].innerText = m25; row.cells[8].innerText = q25; row.cells[9].innerText = a50; row.cells[10].innerText = total;
-
             row.cells[10].classList.remove('text-red', 'underline');
             if (total < 40) row.cells[10].classList.add('text-red', 'underline');
-
-            let rowFilled = true;
-            for(let i=0; i<=5; i++) if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
-
-            if(rowFilled) {
-                if(total < 40) {
-                    let color = (subjName.includes('Hindi') || subjName.includes('Bengali')) ? 'text-green' : 'text-danger';
-                    if(subj.exempt) langFails.push({ name: subjName, color: color });
-                    else { coreFails.push({ name: subjName, color: color }); failCount++; }
-                }
-            } else { dataCompleted = false; }
+            let rowFilled = true; for(let i=0; i<=5; i++) if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
+            if(rowFilled) { if(total < 40) { let color = (subjName.includes('Hindi') || subjName.includes('Bengali')) ? 'text-green' : 'text-danger'; if(subj.exempt) langFails.push({ name: subjName, color: color }); else { coreFails.push({ name: subjName, color: color }); failCount++; } } } else { dataCompleted = false; }
             grandSum += total;
         });
-
-        for (let i = 0; i < 6; i++) {
-            let sum = 0;
-            activeSubjects.forEach((s, sIdx) => {
-                if(s.type === 'numeric') {
-                    let v = document.getElementById(`in-${sIdx}-${i}`).value;
-                    sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v);
-                }
-            });
-            document.getElementById(`gt-${i}`).innerText = sum;
-        }
-
+        for (let i = 0; i < 6; i++) { let sum = 0; activeSubjects.forEach((s, sIdx) => { if(s.type === 'numeric') { let v = document.getElementById(`in-${sIdx}-${i}`).value; sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); } }); document.getElementById(`gt-${i}`).innerText = sum; }
         document.getElementById('gt-total').innerText = grandSum;
         const avg = activeNumericCount > 0 ? (grandSum / activeNumericCount) : 0;
         updateDashboard(avg, coreFails.concat(langFails), failCount, dataCompleted);
     }
 
     function updateDashboard(avg, failedList, coreFailCount, complete) {
-        const statusEl = document.getElementById('dash-status');
-        const pctEl = document.getElementById('dash-pct');
-        const divEl = document.getElementById('dash-div');
+        const statusEl = document.getElementById('dash-status'); const pctEl = document.getElementById('dash-pct'); const divEl = document.getElementById('dash-div');
         const pill = (txt, bg, clr, brd) => `<div class="print-badge" style="background:${bg}; color:${clr}; border-color:${brd}">${txt}</div>`;
-
-        if (!complete) {
-            statusEl.innerText = "AWAITED"; statusEl.className = "stat-value";
-            pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--";
-        } else {
-            let isFailed = (avg < 40 || coreFailCount >= 3);
-            let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3");
-            pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr);
-            if (isFailed) {
-                statusEl.innerText = "FAILED"; statusEl.className = "stat-value text-danger"; divEl.innerText = "--";
-            } else {
-                statusEl.innerText = "PROMOTED"; statusEl.className = "stat-value text-green";
-                divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd");
-            }
-        }
+        if (!complete) { statusEl.innerText = "AWAITED"; statusEl.className = "stat-value"; pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--"; }
+        else { let isFailed = (avg < 40 || coreFailCount >= 3); let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3"); pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr); if (isFailed) { statusEl.innerText = "FAILED"; statusEl.className = "stat-value text-danger"; divEl.innerText = "--"; } else { statusEl.innerText = "PROMOTED"; statusEl.className = "stat-value text-green"; divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd"); } }
         renderFails(failedList);
     }
 
-    function renderFails(list) {
-        const el = document.getElementById('dash-fails'); el.innerHTML = '';
-        if(list.length === 0) { el.innerText = "NONE"; return; }
-        list.forEach(item => {
-            let b = document.createElement('span'); b.className = 'print-badge'; b.style.fontSize = '0.55rem'; b.style.margin = '1px';
-            b.style.color = item.color === 'text-green' ? '#28a745' : '#dc3545';
-            b.innerText = item.name; el.appendChild(b);
-        });
-    }
-
-    function applyMarkStyling(input, max) {
-        input.classList.remove('text-red', 'underline');
-        if (input.value !== '' && !isNaN(input.value)) {
-            if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red', 'underline');
-        }
-    }
-
-    function openSheet(title, options, targetId) {
-        document.getElementById('sheet-title').innerText = title;
-        const container = document.getElementById('options-container'); container.innerHTML = '';
-        options.forEach(opt => {
-            const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt;
-            btn.onclick = () => { 
-                let input = document.getElementById(targetId);
-                if(input) input.value = opt;
-                let trig = document.getElementById(targetId.replace('-val', '-trigger'));
-                if(trig) trig.innerText = opt;
-                closeSheet(); calculateAll(); autoSave(); 
-            };
-            container.appendChild(btn);
-        });
-        document.getElementById('overlay').style.display = 'block';
-        document.getElementById('sheet').classList.add('active');
-    }
-
+    function renderFails(list) { const el = document.getElementById('dash-fails'); el.innerHTML = ''; if(list.length === 0) { el.innerText = "NONE"; return; } list.forEach(item => { let b = document.createElement('span'); b.className = 'print-badge'; b.style.fontSize = '0.55rem'; b.style.margin = '1px'; b.style.color = item.color === 'text-green' ? '#28a745' : '#dc3545'; b.innerText = item.name; el.appendChild(b); }); }
+    function applyMarkStyling(input, max) { input.classList.remove('text-red', 'underline'); if (input.value !== '' && !isNaN(input.value)) { if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red', 'underline'); } }
+    function openSheet(title, options, targetId) { document.getElementById('sheet-title').innerText = title; const container = document.getElementById('options-container'); container.innerHTML = ''; options.forEach(opt => { const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt; btn.onclick = () => { let input = document.getElementById(targetId); if(input) input.value = opt; let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt; closeSheet(); calculateAll(); autoSave(); }; container.appendChild(btn); }); document.getElementById('overlay').style.display = 'block'; document.getElementById('sheet').classList.add('active'); }
     function closeSheet() { document.getElementById('sheet').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; }
-
-    function switchMode(m) { 
-        if (currentMode === m) return;
-        if (!confirm("Switching modes will clear current data. Continue?")) return;
-        currentMode = m; 
-        document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
-        document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); 
-        resetLocalInputs();
-        renderTable(); 
-        calculateAll();
-        autoSave();
-    }
-
-    function resetLocalInputs() {
-        localStorage.removeItem('marksCache');
-        document.querySelectorAll('input').forEach(inp => { if(inp.type !== 'hidden') inp.value = ''; });
-        document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-');
-    }
-
-    function autoSave() {
-        const data = {
-            mode: currentMode,
-            student: { 
-                name: document.getElementById('stu-name').value, 
-                roll: document.getElementById('stu-roll').value, 
-                class: document.getElementById('stu-class-val').value, 
-                sec: document.getElementById('stu-sec-val').value 
-            },
-            marks: []
-        };
-        document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value}));
-        localStorage.setItem('marksCache', JSON.stringify(data));
-    }
-
-    function loadCache() {
-        const saved = localStorage.getItem('marksCache'); if(!saved) return;
-        const data = JSON.parse(saved);
-        currentMode = data.mode || 'PMS';
-        document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
-        document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); 
-        document.getElementById('stu-name').value = data.student.name || '';
-        document.getElementById('stu-roll').value = data.student.roll || '';
-        document.getElementById('stu-class-val').value = data.student.class || '';
-        document.getElementById('stu-class-trigger').innerText = data.student.class || '-';
-        document.getElementById('stu-sec-val').value = data.student.sec || '';
-        document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-';
-        data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; });
-        calculateAll();
-    }
-
-    function downloadBackup() {
-        const data = localStorage.getItem('marksCache');
-        if(!data) { alert("No data to save!"); return; }
-        const name = document.getElementById('stu-name').value || "Report";
-        if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`);
-    }
-
-    function importData(event) {
-        const reader = new FileReader();
-        reader.onload = (e) => { localStorage.setItem('marksCache', e.target.result); loadCache(); };
-        reader.readAsText(event.target.files[0]);
-    }
-
-    function clearAllData() { 
-        if(confirm("Erase all data?")) { 
-            resetLocalInputs();
-            renderTable();
-            calculateAll();
-        } 
-    }
-
+    function switchMode(m) { if (currentMode === m) return; if (!confirm("Switching modes will clear current data. Continue?")) return; currentMode = m; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); resetLocalInputs(); renderTable(); calculateAll(); autoSave(); }
+    function resetLocalInputs() { localStorage.removeItem('marksCache'); document.querySelectorAll('input').forEach(inp => { if(inp.type !== 'hidden') inp.value = ''; }); document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-'); }
+    function autoSave() { const data = { mode: currentMode, student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value }, marks: [] }; document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value})); localStorage.setItem('marksCache', JSON.stringify(data)); }
+    function loadCache() { const saved = localStorage.getItem('marksCache'); if(!saved) return; const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); document.getElementById('stu-name').value = data.student.name || ''; document.getElementById('stu-roll').value = data.student.roll || ''; document.getElementById('stu-class-val').value = data.student.class || ''; document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; document.getElementById('stu-sec-val').value = data.student.sec || ''; document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); calculateAll(); }
+    function downloadBackup() { const data = localStorage.getItem('marksCache'); if(!data) { alert("No data to save!"); return; } const name = document.getElementById('stu-name').value || "Report"; if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`); }
+    function importData(event) { const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('marksCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
+    function clearAllData() { if(confirm("Erase all data?")) { resetLocalInputs(); renderTable(); calculateAll(); } }
     function printReport() { if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF(); else window.print(); }
     function checkForUpdates() { if (typeof AndroidBridge !== "undefined") AndroidBridge.forceUpdate(); else alert("Update via App."); }
-
     window.onload = () => { if(localStorage.getItem('marksCache')) showPage('page-grading'); };
 </script>
 </body>

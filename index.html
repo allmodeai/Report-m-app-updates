@@ -18,7 +18,7 @@
         .app-wrapper { 
             display: flex; flex-direction: column; height: 100%; width: 100%; 
             padding-top: env(safe-area-inset-top, 5px);
-            padding-bottom: env(safe-area-inset-bottom, 15px);
+            padding-bottom: env(safe-area-inset-bottom, 10px);
             box-sizing: border-box; 
         }
 
@@ -35,53 +35,45 @@
         .btn-up { background-color: #ff9800; color: white; }
 
         /* --- GRADING PAGE --- */
-        .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 4px; }
-        .header-section { padding: 6px; flex-shrink: 0; border-bottom: 1px solid #eee; }
+        .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 2px; }
+        .header-section { padding: 4px; flex-shrink: 0; border-bottom: 1px solid #eee; }
         
-        .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; padding: 0 4px; }
-        .btn-menu { background: #004c99; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; min-width: 70px; }
-        .grading-title { font-weight: 900; color: #0066cc; font-size: 0.8rem; text-transform: uppercase; text-align: center; }
-        .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 3px; min-width: 85px; justify-content: center; border: 1px solid #e68a00; }
-        .header-toggle-btn { padding: 5px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.65rem; text-transform: uppercase; border-radius: 15px; }
-        .header-toggle-btn.active { background: #28a745; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 0 4px; }
+        .btn-menu { background: #004c99; color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; }
+        .grading-title { font-weight: 900; color: #0066cc; font-size: 0.75rem; text-transform: uppercase; }
+        .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 2px; border: 1px solid #e68a00; }
+        .header-toggle-btn { padding: 4px 10px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.6rem; text-transform: uppercase; border-radius: 15px; }
+        .header-toggle-btn.active { background: #28a745; color: white; }
 
-        /* IMPROVED LABELS */
-        .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 6px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
+        .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 4px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
-        .info-field label { font-size: 0.65rem; font-weight: 900; color: #0066cc; text-transform: uppercase; margin-bottom: 1px; }
-        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.95rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 20px; display: flex; align-items: center; }
+        .info-field label { font-size: 0.6rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
+        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.85rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 18px; display: flex; align-items: center; }
 
-        .table-container { flex: 1; padding: 2px 6px; overflow: hidden; display: flex; flex-direction: column; }
-        .table-wrap { width: 100%; height: 100%; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; }
+        /* 2. NO-SCROLL TABLE AREA */
+        .table-container { flex: 1; padding: 0 4px; overflow: hidden; display: flex; flex-direction: column; }
+        .table-wrap { width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; border: 1.5px solid #0066cc; border-radius: 4px; }
 
         table { border-collapse: collapse; min-width: 850px; width: 100%; table-layout: fixed; }
-        th { background: #0066cc; color: white; padding: 4px 2px; border: 1px solid #0052a3; font-size: 9px; }
-        td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
+        th { background: #0066cc; color: white; padding: 2px; border: 1px solid #0052a3; font-size: 8px; }
+        td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 10px; vertical-align: middle; }
 
-        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12px; white-space: nowrap; width: 120px; overflow: hidden; text-overflow: ellipsis; }
-        
-        /* CENTERED MARKS & GRADES */
-        .marks-input { 
-            width: 45px; height: 26px; border: 1px solid #bbb; border-radius: 4px; 
-            text-align: center; font-size: 12px; font-weight: 900; outline: none; 
-            margin: 0 auto; display: flex; align-items: center; justify-content: center;
-        }
+        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 1px 4px; font-size: 11px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
+        .marks-input { width: 40px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
 
-        .footer-row { background: #cbdff2; font-weight: 900; border-top: 2.5px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
-        .footer-row td { height: 32px; font-size: 13px; color: #000; }
+        .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
+        .footer-row td { height: 26px; font-size: 11px; color: #000; }
 
-        /* RE-SIZED DASHBOARD */
-        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; padding: 4px 6px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
-        .stat-box { background: white; padding: 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 52px; overflow: hidden; }
-        .stat-label { font-size: 0.58rem; font-weight: 900; color: #0066cc; text-transform: uppercase; line-height: 1; margin-bottom: 2px; }
-        .stat-value { font-size: 0.85rem; font-weight: 900; width: 100%; }
-        
-        /* SMALL PILLS */
-        .print-badge { display: inline-block; padding: 2px 6px; border-radius: 8px; font-weight: 800; border: 1px solid rgba(0,0,0,0.1); font-size: 0.52rem; margin: 1px; }
+        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; padding: 2px 4px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
+        .stat-box { background: white; padding: 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 45px; overflow: hidden; }
+        .stat-label { font-size: 0.55rem; font-weight: 900; color: #0066cc; text-transform: uppercase; line-height: 1; }
+        .stat-value { font-size: 0.8rem; font-weight: 900; }
+        .print-badge { display: inline-block; padding: 1px 5px; border-radius: 6px; font-weight: 800; border: 1px solid rgba(0,0,0,0.1); font-size: 0.5rem; margin: 1px; }
 
-        .bottom-section { flex-shrink: 0; padding: 8px 6px 15px 6px; background: #fff; }
-        .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-        .btn { padding: 12px 2px; border: none; border-radius: 6px; font-weight: 900; font-size: 0.65rem; color: white; text-transform: uppercase; cursor: pointer; }
+        /* 1. REDUCED BOTTOM BUTTON SIZE */
+        .bottom-section { flex-shrink: 0; padding: 4px 4px 10px 4px; background: #fff; }
+        .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+        .btn { padding: 6px 2px; border: none; border-radius: 5px; font-weight: 900; font-size: 0.6rem; color: white; text-transform: uppercase; cursor: pointer; }
         
         .btn-save { background: #28a745 !important; }
         .btn-load { background: #0066cc !important; }
@@ -89,9 +81,9 @@
         .btn-erase { background: #dc3545 !important; }
 
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
-        .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; z-index: 1001; padding: 15px 15px calc(15px + env(safe-area-inset-bottom)) 15px; box-sizing: border-box; max-height: 80vh; overflow-y: auto; }
+        .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; z-index: 1001; padding: 15px; box-sizing: border-box; max-height: 80vh; overflow-y: auto; }
         .bottom-sheet.active { transform: translateY(0); }
-        .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
+        .opt-btn { padding: 12px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 0.9rem; text-align: center; margin-bottom: 6px; }
 
         .text-red { color: #dc3545 !important; }
         .text-green { color: #28a745 !important; }
@@ -126,11 +118,7 @@
 
                 <div class="student-info">
                     <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
-                    <div class="info-field">
-                        <label>Roll No</label>
-                        <div id="stu-roll-trigger" class="select-trigger" onclick="promptRoll()">-</div>
-                        <input type="hidden" id="stu-roll">
-                    </div>
+                    <div class="info-field"><label>Roll No</label><div id="stu-roll-trigger" class="select-trigger" onclick="promptRoll()">-</div><input type="hidden" id="stu-roll"></div>
                     <div class="info-field"><label>Class</label><div id="stu-class-trigger" class="select-trigger" onclick="openSheet('Select Class', classOptions, 'stu-class-val')">-</div><input type="hidden" id="stu-class-val"></div>
                     <div class="info-field"><label>Section</label><div id="stu-sec-trigger" class="select-trigger" onclick="openSheet('Select Section', ['A', 'B', 'C'], 'stu-sec-val')">-</div><input type="hidden" id="stu-sec-val"></div>
                 </div>
@@ -141,15 +129,15 @@
                     <table id="main-table">
                         <thead>
                         <tr>
-                            <th rowspan="2" style="width: 120px; position: sticky; left: 0; z-index: 10;">SUBJECTS</th>
+                            <th rowspan="2" style="width: 110px; position: sticky; left: 0; z-index: 10;">SUBJECTS</th>
                             <th colspan="5">Assessments</th>
                             <th colspan="5" style="background-color: #004c99">Final Weightage</th>
                         </tr>
                         <tr>
                             <th>U I</th><th>Qtr</th><th>U II</th><th>HY</th><th>U III</th>
                             <th style="background-color: #004c99">Ann 100</th>
-                            <th style="background-color: #004c99">Mon 25%</th>
-                            <th style="background-color: #004c99">Q/H 25%</th>
+                            <th style="background-color: #004c99">M 25%</th>
+                            <th style="background-color: #004c99">QH 25%</th>
                             <th style="background-color: #004c99">Ann 50%</th>
                             <th style="background-color: #004c99">Total</th>
                         </tr>
@@ -165,12 +153,9 @@
             </div>
 
             <div class="dashboard-section">
-                <div class="stat-box">
-                    <span class="stat-label">Failed Subjects</span>
-                    <div class="stat-value" id="dash-fails" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">NONE</div>
-                </div>
+                <div class="stat-box"><span class="stat-label">Failed Subjects</span><div class="stat-value" id="dash-fails" style="display: flex; flex-wrap: wrap; justify-content: center;">NONE</div></div>
                 <div class="stat-box" style="border: 1.5px solid #0066cc; background: #f9fbfd;"><span class="stat-label">Result Status</span><div class="stat-value" id="dash-status">AWAITED</div></div>
-                <div class="stat-box" style="align-items: center;"><span class="stat-label">Percentage</span><div id="dash-pct">--%</div><hr style="width: 80%; margin: 2px 0; border: 0; border-top: 1px solid #ddd;"><span class="stat-label">Division</span><div id="dash-div">--</div></div>
+                <div class="stat-box" style="align-items: center;"><span class="stat-label">Percentage</span><div id="dash-pct">--%</div><hr style="width: 80%; margin: 1px 0; border: 0; border-top: 1px solid #ddd;"><span class="stat-label">Division</span><div id="dash-div">--</div></div>
             </div>
 
             <div class="bottom-section">
@@ -187,8 +172,8 @@
 
 <div id="overlay" class="sheet-overlay" onclick="closeSheet()"></div>
 <div id="sheet" class="bottom-sheet">
-    <div id="sheet-title" style="font-weight: 900; margin-bottom: 12px; color: #0066cc; text-align: center; text-transform: uppercase; font-size: 0.8rem;">Select</div>
-    <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;"></div>
+    <div id="sheet-title" style="font-weight: 900; margin-bottom: 8px; color: #0066cc; text-align: center; text-transform: uppercase; font-size: 0.75rem;">Select</div>
+    <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;"></div>
 </div>
 
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">

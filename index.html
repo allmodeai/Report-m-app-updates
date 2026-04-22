@@ -38,22 +38,30 @@
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 4px; }
         .header-section { padding: 6px; flex-shrink: 0; border-bottom: 1px solid #eee; }
         
-        .top-row { display: grid; grid-template-columns: 80px 1fr 80px; align-items: center; margin-bottom: 6px; }
+        /* SYMMETRICAL TOP ROW */
+        .top-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 6px; 
+            padding: 0 4px;
+        }
         
-        /* UPDATED MENU BUTTON */
         .btn-menu { 
             background: #004c99; color: white; border: none; 
-            padding: 8px; border-radius: 6px; 
+            padding: 8px 12px; border-radius: 6px; 
             font-size: 0.7rem; font-weight: 900; 
             text-transform: uppercase;
+            min-width: 70px;
         }
 
-        /* CENTERED TITLE WRAP */
-        .header-title-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .grading-title { font-weight: 900; color: #0066cc; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 2px; }
+        .grading-title { 
+            font-weight: 900; color: #0066cc; font-size: 0.8rem; 
+            text-transform: uppercase; text-align: center;
+        }
 
-        .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 2px; }
-        .header-toggle-btn { padding: 3px 10px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.55rem; text-transform: uppercase; border-radius: 15px; }
+        .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 2px; min-width: 70px; justify-content: center; }
+        .header-toggle-btn { padding: 3px 8px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.55rem; text-transform: uppercase; border-radius: 15px; }
         .header-toggle-btn.active { background: #28a745; color: white; }
 
         .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 6px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
@@ -69,11 +77,9 @@
         td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12px; white-space: nowrap; width: 120px; overflow: hidden; text-overflow: ellipsis; }
-        
         .marks-input { width: 45px; height: 24px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; }
 
         .footer-row { background: #cbdff2; font-weight: bold; border-top: 2px solid #0066cc; position: sticky; bottom: 0; }
-        
         .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 6px; padding: 4px 6px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
         .stat-box { background: white; padding: 4px 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 48px; }
         .stat-label { font-size: 0.6rem; font-weight: bold; color: #0066cc; text-transform: uppercase; }
@@ -85,14 +91,12 @@
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
         .btn { padding: 12px 2px; border: none; border-radius: 6px; font-weight: 900; font-size: 0.65rem; color: white; text-transform: uppercase; cursor: pointer; }
 
-        /* --- BOTTOM SHEET SAFE AREA FIX --- */
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
         .bottom-sheet { 
             position: fixed; bottom: 0; left: 0; width: 100%; background: white; 
             border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; 
             z-index: 1001; padding: 15px 15px calc(15px + env(safe-area-inset-bottom)) 15px; 
-            box-sizing: border-box; 
-            max-height: 80vh; overflow-y: auto;
+            box-sizing: border-box; max-height: 80vh; overflow-y: auto;
         }
         .bottom-sheet.active { transform: translateY(0); }
         .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
@@ -104,7 +108,6 @@
         @media print {
             #page-title, .bottom-section, .top-row { display: none !important; }
             .page { display: block !important; height: auto !important; position: static !important; }
-            .container { border: none; box-shadow: none; }
         }
     </style>
 </head>
@@ -129,15 +132,13 @@
                 <div class="top-row">
                     <button class="btn-menu" onclick="showPage('page-title')">Menu</button>
                     
-                    <div class="header-title-wrap">
-                        <div class="grading-title">Grading Table</div>
-                        <div class="header-toggle">
-                            <button id="btn-pms" class="header-toggle-btn active" onclick="switchMode('PMS')">PMS</button>
-                            <button id="btn-pre" class="header-toggle-btn" onclick="switchMode('PRE')">Pre</button>
-                        </div>
-                    </div>
+                    <div class="grading-title">Grading Table</div>
                     
-                    <div style="width: 80px;"></div> </div>
+                    <div class="header-toggle">
+                        <button id="btn-pms" class="header-toggle-btn active" onclick="switchMode('PMS')">PMS</button>
+                        <button id="btn-pre" class="header-toggle-btn" onclick="switchMode('PRE')">Pre</button>
+                    </div>
+                </div>
 
                 <div class="student-info">
                     <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
@@ -186,7 +187,7 @@
             <div class="dashboard-section">
                 <div class="stat-box">
                     <span class="stat-label">Failed Subjects</span>
-                    <div class="stat-value" id="dash-fails" style="font-size:0.6rem">NONE</div>
+                    <div class="stat-value" id="dash-fails" style="font-size:0.55rem">NONE</div>
                 </div>
                 <div class="stat-box" style="border: 1.5px solid #0066cc; background: #f9fbfd;">
                     <span class="stat-label">Result Status</span>
@@ -313,10 +314,8 @@
         activeSubjects.forEach((subj, sIdx) => {
             if (subj.type !== 'numeric') return;
             let subjName = subj.name;
-            if (subj.options) {
-                let hiddenInp = document.getElementById(`subj-val-${sIdx}`);
-                if(hiddenInp) subjName = hiddenInp.value;
-            }
+            let hiddenInp = document.getElementById(`subj-val-${sIdx}`);
+            if(hiddenInp) subjName = hiddenInp.value;
             
             const row = tableBody.rows[sIdx];
             if (subjName === 'N/A') {
@@ -429,13 +428,29 @@
 
     function closeSheet() { document.getElementById('sheet').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; }
 
+    // --- UPDATED: DYNAMIC SWITCH MODE (NO RELOAD) ---
     function switchMode(m) { 
+        if (currentMode === m) return;
         if (!confirm("Switching modes will clear current data. Continue?")) return;
+        
         currentMode = m; 
         document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
         document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); 
-        localStorage.removeItem('marksCache'); // Clear cache on switch
-        location.reload(); 
+        
+        // Reset local data specifically
+        resetLocalInputs();
+        renderTable(); 
+        calculateAll();
+        autoSave();
+    }
+
+    function resetLocalInputs() {
+        localStorage.removeItem('marksCache');
+        // Clear student names too if necessary, or just marks
+        document.querySelectorAll('input').forEach(inp => {
+            if(inp.type !== 'hidden') inp.value = '';
+        });
+        document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-');
     }
 
     function autoSave() {
@@ -456,7 +471,10 @@
     function loadCache() {
         const saved = localStorage.getItem('marksCache'); if(!saved) return;
         const data = JSON.parse(saved);
-        if(data.mode && data.mode !== currentMode) return; // Prevent mismatch
+        
+        currentMode = data.mode || 'PMS';
+        document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
+        document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); 
 
         document.getElementById('stu-name').value = data.student.name || '';
         document.getElementById('stu-roll').value = data.student.roll || '';
@@ -474,18 +492,25 @@
         if(!data) { alert("No data to save!"); return; }
         const name = document.getElementById('stu-name').value || "Report";
         if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`);
-        else alert("Backup downloaded locally (Simulated).");
     }
 
     function importData(event) {
         const reader = new FileReader();
-        reader.onload = (e) => { localStorage.setItem('marksCache', e.target.result); location.reload(); };
+        reader.onload = (e) => { localStorage.setItem('marksCache', e.target.result); loadCache(); };
         reader.readAsText(event.target.files[0]);
     }
 
-    function clearAllData() { if(confirm("Erase all data?")) { localStorage.clear(); location.reload(); } }
-    function printReport() { if (window.AndroidBridge) AndroidBridge.printPDF(); else window.print(); }
-    function checkForUpdates() { if (window.AndroidBridge) AndroidBridge.forceUpdate(); else alert("Update via App."); }
+    // --- UPDATED: ERASE WITHOUT RELOAD ---
+    function clearAllData() { 
+        if(confirm("Erase all data?")) { 
+            resetLocalInputs();
+            renderTable();
+            calculateAll();
+        } 
+    }
+
+    function printReport() { if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF(); else window.print(); }
+    function checkForUpdates() { if (typeof AndroidBridge !== "undefined") AndroidBridge.forceUpdate(); else alert("Update via App."); }
 
     window.onload = () => { if(localStorage.getItem('marksCache')) showPage('page-grading'); };
 </script>

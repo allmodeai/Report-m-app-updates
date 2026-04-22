@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Report Maker</title>
     <style>
-        /* --- GLOBAL LAYOUT --- */
+        /* --- CORE APP LAYOUT --- */
         html, body {
             font-family: 'Segoe UI', system-ui, sans-serif;
             margin: 0; padding: 0;
@@ -14,36 +14,49 @@
             overflow: hidden; position: fixed;
         }
 
-        /* --- PAGE SWITCHING --- */
         .page { display: none; height: 100%; width: 100%; flex-direction: column; }
         .page.active { display: flex; }
 
-        /* --- SCREEN 1: TITLE PAGE --- */
-        #page-info { background: #0066cc; justify-content: center; align-items: center; }
-        .info-card { background: white; width: 88%; padding: 25px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); box-sizing: border-box; }
-        .info-card h2 { color: #0066cc; margin: 0 0 20px 0; text-align: center; font-weight: 900; text-transform: uppercase; font-size: 1.1rem; }
+        /* --- TITLE PAGE (3 BUTTONS) --- */
+        #page-info {
+            background: linear-gradient(135deg, #0066cc 0%, #004c99 100%);
+            justify-content: center; align-items: center;
+        }
+        .launch-card {
+            background: white; width: 85%; padding: 30px 20px;
+            border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            text-align: center; box-sizing: border-box;
+        }
+        .launch-card h1 { color: #0066cc; margin: 0 0 30px 0; font-weight: 900; text-transform: uppercase; font-size: 1.4rem; letter-spacing: 1px; }
+
+        .btn-stack { display: flex; flex-direction: column; gap: 12px; }
         
-        .input-box { margin-bottom: 15px; }
-        .input-box label { display: block; font-size: 0.6rem; font-weight: bold; color: #666; text-transform: uppercase; margin-bottom: 4px; }
-        .input-box input { 
-            width: 100%; padding: 12px; border: 1.5px solid #ddd; border-radius: 8px; 
-            box-sizing: border-box; font-weight: 900; font-size: 1rem; outline: none;
-        }
-        .input-box input:focus { border-color: #0066cc; }
-
         .btn-start {
-            width: 100%; padding: 15px; background: #28a745; color: white;
-            border: none; border-radius: 30px; font-weight: 900; cursor: pointer;
-            font-size: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            padding: 16px; background: #28a745; color: white;
+            border: none; border-radius: 12px; font-weight: 900; 
+            font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+        }
+        .btn-load {
+            padding: 14px; background: #6f42c1; color: white;
+            border: none; border-radius: 12px; font-weight: 900; 
+            font-size: 0.9rem; cursor: pointer;
+        }
+        .btn-update {
+            padding: 12px; background: #ff9800; color: white;
+            border: none; border-radius: 12px; font-weight: 900; 
+            font-size: 0.85rem; cursor: pointer; margin-top: 10px;
         }
 
-        /* --- SCREEN 2: GRADING TABLE --- */
-        .top-nav { background: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid #ddd; }
-        .mode-toggle { background: #eee; border-radius: 20px; padding: 2px; display: flex; border: 1px solid #ccc; }
-        .m-btn { padding: 5px 15px; border: none; background: transparent; font-size: 0.7rem; font-weight: 900; border-radius: 15px; cursor: pointer; }
-        .m-btn.active { background: #0066cc; color: white; }
+        /* --- GRADING PAGE --- */
+        .top-nav { background: #fff; padding: 6px 10px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid #ddd; }
+        
+        .student-header { padding: 8px; background: #fff; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 6px; border-bottom: 1px solid #eee; }
+        .head-box { display: flex; flex-direction: column; }
+        .head-box label { font-size: 0.5rem; font-weight: bold; color: #0066cc; text-transform: uppercase; }
+        .head-box input { border: none; border-bottom: 1.5px solid #eee; font-weight: 900; font-size: 0.9rem; padding: 2px 0; outline: none; }
+        .head-box input:focus { border-color: #0066cc; }
 
-        .table-container { flex: 1; overflow: auto; padding: 4px; background: #fff; }
+        .table-container { flex: 1; overflow: auto; padding: 2px; }
         table { border-collapse: collapse; width: 100%; min-width: 850px; table-layout: fixed; }
         th { background: #0066cc; color: white; font-size: 9px; padding: 6px 0; border: 1px solid #0052a3; position: sticky; top: 0; z-index: 5; }
         td { border: 1px solid #ddd; padding: 2px; text-align: center; font-size: 11px; }
@@ -51,14 +64,14 @@
 
         .marks-input { width: 85%; border: 1px solid #bbb; text-align: center; font-weight: 900; padding: 4px 0; border-radius: 4px; font-size: 13px; }
 
-        /* --- DASHBOARD & ACTIONS --- */
-        .dash { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 6px; padding: 6px; background: #f4f7f6; border-top: 1.5px solid #ddd; }
+        /* --- DASHBOARD --- */
+        .dash { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 6px; background: #f4f7f6; border-top: 1.5px solid #ddd; }
         .stat { background: white; text-align: center; border: 1px solid #ddd; padding: 5px; border-radius: 6px; }
-        .stat label { font-size: 0.55rem; font-weight: bold; color: #0066cc; display: block; text-transform: uppercase; }
-        .stat b { font-size: 0.9rem; font-weight: 900; }
+        .stat label { font-size: 0.55rem; font-weight: bold; color: #666; display: block; }
+        .stat b { font-size: 0.85rem; font-weight: 900; }
 
-        .bottom-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; padding: 8px; background: #fff; }
-        .action-btn { padding: 12px 0; border: none; color: white; border-radius: 6px; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; }
+        .bottom-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 8px; background: #fff; }
+        .action-btn { padding: 10px 0; border: none; color: white; border-radius: 6px; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; }
 
         .text-red { color: #dc3545 !important; text-decoration: underline; }
         .text-green { color: #28a745 !important; }
@@ -67,34 +80,30 @@
 <body>
 
     <div id="page-info" class="page active">
-        <div class="info-card">
-            <h2>Student Report</h2>
-            <div class="input-box">
-                <label>Student Name</label>
-                <input type="text" id="stu-name" placeholder="Full Name" oninput="autoSave()">
+        <div class="launch-card">
+            <h1>Report Maker</h1>
+            <div class="btn-stack">
+                <button class="btn-start" onclick="goToGrading()">START GRADING →</button>
+                <button class="btn-load" onclick="document.getElementById('file-loader').click()">LOAD BACKUP</button>
+                <button class="btn-update" onclick="checkForUpdates()">
+                    UPDATE APP<br>
+                    <span style="font-size: 10px; opacity: 0.9; font-weight: normal;">v1.2.0</span>
+                </button>
             </div>
-            <div style="display: flex; gap: 10px;">
-                <div class="input-box" style="flex:1">
-                    <label>Roll No</label>
-                    <input type="number" id="stu-roll" placeholder="00" oninput="autoSave()">
-                </div>
-                <div class="input-box" style="flex:1">
-                    <label>Class</label>
-                    <input type="text" id="stu-class" placeholder="VI" oninput="autoSave()">
-                </div>
-            </div>
-            <button class="btn-start" onclick="goToGrading()">START GRADING →</button>
         </div>
     </div>
 
     <div id="page-grading" class="page">
         <div class="top-nav">
-            <button onclick="goToInfo()" style="border:none; background:#666; color:white; padding:6px 12px; border-radius:6px; font-size:0.65rem; font-weight:bold;">← BACK</button>
-            <div class="mode-toggle">
-                <button id="m-pms" class="m-btn active" onclick="switchMode('PMS')">PMS</button>
-                <button id="m-pre" class="m-btn" onclick="switchMode('PRE')">PRE</button>
-            </div>
+            <button onclick="goToInfo()" style="border:none; background:#666; color:white; padding:6px 12px; border-radius:6px; font-size:0.65rem; font-weight:bold;">← MENU</button>
+            <div style="font-weight: 900; color: #0066cc; font-size: 0.8rem; text-transform: uppercase;">Marks Entry</div>
             <button onclick="calculateAll()" style="border:none; background:#28a745; color:white; padding:6px 12px; border-radius:6px; font-size:0.65rem; font-weight:bold;">CALC</button>
+        </div>
+
+        <div class="student-header">
+            <div class="head-box"><label>Student Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
+            <div class="head-box"><label>Roll</label><input type="number" id="stu-roll" oninput="autoSave()"></div>
+            <div class="head-box"><label>Class</label><input type="text" id="stu-class" oninput="autoSave()"></div>
         </div>
 
         <div class="table-container">
@@ -126,13 +135,12 @@
 
         <div class="dash">
             <div class="stat"><label>Status</label><b id="dash-status">AWAITED</b></div>
-            <div class="stat" style="border: 1.5px solid #0066cc;"><label>Percentage</label><b id="dash-pct">--%</b></div>
+            <div class="stat"><label>Percentage</label><b id="dash-pct">--%</b></div>
             <div class="stat"><label>Result</label><b id="dash-res">--</b></div>
         </div>
 
         <div class="bottom-actions">
             <button class="action-btn" style="background:#0066cc" onclick="downloadBackup()">Backup</button>
-            <button class="action-btn" style="background:#6f42c1" onclick="document.getElementById('file-loader').click()">Load</button>
             <button class="action-btn" style="background:#28a745" onclick="printReport()">PDF</button>
             <button class="action-btn" style="background:#dc3545" onclick="clearAllData()">Wipe</button>
         </div>
@@ -148,9 +156,6 @@
         { name: 'G.K.', max: 100 }, { name: 'Moral Sci.', max: 100 }
     ];
 
-    let currentMode = 'PMS';
-
-    // NAVIGATION LOGIC
     function goToGrading() { 
         document.getElementById('page-info').classList.remove('active');
         document.getElementById('page-grading').classList.add('active');
@@ -164,7 +169,7 @@
 
     function renderTable() {
         const body = document.getElementById('tableBody');
-        if (body.innerHTML !== '') return; // Prevent re-rendering and losing focus
+        if (body.innerHTML !== '') return;
 
         subjectsPMS.forEach((subj, sIdx) => {
             let row = body.insertRow();
@@ -178,7 +183,6 @@
                 input.type = 'number'; 
                 input.className = 'marks-input';
                 input.id = `in-${sIdx}-${i}`;
-                // EXCLUDE DECIMALS
                 input.onkeydown = (e) => { if(e.key === '.') e.preventDefault(); };
                 input.oninput = autoSave;
                 cell.appendChild(input);
@@ -203,10 +207,9 @@
             
             let m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / subj.max) * 25);
             let qh25 = Math.round(((getV(1) + getV(3)) / 2 / subj.max) * 25);
-            let a50 = 0; // Space for Annual exam 50% weightage
+            let a50 = 0; 
 
             let total = m25 + qh25 + a50;
-            
             document.getElementById(`m25-${sIdx}`).innerText = m25;
             document.getElementById(`qh25-${sIdx}`).innerText = qh25;
             document.getElementById(`tot-${sIdx}`).innerText = total;
@@ -254,6 +257,28 @@
         calculateAll();
     }
 
+    function downloadBackup() {
+        const data = localStorage.getItem('marks_data_v2');
+        if(!data) return alert("No data!");
+        const name = document.getElementById('stu-name').value || "Student";
+        if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`);
+    }
+
+    function importData(event) {
+        const reader = new FileReader();
+        reader.onload = (e) => { 
+            localStorage.setItem('marks_data_v2', e.target.result); 
+            renderTable();
+            location.reload(); 
+        };
+        reader.readAsText(event.target.files[0]);
+    }
+
+    function checkForUpdates() {
+        if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) AndroidBridge.forceUpdate();
+        else alert("Update feature works inside the app.");
+    }
+
     function printReport() {
         if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF();
         else window.print();
@@ -261,7 +286,6 @@
 
     function clearAllData() { if(confirm("Wipe all data?")) { localStorage.clear(); location.reload(); } }
 
-    // Init table if data exists on refresh
     window.onload = () => { if(localStorage.getItem('marks_data_v2')) goToGrading(); };
 </script>
 </body>

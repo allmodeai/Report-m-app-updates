@@ -25,97 +25,74 @@
         .page { display: none; height: 100%; width: 100%; flex-direction: column; overflow: hidden; }
         .page.active { display: flex; }
 
-        /* --- TITLE SCREEN (Updated with Watermark & Bottom Buttons) --- */
+        /* --- TITLE SCREEN --- */
         #page-title { justify-content: center; align-items: center; background: #0066cc; }
-        
         .launch-card { 
-            background: white; 
-            padding: 30px 20px; 
-            border-radius: 24px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
-            width: 88%; 
-            height: 60vh;
-            text-align: center; 
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Pushes buttons to bottom */
-            overflow: hidden;
+            background: white; padding: 30px 20px; border-radius: 24px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); width: 88%; height: 60vh;
+            text-align: center; position: relative; display: flex;
+            flex-direction: column; justify-content: space-between; overflow: hidden;
         }
-
-        /* Watermark Styles */
         .launch-card::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 220px; height: 220px;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230066cc' opacity='0.06'%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-size: contain;
-            pointer-events: none;
-            z-index: 0;
+            background-repeat: no-repeat; background-size: contain; pointer-events: none; z-index: 0;
         }
-
-        .launch-card h1 { 
-            margin: 10px 0; 
-            color: #0066cc; 
-            font-weight: 900; 
-            text-transform: uppercase; 
-            font-size: 1.6rem; 
-            z-index: 1;
-        }
-        
-        .title-btn-group { width: 100%; z-index: 1; }
-
-        .title-btn { 
-            width: 100%; padding: 18px; margin-top: 12px; 
-            border: none; border-radius: 14px; 
-            font-weight: 900; font-size: 1.1rem; 
-            text-transform: uppercase; cursor: pointer; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
+        .launch-card h1 { color: #0066cc; font-weight: 900; text-transform: uppercase; font-size: 1.6rem; z-index: 1; }
+        .title-btn { width: 100%; padding: 18px; margin-top: 12px; border: none; border-radius: 14px; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1; }
         .btn-go { background-color: #28a745; color: white; }
         .btn-up { background-color: #ff9800; color: white; }
 
         /* --- GRADING PAGE --- */
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 2px; }
         .header-section { padding: 4px; flex-shrink: 0; border-bottom: 1px solid #eee; }
-        
         .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 0 4px; }
-        .btn-menu { background: #004c99; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; }
+        
+        .btn-menu { 
+            background: #004c99; color: white; border: none; 
+            padding: 5px 10px; border-radius: 6px; 
+            font-size: 0.65rem; font-weight: 900; text-transform: uppercase; 
+        }
         .grading-title { font-weight: 900; color: #0066cc; font-size: 0.8rem; text-transform: uppercase; }
         .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 2px; border: 1px solid #e68a00; }
-        .header-toggle-btn { padding: 4px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.65rem; text-transform: uppercase; border-radius: 15px; }
+        .header-toggle-btn { padding: 4px 10px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.6rem; text-transform: uppercase; border-radius: 15px; }
         .header-toggle-btn.active { background: #28a745; color: white; }
 
-        .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 4px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
+        .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3px; padding: 4px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
-        .info-field label { font-size: 0.65rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
-        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.95rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 20px; display: flex; align-items: center; }
+        .info-field label { font-size: 0.6rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
+        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.9rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 18px; display: flex; align-items: center; }
 
+        /* NO-SCROLL TABLE LOGIC */
         .table-container { flex: 1; padding: 0 4px; overflow: hidden; display: flex; flex-direction: column; }
         .table-wrap { width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; border: 1.5px solid #0066cc; border-radius: 4px; }
 
-        table { border-collapse: collapse; min-width: 850px; width: 100%; table-layout: fixed; }
-        th { background: #0066cc; color: white; padding: 3px 2px; border: 1px solid #0052a3; font-size: 9px; }
-        td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
+        table { border-collapse: collapse; min-width: 850px; width: 100%; height: 100%; table-layout: fixed; }
+        th { background: #0066cc; color: white; padding: 2px; border: 1px solid #0052a3; font-size: 8px; height: 20px; }
+        td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
 
-        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 1px 4px; font-size: 12px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
-        .marks-input { width: 45px; height: 24px; border: 1px solid #bbb; border-radius: 4px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 11px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
+        .marks-input { width: 42px; height: 20px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
 
-        .footer-row { background: #cbdff2; font-weight: 900; border-top: 2.5px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
-        .footer-row td { height: 28px; font-size: 12px; color: #000; }
+        .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
+        .footer-row td { height: 24px; font-size: 11px; }
 
-        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; padding: 4px 6px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
-        .stat-box { background: white; padding: 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 50px; overflow: hidden; }
-        .stat-label { font-size: 0.58rem; font-weight: 900; color: #0066cc; text-transform: uppercase; margin-bottom: 2px; }
-        .stat-value { font-size: 0.85rem; font-weight: 900; }
-        .print-badge { display: inline-block; padding: 2px 6px; border-radius: 8px; font-weight: 800; border: 1px solid rgba(0,0,0,0.1); font-size: 0.52rem; margin: 1px; }
+        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; padding: 3px 4px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
+        .stat-box { background: white; padding: 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 48px; }
+        .stat-label { font-size: 0.55rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
+        .stat-value { font-size: 0.8rem; font-weight: 900; }
+        .print-badge { display: inline-block; padding: 1px 5px; border-radius: 6px; font-weight: 800; border: 1px solid rgba(0,0,0,0.1); font-size: 0.5rem; margin: 1px; }
 
-        .bottom-section { flex-shrink: 0; padding: 6px 4px 12px 4px; background: #fff; }
+        /* SLIGHTLY BIGGER BOTTOM BUTTONS */
+        .bottom-section { flex-shrink: 0; padding: 6px 4px 10px 4px; background: #fff; }
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-        .btn { padding: 10px 2px; border: none; border-radius: 6px; font-weight: 900; font-size: 0.65rem; color: white; text-transform: uppercase; cursor: pointer; }
+        .btn { 
+            padding: 10px 2px; border: none; border-radius: 7px; 
+            font-weight: 900; font-size: 0.72rem; color: white; 
+            text-transform: uppercase; cursor: pointer; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
         
         .btn-save { background: #28a745 !important; }
         .btn-load { background: #0066cc !important; }
@@ -123,13 +100,12 @@
         .btn-erase { background: #dc3545 !important; }
 
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
-        .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; z-index: 1001; padding: 15px 15px calc(15px + env(safe-area-inset-bottom)) 15px; box-sizing: border-box; max-height: 80vh; overflow-y: auto; }
+        .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; z-index: 1001; padding: 15px; box-sizing: border-box; max-height: 80vh; overflow-y: auto; }
         .bottom-sheet.active { transform: translateY(0); }
         .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
 
-        .text-red { color: #dc3545 !important; }
+        .text-red { color: #dc3545 !important; text-decoration: underline; }
         .text-green { color: #28a745 !important; }
-        .underline { text-decoration: underline; }
 
         @media print { #page-title, .bottom-section, .top-row { display: none !important; } .page { display: block !important; height: auto !important; position: static !important; } }
     </style>
@@ -141,7 +117,6 @@
     <div id="page-title" class="page active">
         <div class="launch-card">
             <h1>Report Maker</h1>
-            
             <div class="title-btn-group">
                 <button class="title-btn btn-go" onclick="showPage('page-grading')">Start Grading</button>
                 <button class="title-btn btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
@@ -163,7 +138,7 @@
 
                 <div class="student-info">
                     <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
-                    <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" inputmode="numeric" pattern="[0-9]*" oninput="autoSave()"></div>
+                    <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" inputmode="numeric" oninput="autoSave()"></div>
                     <div class="info-field"><label>Class</label><div id="stu-class-trigger" class="select-trigger" onclick="openSheet('Select Class', classOptions, 'stu-class-val')">-</div><input type="hidden" id="stu-class-val"></div>
                     <div class="info-field"><label>Section</label><div id="stu-sec-trigger" class="select-trigger" onclick="openSheet('Select Section', ['A', 'B', 'C'], 'stu-sec-val')">-</div><input type="hidden" id="stu-sec-val"></div>
                 </div>
@@ -198,9 +173,9 @@
             </div>
 
             <div class="dashboard-section">
-                <div class="stat-box"><span class="stat-label">Failed Subjects</span><div class="stat-value" id="dash-fails" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">NONE</div></div>
+                <div class="stat-box"><span class="stat-label">Failed Subjects</span><div class="stat-value" id="dash-fails" style="display: flex; flex-wrap: wrap; justify-content: center;">NONE</div></div>
                 <div class="stat-box" style="border: 1.5px solid #0066cc; background: #f9fbfd;"><span class="stat-label">Result Status</span><div class="stat-value" id="dash-status">AWAITED</div></div>
-                <div class="stat-box" style="align-items: center;"><span class="stat-label">Percentage</span><div id="dash-pct">--%</div><hr style="width: 80%; margin: 2px 0; border: 0; border-top: 1px solid #ddd;"><span class="stat-label">Division</span><div id="dash-div">--</div></div>
+                <div class="stat-box" style="align-items: center;"><span class="stat-label">Percentage</span><div id="dash-pct">--%</div><hr style="width: 80%; margin: 1px 0; border: 0; border-top: 1px solid #ddd;"><span class="stat-label">Division</span><div id="dash-div">--</div></div>
             </div>
 
             <div class="bottom-section">
@@ -277,7 +252,8 @@
             for (let i = 0; i <= 5; i++) {
                 let cell = row.insertCell(); let inputId = `in-${sIdx}-${i}`;
                 if(subj.type === 'numeric') {
-                    let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric'; input.className = 'marks-input'; input.id = inputId;
+                    let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
+                    input.className = 'marks-input'; input.id = inputId;
                     input.onkeydown = (e) => { if(e.key === '.') e.preventDefault(); };
                     input.oninput = function() {
                         if (this.value === '--') { this.value = 'Ab'; }
@@ -314,10 +290,9 @@
             const a50 = Math.round((getV(5) / subj.max) * 50);
             const total = m25 + q25 + a50;
             row.cells[7].innerText = m25; row.cells[8].innerText = q25; row.cells[9].innerText = a50; row.cells[10].innerText = total;
-            row.cells[10].classList.remove('text-red', 'underline');
-            if (total < 40) row.cells[10].classList.add('text-red', 'underline');
+            row.cells[10].classList.remove('text-red'); if (total < 40) row.cells[10].classList.add('text-red');
             let rowFilled = true; for(let i=0; i<=5; i++) if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
-            if(rowFilled) { if(total < 40) { let color = (subjName.includes('Hindi') || subjName.includes('Bengali')) ? 'text-green' : 'text-danger'; if(subj.exempt) langFails.push({ name: subjName, type: 'exempt' }); else { coreFails.push({ name: subjName, type: 'core' }); failCount++; } } } else { dataCompleted = false; }
+            if(rowFilled) { if(total < 40) { if(subj.exempt) langFails.push({ name: subjName, type: 'exempt' }); else { coreFails.push({ name: subjName, type: 'core' }); failCount++; } } } else { dataCompleted = false; }
             grandSum += total;
         });
         for (let i = 0; i < 6; i++) { let sum = 0; activeSubjects.forEach((s, sIdx) => { if(s.type === 'numeric') { let v = document.getElementById(`in-${sIdx}-${i}`).value; sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); } }); document.getElementById(`gt-${i}`).innerText = sum; }
@@ -329,22 +304,13 @@
     function updateDashboard(avg, failedList, coreFailCount, complete) {
         const statusEl = document.getElementById('dash-status'); const pctEl = document.getElementById('dash-pct'); const divEl = document.getElementById('dash-div');
         const pill = (txt, bg, clr, brd) => `<div class="print-badge" style="background:${bg}; color:${clr}; border-color:${brd}">${txt}</div>`;
-        if (!complete) { statusEl.innerText = "AWAITED"; statusEl.className = "stat-value"; pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--"; }
+        if (!complete) { statusEl.innerText = "AWAITED"; pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--"; }
         else { let isFailed = (avg < 40 || coreFailCount >= 3); let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3"); pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr); if (isFailed) { statusEl.innerText = "FAILED"; statusEl.className = "stat-value text-danger"; divEl.innerText = "--"; } else { statusEl.innerText = "PROMOTED"; statusEl.className = "stat-value text-green"; divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd"); } }
         renderFails(failedList);
     }
 
-    function renderFails(list) { 
-        const el = document.getElementById('dash-fails'); el.innerHTML = ''; 
-        if(list.length === 0) { el.innerText = "NONE"; return; } 
-        list.forEach(item => { 
-            let b = document.createElement('span'); b.className = 'print-badge'; 
-            b.style.color = 'white'; b.style.backgroundColor = item.type === 'exempt' ? '#28a745' : '#dc3545';
-            b.innerText = item.name; el.appendChild(b); 
-        }); 
-    }
-
-    function applyMarkStyling(input, max) { input.classList.remove('text-red', 'underline'); if (input.value !== '' && !isNaN(input.value)) { if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red', 'underline'); } }
+    function renderFails(list) { const el = document.getElementById('dash-fails'); el.innerHTML = ''; if(list.length === 0) { el.innerText = "NONE"; return; } list.forEach(item => { let b = document.createElement('span'); b.className = 'print-badge'; b.style.color = 'white'; b.style.backgroundColor = item.type === 'exempt' ? '#28a745' : '#dc3545'; b.innerText = item.name; el.appendChild(b); }); }
+    function applyMarkStyling(input, max) { input.classList.remove('text-red'); if (input.value !== '' && !isNaN(input.value)) { if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red'); } }
     function openSheet(title, options, targetId) { document.getElementById('sheet-title').innerText = title; const container = document.getElementById('options-container'); container.innerHTML = ''; options.forEach(opt => { const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt; btn.onclick = () => { let input = document.getElementById(targetId); if(input) input.value = opt; let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt; closeSheet(); calculateAll(); autoSave(); }; container.appendChild(btn); }); document.getElementById('overlay').style.display = 'block'; document.getElementById('sheet').classList.add('active'); }
     function closeSheet() { document.getElementById('sheet').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; }
     function switchMode(m) { if (currentMode === m) return; if (!confirm("Switching modes will clear current data. Continue?")) return; currentMode = m; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); resetLocalInputs(); renderTable(); calculateAll(); autoSave(); }

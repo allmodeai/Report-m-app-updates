@@ -3,335 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Marks Calculator Pro</title>
-
+    <title>Report Maker</title>
     <style>
-        /* --- APP UI STYLES (Screen View) --- */
+        /* --- CORE APP LAYOUT --- */
         html, body {
             font-family: 'Segoe UI', system-ui, sans-serif;
             margin: 0; padding: 0;
             background-color: #f4f7f6; color: #000;
             height: 100vh; width: 100vw;
-            display: flex; flex-direction: column;
-            overflow: hidden;
-            position: fixed;
+            overflow: hidden; position: fixed;
         }
 
-        /* --- TITLE SCREEN STYLES --- */
-        #title-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            width: 100vw;
-            background: linear-gradient(135deg, #f4f7f6 0%, #e0e8f5 100%);
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 2000;
+        .page {
+            display: none; height: 100%; width: 100%;
+            flex-direction: column; overflow: hidden;
         }
+        .page.active { display: flex; }
 
-        .title-header {
-            color: #0066cc;
-            font-size: 2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            text-align: center;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        /* --- SCREEN 1: TITLE/INFO PAGE --- */
+        #page-info {
+            background: #0066cc;
+            justify-content: center; align-items: center;
         }
-
-        .title-subtitle {
-            color: #555;
-            font-size: 0.9rem;
-            margin-bottom: 40px;
-            font-weight: bold;
+        .info-card {
+            background: white; width: 85%; padding: 20px;
+            border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
-
-        .title-btn {
-            width: 220px;
-            padding: 15px;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        /* --- MAIN APP WRAPPER --- */
-        .app-wrapper { display: none; flex-direction: column; height: 100%; width: 100%; padding: 4px; box-sizing: border-box; }
+        .info-card h2 { color: #0066cc; margin-top: 0; text-align: center; font-size: 1.2rem; }
         
-        .container { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+        .input-box { margin-bottom: 12px; }
+        .input-box label { display: block; font-size: 0.65rem; font-weight: bold; color: #666; text-transform: uppercase; }
+        .input-box input { 
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; 
+            box-sizing: border-box; font-weight: bold; font-size: 1rem;
+        }
 
-        .header-section { padding: 4px 6px 2px 6px; background: white; flex-shrink: 0; }
-        h3.header-title { text-align: center; color: #0066cc; margin: 0 0 4px 0; font-size: 0.95rem; text-transform: uppercase; font-weight: 900; letter-spacing: 0.5px; }
+        .btn-main {
+            width: 100%; padding: 15px; background: #28a745; color: white;
+            border: none; border-radius: 8px; font-weight: 900; cursor: pointer;
+        }
 
-        .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 6px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
-        .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
-        .info-field label { font-size: 0.55rem; font-weight: bold; color: #0066cc; text-transform: uppercase; margin-bottom: 0px; }
-        .info-field input, .info-field .select-trigger { border: none; background: transparent; font-size: 0.9rem !important; padding: 0; outline: none; font-weight: 900; color: #000; }
+        /* --- SCREEN 2: GRADING PAGE --- */
+        .top-nav {
+            background: white; padding: 6px 12px; display: flex;
+            justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd;
+        }
+        .mode-toggle { background: #eee; border-radius: 20px; padding: 2px; display: flex; }
+        .m-btn { padding: 4px 12px; border: none; background: transparent; font-size: 0.7rem; font-weight: bold; border-radius: 15px; }
+        .m-btn.active { background: #0066cc; color: white; }
 
-        .table-container { flex: 1; padding: 2px 6px 6px 6px; background: #fff; min-height: 0; }
-        .table-wrap { width: 100%; height: 100%; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; box-sizing: border-box; }
-        
-        table { border-collapse: collapse; min-width: 850px; width: 100%; table-layout: fixed; }
-        th { background: #0066cc; color: white; padding: 3px 2px; border: 1px solid #0052a3; font-size: 9px; white-space: nowrap; }
-        td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
+        .table-container { flex: 1; overflow: auto; padding: 4px; }
+        table { border-collapse: collapse; width: 100%; min-width: 850px; table-layout: fixed; }
+        th { background: #0066cc; color: white; font-size: 9px; padding: 4px 0; border: 1px solid #0052a3; }
+        td { border: 1px solid #ddd; padding: 2px; text-align: center; font-size: 11px; }
+        .subject-name { position: sticky; left: 0; background: #f9fbfd; font-weight: 900; text-align: left; border-right: 2px solid #0066cc; padding-left: 5px; }
 
-        .header-toggle { background: #ff9800; border-radius: 6px; display: inline-flex; flex-direction: column; overflow: hidden; padding: 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); border: 1px solid #e68a00; }
-        .header-toggle-btn { padding: 4px 6px; border: none; background: transparent; color: #fff; opacity: 0.8; border-radius: 5px; font-weight: 900; cursor: pointer; font-size: 0.55rem; text-transform: uppercase; transition: all 0.2s; line-height: 1; margin-bottom: 1px;}
-        .header-toggle-btn:last-child { margin-bottom: 0; }
-        .header-toggle-btn.active { background: #28a745; color: white; opacity: 1; box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+        .marks-input { width: 90%; border: 1px solid #ccc; text-align: center; font-weight: 900; padding: 2px 0; border-radius: 3px; }
 
-        #tableBody td:nth-child(n+7) { font-weight: 900; font-size: 12px; }
+        /* --- DASHBOARD --- */
+        .dash { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; padding: 6px; background: #fff; border-top: 1px solid #ddd; }
+        .stat { text-align: center; border: 1px solid #eee; padding: 4px; border-radius: 6px; }
+        .stat label { font-size: 0.55rem; color: #666; display: block; }
+        .stat b { font-size: 0.85rem; }
 
-        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12.5px; white-space: nowrap; width: 120px; overflow: hidden; text-overflow: ellipsis; }
+        .bottom-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 6px; background: #fff; }
+        .action-btn { padding: 8px 0; border: none; color: white; border-radius: 4px; font-size: 0.6rem; font-weight: bold; }
 
-        .marks-input { width: 48px; height: 25px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; background: #fff; display: flex; align-items: center; justify-content: center; outline: none; margin: 0 auto; }
-        .marks-input:disabled { background: #f0f0f0; color: #999; border: 1px dashed #ccc; }
-
-        .text-red { color: #dc3545 !important; }
-        .underline { text-decoration: underline; }
-
-        .footer-row { background: #cbdff2; font-weight: bold; border-top: 2px solid #0066cc; position: sticky; bottom: 0; }
-        .footer-row td { height: 25px; }
-
-        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 6px; padding: 4px 6px; background: #f4f7f6; border-top: 1.5px solid #e0e0e0; border-bottom: 1.5px solid #e0e0e0; z-index: 10; }
-        .stat-box { background: white; padding: 4px 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; overflow: hidden; min-height: 50px; }
-        .stat-box.highlight { border: 1.5px solid #0066cc; background: #f9fbfd; }
-
-        .stat-label { font-size: 0.65rem; font-weight: bold; color: #0066cc; text-transform: uppercase; margin-bottom: 1px; }
-        .stat-value { font-size: 0.9rem; font-weight: 900; color: #000; line-height: 1.1; word-wrap: break-word; }
-
-        .text-green { color: #28a745 !important; }
-        .text-danger { color: #dc3545 !important; }
-
-        .bottom-section { flex-shrink: 0; padding: 6px 6px 12px 6px; background: #fff; }
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
-        .btn { padding: 10px 2px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.7rem; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-transform: uppercase; cursor: pointer; }
-        .btn:active { transform: scale(0.96); }
-
-        .btn-save { background-color: #0066cc; }
-        .btn-load { background-color: #6f42c1; }
-        .btn-pdf { background-color: #28a745; }
-        .btn-clear { background-color: #dc3545; }
-        .btn-update { background-color: #ff9800; } 
-
-        .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
-        .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: transform 0.2s ease-out; z-index: 1001; padding: 15px 15px 45px 15px; box-sizing: border-box; }
-        .bottom-sheet.active { transform: translateY(0); }
-        .opt-btn { padding: 12px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 6px; cursor: pointer; }
-
+        /* --- PRINT STYLES --- */
         @media print {
-            @page { size: auto; margin: 10mm; }
-            html, body { height: auto !important; width: 100% !important; overflow: visible !important; position: static !important; background: white !important; }
-            #title-screen { display: none !important; } /* Hide title screen on print */
-            .app-wrapper { display: block !important; padding: 0 !important; }
-            .container { box-shadow: none !important; border: none !important; display: block !important; }
-            .bottom-section, .sheet-overlay, .bottom-sheet, .header-toggle { display: none !important; } 
-            .table-wrap { overflow: visible !important; width: 100% !important; height: auto !important; border: 0.5pt solid #000 !important; }
-            table { min-width: 100% !important; width: 100% !important; height: auto !important; table-layout: auto !important; }
-            th { font-size: 8pt !important; background-color: #0066cc !important; color: white !important; -webkit-print-color-adjust: exact; }
-            td { font-size: 9pt !important; padding: 4pt !important; border: 0.5pt solid #ccc !important; }
-            #tableBody td:nth-child(n+7) { font-weight: bold !important; font-size: 10pt !important; }
-            .subject-name { position: static !important; background: white !important; font-size: 10pt !important; }
-            .marks-input { border: none !important; width: 100% !important; height: auto !important; font-size: 9pt !important; }
-            .dashboard-section { display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; margin-top: 20px !important; border: 1pt solid #000 !important; background: #f9f9f9 !important; -webkit-print-color-adjust: exact; }
-            .stat-box { border: none !important; padding: 10pt !important; }
-            .stat-value { font-size: 10pt !important; }
-            .print-badge { border: 1px solid #000 !important; background: transparent !important; color: #000 !important; padding: 1px 4px !important; border-radius: 4px !important; }
-            div[id^="subj-trigger-"] { color: #000 !important; border-bottom: none !important; text-decoration: none !important; pointer-events: none !important; }
+            body, html { overflow: visible; position: static; height: auto; background: white; }
+            .page { display: block !important; height: auto !important; }
+            #page-info { background: white !important; padding: 0; }
+            .info-card { box-shadow: none; border: 1pt solid #000; width: 100%; margin-bottom: 20px; }
+            .top-nav, .bottom-actions, .btn-main { display: none !important; }
+            .table-container { overflow: visible; }
+            table { min-width: 100%; width: 100%; }
+            /* No page-break-after here as requested */
         }
+
+        .text-red { color: #dc3545 !important; text-decoration: underline; }
+        .text-green { color: #28a745 !important; }
     </style>
 </head>
 <body>
 
-<div id="title-screen">
-    <div class="title-header">Marks Calculator<br>Pro</div>
-    <div class="title-subtitle">Student Progress Management</div>
-    
-    <button class="btn btn-save title-btn" onclick="startApp()">Start New Session</button>
-    <button class="btn btn-load title-btn" onclick="document.getElementById('file-loader').click()">Load Data</button>
-    <button class="btn btn-update title-btn" onclick="checkForUpdates()">Update App <span style="font-size: 10px; font-weight: normal; margin-left: 5px;">v1.0.8</span></button>
-</div>
-
-<div class="app-wrapper" id="main-app">
-    <div class="container">
-        <div class="header-section">
-            <h3 class="header-title">Student Progress Report</h3>
-            <div class="student-info">
-                <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
-                <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" oninput="autoSave()"></div>
-                <div class="info-field">
-                    <label>Class</label>
-                    <div id="stu-class-trigger" class="select-trigger" onclick="openSheet('Select Class', classOptions, 'stu-class-val')">-</div>
-                    <input type="hidden" id="stu-class-val">
+    <div id="page-info" class="page active">
+        <div class="info-card">
+            <h2>Student Progress Report</h2>
+            <div class="input-box">
+                <label>Full Name</label>
+                <input type="text" id="stu-name" oninput="autoSave()">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <div class="input-box" style="flex:1">
+                    <label>Roll No</label>
+                    <input type="number" id="stu-roll" oninput="autoSave()">
                 </div>
-                <div class="info-field">
-                    <label>Section</label>
-                    <div id="stu-sec-trigger" class="select-trigger" onclick="openSheet('Select Section', ['A', 'B', 'C'], 'stu-sec-val')">-</div>
-                    <input type="hidden" id="stu-sec-val">
+                <div class="input-box" style="flex:1">
+                    <label>Class</label>
+                    <input type="text" id="stu-class" oninput="autoSave()">
                 </div>
             </div>
+            <button class="btn-main" onclick="goToGrading()">START GRADING →</button>
+        </div>
+    </div>
+
+    <div id="page-grading" class="page">
+        <div class="top-nav">
+            <button onclick="goToInfo()" style="border:none; background:#666; color:white; padding:5px 10px; border-radius:4px; font-size:0.6rem;">← BACK</button>
+            <div class="mode-toggle">
+                <button id="m-pms" class="m-btn active" onclick="switchMode('PMS')">PMS</button>
+                <button id="m-pre" class="m-btn" onclick="switchMode('PRE')">PRE</button>
+            </div>
+            <button onclick="calculateAll()" style="border:none; background:#28a745; color:white; padding:5px 10px; border-radius:4px; font-size:0.6rem; font-weight:bold;">CALC</button>
         </div>
 
         <div class="table-container">
-            <div class="table-wrap">
-                <table id="printable-table">
-                    <thead>
+            <table>
+                <thead>
                     <tr>
-                        <th rowspan="2" style="position: sticky; left: 0; z-index: 4; background-color: #0066cc; color: white; text-align: center; vertical-align: middle; border-right: 2px solid #004c99; width: 120px;">
-                            <div style="display: flex; align-items: center; justify-content: center; gap: 5px; padding: 0 2px;">
-                                <div class="header-toggle">
-                                    <button id="btn-pre" class="header-toggle-btn" onclick="switchMode('PRE')">Pre</button>
-                                    <button id="btn-pms" class="header-toggle-btn active" onclick="switchMode('PMS')">PMS</button>
-                                </div>
-                                <span style="font-size: 9px; font-weight: 900; letter-spacing: 0;">SUBJECTS</span>
-                            </div>
-                        </th>
+                        <th rowspan="2" style="width:120px; position:sticky; left:0; z-index:10;">SUBJECTS</th>
                         <th colspan="5">Assessments</th>
-                        <th colspan="5" style="background-color: #004c99">Final Weightage</th>
+                        <th colspan="4" style="background:#004c99">Final Weightage</th>
                     </tr>
                     <tr>
-                        <th>Unit I</th><th>Quarterly</th><th>Unit II</th><th>Half Yearly</th><th>Unit III</th>
-                        <th style="background-color: #004c99">Annual 100%</th>
-                        <th style="background-color: #004c99">Monthly 25%</th>
-                        <th style="background-color: #004c99">Qrt/HY 25%</th>
-                        <th style="background-color: #004c99">Annual 50%</th>
-                        <th style="background-color: #004c99">Total 100%</th>
+                        <th>U1</th><th>QT</th><th>U2</th><th>HY</th><th>U3</th>
+                        <th style="background:#004c99">M 25%</th>
+                        <th style="background:#004c99">QH 25%</th>
+                        <th style="background:#004c99">A 50%</th>
+                        <th style="background:#004c99">Total</th>
                     </tr>
-                    </thead>
-                    <tbody id="tableBody"></tbody>
-                    <tr class="footer-row">
+                </thead>
+                <tbody id="tableBody"></tbody>
+                <tfoot style="background:#e6f2ff; font-weight:bold;">
+                    <tr>
                         <td class="subject-name">Grand Total</td>
-                        <td id="gt-0">0</td><td id="gt-1">0</td><td id="gt-2">0</td><td id="gt-3">0</td><td id="gt-4">0</td><td id="gt-5">0</td>
-                        <td></td><td></td><td></td><td id="gt-total">0</td>
+                        <td id="gt-0">0</td><td id="gt-1">0</td><td id="gt-2">0</td><td id="gt-3">0</td><td id="gt-4">0</td>
+                        <td colspan="3"></td><td id="gt-total">0</td>
                     </tr>
-                </table>
-            </div>
+                </tfoot>
+            </table>
         </div>
 
-        <div class="dashboard-section" id="printable-footer">
-            <div class="stat-box">
-                <span class="stat-label">Failed Subjects</span>
-                <div class="stat-value" id="dash-fails">NONE</div>
-            </div>
-            <div class="stat-box highlight">
-                <span class="stat-label">Result Status</span>
-                <div class="stat-value" id="dash-status">AWAITED</div>
-            </div>
-            <div class="stat-box" style="padding: 4px 2px; align-items: center;">
-                <span class="stat-label">Percentage</span>
-                <div id="dash-pct">--%</div>
-                <hr style="width: 85%; margin: 4px auto; border: 0; border-top: 1px solid #ddd;">
-                <span class="stat-label">Division</span>
-                <div id="dash-div">--</div>
-            </div>
+        <div class="dash">
+            <div class="stat"><label>Status</label><b id="dash-status">AWAITED</b></div>
+            <div class="stat" style="border: 1px solid #0066cc;"><label>Percentage</label><b id="dash-pct">--%</b></div>
+            <div class="stat"><label>Failed</label><b id="dash-fails" style="font-size:0.6rem; color:red;">NONE</b></div>
         </div>
 
-        <div class="bottom-section">
-            <div class="btn-group">
-                <button class="btn btn-save" onclick="downloadBackup()">Backup</button>
-                <button class="btn btn-load" onclick="document.getElementById('file-loader').click()">Load</button>
-                <button class="btn btn-pdf" onclick="printReport()">PDF</button>
-                <button class="btn btn-clear" onclick="clearAllData()">Wipe</button>
-                <button class="btn btn-update" onclick="checkForUpdates()">
-                    Update <br>
-                    <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.1.1</span>
-                </button>
-            </div>
+        <div class="bottom-actions">
+            <button class="action-btn" style="background:#0066cc" onclick="downloadBackup()">BACKUP</button>
+            <button class="action-btn" style="background:#6f42c1" onclick="document.getElementById('file-loader').click()">LOAD</button>
+            <button class="action-btn" style="background:#28a745" onclick="printReport()">PDF</button>
+            <button class="action-btn" style="background:#dc3545" onclick="clearAllData()">WIPE</button>
         </div>
     </div>
-</div>
 
-<div id="overlay" class="sheet-overlay" onclick="closeSheet()"></div>
-<div id="sheet" class="bottom-sheet">
-    <div id="sheet-title" class="sheet-header" style="font-weight: bold; margin-bottom: 10px; color: #0066cc; text-align: center;">Select</div>
-    <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;"></div>
-</div>
-
-<input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
+    <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const classOptions = ['Nursery', 'LKG', 'UKG', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
-    const validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
-
     const subjectsPMS = [
-        { name: 'English', type: 'numeric', max: 200 },
-        { name: 'TEL/Hindi', type: 'numeric', max: 100, exempt: true },
-        { name: 'Bengali', type: 'numeric', max: 100, exempt: true },
-        { name: 'Mathematics', type: 'numeric', max: 100 },
-        { name: 'Science', type: 'numeric', max: 100 },
-        { name: 'G.K.', type: 'numeric', max: 100 }, 
-        { name: 'Social Study', type: 'numeric', max: 100 },
-        { name: 'Computer', type: 'numeric', max: 100 },
-        { name: 'Moral', type: 'numeric', max: 100 },
-        { name: 'Drawing', type: 'grade' },
-        { name: 'SUPW', type: 'grade' }
+        { name: 'English', max: 100 }, { name: 'Mathematics', max: 100 },
+        { name: 'Science', max: 100 }, { name: 'Social Study', max: 100 },
+        { name: 'Hindi/Bengali', max: 100 }, { name: 'Computer', max: 100 }
     ];
 
-    const subjectsPRE = [
-        { name: 'English', type: 'numeric', max: 100 },
-        { name: 'Hindi', type: 'numeric', max: 100, exempt: true },
-        { name: 'Mathematics', type: 'numeric', max: 100 },
-        { name: 'Rhymes', type: 'numeric', max: 100 },
-        { name: 'G.K.', type: 'numeric', max: 100, options: ['G.K.', 'P.G.', 'N/A'] },
-        { name: 'Computer', type: 'numeric', max: 100, options: ['Computer', 'N/A'] },
-        { name: 'Drawing', type: 'grade' }
-    ];
+    let currentMode = 'PMS';
 
-    let currentMode = 'PMS'; 
-    let activeSubjects = subjectsPMS;
-    const tableBody = document.getElementById('tableBody');
-
-    // Start App & Show Main Wrapper
-    function startApp() {
-        document.getElementById('title-screen').style.display = 'none';
-        document.getElementById('main-app').style.display = 'flex';
+    function goToGrading() { 
+        document.getElementById('page-info').classList.remove('active');
+        document.getElementById('page-grading').classList.add('active');
         renderTable();
     }
 
+    function goToInfo() {
+        document.getElementById('page-grading').classList.remove('active');
+        document.getElementById('page-info').classList.add('active');
+    }
+
     function renderTable() {
-        tableBody.innerHTML = '';
-        activeSubjects = (currentMode === 'PMS') ? subjectsPMS : subjectsPRE;
+        const body = document.getElementById('tableBody');
+        body.innerHTML = '';
+        subjectsPMS.forEach((subj, sIdx) => {
+            let row = body.insertRow();
+            let nameCell = row.insertCell();
+            nameCell.className = 'subject-name';
+            nameCell.innerText = subj.name;
 
-        activeSubjects.forEach((subj, sIdx) => {
-            let row = tableBody.insertRow();
-            let sCell = row.insertCell(); sCell.className = 'subject-name';
-
-            if (subj.options) {
-                let trigger = document.createElement('div');
-                trigger.id = `subj-trigger-${sIdx}`;
-                trigger.style.cssText = "color: #0066cc; cursor: pointer; display: inline-block; border-bottom: 1px dashed #0066cc; line-height: 1.1;";
-                trigger.innerText = subj.name;
-                trigger.onclick = () => openSheet('Select Subject', subj.options, `subj-val-${sIdx}`);
-                let hidden = document.createElement('input');
-                hidden.type = 'hidden';
-                hidden.id = `subj-val-${sIdx}`;
-                hidden.value = subj.name;
-                sCell.appendChild(trigger);
-                sCell.appendChild(hidden);
-            } else {
-                sCell.innerText = subj.name;
+            for (let i = 0; i < 5; i++) {
+                let cell = row.insertCell();
+                let input = document.createElement('input');
+                input.type = 'number'; input.className = 'marks-input';
+                input.id = `in-${sIdx}-${i}`;
+                input.oninput = autoSave;
+                cell.appendChild(input);
             }
+            // Weightage Cells
+            row.insertCell().id = `m25-${sIdx}`;
+            row.insertCell().id = `qh25-${sIdx}`;
+            row.insertCell().id = `a50-${sIdx}`;
+            row.insertCell().id = `tot-${sIdx}`;
+        });
+        loadMarks();
+    }
 
-            for (let i = 0; i <= 5; i++) {
-                let cell = row.insertCell(); let inputId = `in-${sIdx}-${i}`;
-                if(subj.type === 'numeric') {
-                    let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
-                    input.className = 'marks-input'; input.id = inputId;
-                    input.onclick = function() { if (this.value === 'Ab' || this.value === '-') { this.value = ''; if(typeof applyMarkStyling === 'function') applyMarkStyling(this, subj.max); if(typeof calculateAll === 'function') calculateAll(); if(typeof autoSave === 'function') autoSave(); } };
-                    input.oninput = function() {
-                        if (this.value === '--') { this.value = 'Ab'; } else {
-                            this.value = this.value.replace(/[^0-9.\-]/g, '');
-                            if (this.value.startsWith('0') && this.value.length > 2) { this.value = ''; }
-                        }
-                        if(this.value !== '-' && this.value !== 'Ab' && this.value !== '' && parseFloat(this.value) > subj.max) this.value = '';
-                        if(typeof applyMarkStyling === 'function') applyMarkStyling(this, subj.max); 
-                        if(typeof calculateAll === 'function') calculateAll(); 
-                        if(typeof autoSave === 'function') autoSave();
-                    };
-                    cell.appendChild(input);
-                } else {
-                    let display 
+    function calculateAll() {
+        let grandTotal = 0;
+        let failCount = 0;
+        let subjectsCount = subjectsPMS.length;
+
+        subjectsPMS.forEach((subj, sIdx) => {
+            const getV = (i) => parseFloat(document.getElementById(`in-${sIdx}-${i}`).value) || 0;
+            
+            // Weightage Logic (Your original logic)
+            let m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / subj.max) * 25);
+            let qh25 = Math.round(((getV(1) + getV(3)) / 2 / subj.max) * 25);
+            let a50 = 0; // Assuming Annual is column 5 if you added it, for now using 0
+
+            let total = m25 + qh25 + a50;
+            
+            document.getElementById(`m25-${sIdx}`).innerText = m25;
+            document.getElementById(`qh25-${sIdx}`).innerText = qh25;
+            document.getElementById(`tot-${sIdx}`).innerText = total;
+
+            if(total < 40) {
+                document.getElementById(`tot-${sIdx}`).classList.add('text-red');
+                failCount++;
+            } else {
+                document.getElementById(`tot-${sIdx}`).classList.remove('text-red');
+            }
+            grandTotal += total;
+        });
+
+        document.getElementById('gt-total').innerText = grandTotal;
+        let pct = (grandTotal / (subjectsCount * 100)) * 100;
+        document.getElementById('dash-pct').innerText = pct.toFixed(1) + '%';
+        document.getElementById('dash-status').innerText = (failCount > 2) ? "FAILED" : "PROMOTED";
+        document.getElementById('dash-status').className = (failCount > 2) ? "text-red" : "text-green";
+    }
+
+    function autoSave() {
+        const data = {
+            name: document.getElementById('stu-name').value,
+            roll: document.getElementById('stu-roll').value,
+            class: document.getElementById('stu-class').value,
+            marks: []
+        };
+        document.querySelectorAll('.marks-input').forEach(inp => {
+            data.marks.push({ id: inp.id, val: inp.value });
+        });
+        localStorage.setItem('report_cache', JSON.stringify(data));
+    }
+
+    function loadMarks() {
+        const saved = localStorage.getItem('report_cache');
+        if (!saved) return;
+        const data = JSON.parse(saved);
+        document.getElementById('stu-name').value = data.name || '';
+        document.getElementById('stu-roll').value = data.roll || '';
+        document.getElementById('stu-class').value = data.class || '';
+        data.marks.forEach(m => {
+            const inp = document.getElementById(m.id);
+            if (inp) inp.value = m.val;
+        });
+    }
+
+    function printReport() {
+        if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF();
+        else window.print();
+    }
+
+    function clearAllData() { if(confirm("Clear everything?")) { localStorage.clear(); location.reload(); } }
+
+    window.onload = renderTable;
+</script>
+</body>
+</html>

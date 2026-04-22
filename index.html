@@ -15,68 +15,44 @@
             overflow: hidden; position: fixed;
         }
 
-        .app-wrapper { 
-            display: flex; flex-direction: column; height: 100%; width: 100%; 
+        .app-wrapper {
+            display: flex; flex-direction: column; height: 100%; width: 100%;
             padding-top: env(safe-area-inset-top, 5px);
             padding-bottom: env(safe-area-inset-bottom, 10px);
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
 
         .page { display: none; height: 100%; width: 100%; flex-direction: column; overflow: hidden; }
         .page.active { display: flex; }
 
-        /* --- TITLE SCREEN (Fixed Watermark) --- */
+        /* --- TITLE SCREEN --- */
         #page-title { justify-content: center; align-items: center; background: #0066cc; }
-        
-        .launch-card { 
-            background: white; 
-            padding: 30px 20px; 
-            border-radius: 28px; 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4); 
-            width: 88%; 
-            height: 65vh;
-            text-align: center; 
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
+
+        .launch-card {
+            background: white; padding: 30px 20px; border-radius: 28px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4); width: 88%; height: 65vh;
+            text-align: center; position: relative; display: flex;
+            flex-direction: column; justify-content: space-between; overflow: hidden;
         }
 
-        /* FIXED WATERMARK - Increased Opacity and simplified SVG */
+        /* METHOD 2 WATERMARK: References the local file app_icon.png */
         .launch-card::before {
             content: "";
             position: absolute;
             top: 45%; left: 50%;
             transform: translate(-50%, -50%);
             width: 250px; height: 250px;
-            /* Using a document icon SVG with higher visibility (0.1 opacity) */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230066cc'%3E%3Cpath opacity='0.1' d='M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z M16,18H8v-2h8V18z M16,14H8v-2h8V14z M13,9V3.5L18.5,9H13z'/%3E%3C/svg%3E");
+            background-image: url("app_icon.png"); /* Referenced directly from assets */
             background-repeat: no-repeat;
             background-size: contain;
+            opacity: 0.08; /* Very subtle so it doesn't hide text */
             pointer-events: none;
             z-index: 0;
         }
 
-        .launch-card h1 { 
-            margin: 15px 0; 
-            color: #0066cc; 
-            font-weight: 900; 
-            text-transform: uppercase; 
-            font-size: 1.7rem; 
-            z-index: 2;
-            position: relative;
-        }
-        
+        .launch-card h1 { color: #0066cc; font-weight: 900; text-transform: uppercase; font-size: 1.7rem; z-index: 2; position: relative; }
         .title-btn-group { width: 100%; z-index: 2; position: relative; }
-
-        .title-btn { 
-            width: 100%; padding: 20px; margin-top: 14px; 
-            border: none; border-radius: 16px; 
-            font-weight: 900; font-size: 1.1rem; 
-            text-transform: uppercase; cursor: pointer; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
+        .title-btn { width: 100%; padding: 20px; margin-top: 14px; border: none; border-radius: 16px; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
         .btn-go { background-color: #28a745; color: white; }
         .btn-up { background-color: #ff9800; color: white; }
 
@@ -92,16 +68,15 @@
 
         .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3px; padding: 4px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
-        .info-field label { font-size: 0.6rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
+        .info-field label { font-size: 0.65rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
         .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.9rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 18px; display: flex; align-items: center; }
 
+        /* NO-SCROLL TABLE */
         .table-container { flex: 1; padding: 0 4px; overflow: hidden; display: flex; flex-direction: column; }
         .table-wrap { width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; border: 1.5px solid #0066cc; border-radius: 4px; }
-
         table { border-collapse: collapse; min-width: 850px; width: 100%; height: 100%; table-layout: fixed; }
         th { background: #0066cc; color: white; padding: 2px; border: 1px solid #0052a3; font-size: 8px; }
         td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
-
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 11px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         .marks-input { width: 42px; height: 20px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
 
@@ -112,36 +87,30 @@
         .stat-box { background: white; padding: 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 48px; }
         .stat-label { font-size: 0.55rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
         .stat-value { font-size: 0.8rem; font-weight: 900; }
-        .print-badge { display: inline-block; padding: 1px 5px; border-radius: 6px; font-weight: 800; border: 1px solid rgba(0,0,0,0.1); font-size: 0.5rem; margin: 1px; }
 
+        /* BUTTON SIZING: BIGGER THAN MENU */
         .bottom-section { flex-shrink: 0; padding: 6px 4px 10px 4px; background: #fff; }
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
         .btn { padding: 10px 2px; border: none; border-radius: 7px; font-weight: 900; font-size: 0.72rem; color: white; text-transform: uppercase; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        
         .btn-save { background: #28a745 !important; }
         .btn-load { background: #0066cc !important; }
         .btn-pdf { background: #6f42c1 !important; }
         .btn-erase { background: #dc3545 !important; }
 
+        .text-red { color: #dc3545 !important; text-decoration: underline; }
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
         .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; z-index: 1001; padding: 15px; box-sizing: border-box; max-height: 80vh; overflow-y: auto; }
         .bottom-sheet.active { transform: translateY(0); }
         .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
-
-        .text-red { color: #dc3545 !important; text-decoration: underline; }
-        .text-green { color: #28a745 !important; }
-
         @media print { #page-title, .bottom-section, .top-row { display: none !important; } .page { display: block !important; height: auto !important; position: static !important; } }
     </style>
 </head>
 <body>
 
 <div class="app-wrapper">
-    
     <div id="page-title" class="page active">
         <div class="launch-card">
             <h1>Report Maker</h1>
-            
             <div class="title-btn-group">
                 <button class="title-btn btn-go" onclick="showPage('page-grading')">Start Grading</button>
                 <button class="title-btn btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
@@ -160,7 +129,6 @@
                         <button id="btn-pre" class="header-toggle-btn" onclick="switchMode('PRE')">Pre</button>
                     </div>
                 </div>
-
                 <div class="student-info">
                     <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
                     <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" inputmode="numeric" oninput="autoSave()"></div>
@@ -329,7 +297,7 @@
     function updateDashboard(avg, failedList, coreFailCount, complete) {
         const statusEl = document.getElementById('dash-status'); const pctEl = document.getElementById('dash-pct'); const divEl = document.getElementById('dash-div');
         const pill = (txt, bg, clr, brd) => `<div class="print-badge" style="background:${bg}; color:${clr}; border-color:${brd}">${txt}</div>`;
-        if (!complete) { statusEl.innerText = "AWAITED"; pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--"; }
+        if (!complete) { statusEl.innerText = "AWAITED"; statusEl.className = "stat-value"; pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--"; }
         else { let isFailed = (avg < 40 || coreFailCount >= 3); let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3"); pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr); if (isFailed) { statusEl.innerText = "FAILED"; statusEl.className = "stat-value text-danger"; divEl.innerText = "--"; } else { statusEl.innerText = "PROMOTED"; statusEl.className = "stat-value text-green"; divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd"); } }
         renderFails(failedList);
     }

@@ -36,10 +36,27 @@
 
         /* --- GRADING PAGE --- */
         .container { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 4px; }
-        .header-section { padding: 4px 6px 2px 6px; flex-shrink: 0; border-bottom: 1px solid #eee; }
+        .header-section { padding: 6px; flex-shrink: 0; border-bottom: 1px solid #eee; }
         
-        .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-        .btn-menu { background: #666; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; }
+        /* UPDATED TOP ROW */
+        .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; gap: 8px; }
+        
+        /* RE-SIZED MENU BUTTON */
+        .btn-menu { 
+            background: #444; color: white; border: none; 
+            padding: 10px 14px; border-radius: 8px; 
+            font-size: 1.1rem; font-weight: 900; 
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header-title-wrap { display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; }
+        .grading-title { font-weight: 900; color: #0066cc; font-size: 0.85rem; text-transform: uppercase; white-space: nowrap; }
+
+        /* HORIZONTAL TOGGLE IN HEADER */
+        .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 2px; border: 1px solid #e68a00; }
+        .header-toggle-btn { padding: 4px 10px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.6rem; text-transform: uppercase; cursor: pointer; border-radius: 15px; }
+        .header-toggle-btn.active { background: #28a745; color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
 
         .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 6px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
@@ -50,21 +67,15 @@
         .table-wrap { width: 100%; height: 100%; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; }
 
         table { border-collapse: collapse; min-width: 850px; width: 100%; table-layout: fixed; }
-        th { background: #0066cc; color: white; padding: 3px 2px; border: 1px solid #0052a3; font-size: 9px; }
+        th { background: #0066cc; color: white; padding: 4px 2px; border: 1px solid #0052a3; font-size: 9px; text-transform: uppercase; }
         td { border: 1px solid #ddd; padding: 1px; text-align: center; font-size: 11px; vertical-align: middle; }
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12.5px; white-space: nowrap; width: 120px; overflow: hidden; text-overflow: ellipsis; }
         
-        .header-toggle { background: #ff9800; border-radius: 6px; display: inline-flex; flex-direction: column; padding: 2px; }
-        .header-toggle-btn { padding: 4px 6px; border: none; background: transparent; color: #fff; opacity: 0.8; font-weight: 900; font-size: 0.55rem; line-height: 1; margin-bottom: 1px; }
-        .header-toggle-btn.active { background: #28a745; color: white; opacity: 1; border-radius: 4px; }
-
         .marks-input { width: 48px; height: 25px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; }
-        .marks-input:disabled { background: #f0f0f0; border: 1px dashed #ccc; }
 
         .footer-row { background: #cbdff2; font-weight: bold; border-top: 2px solid #0066cc; position: sticky; bottom: 0; }
         
-        /* --- DASHBOARD PILLS --- */
         .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 6px; padding: 4px 6px; background: #f4f7f6; border-top: 1.5px solid #e0e0e0; }
         .stat-box { background: white; padding: 4px 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 50px; }
         .stat-label { font-size: 0.65rem; font-weight: bold; color: #0066cc; text-transform: uppercase; }
@@ -76,20 +87,13 @@
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
         .btn { padding: 12px 2px; border: none; border-radius: 6px; font-weight: bold; font-size: 0.7rem; color: white; text-transform: uppercase; cursor: pointer; }
 
-        /* --- SELECT SHEETS --- */
-        .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
-        .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.2s; z-index: 1001; padding: 15px; box-sizing: border-box; }
-        .bottom-sheet.active { transform: translateY(0); }
-        .opt-btn { padding: 12px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 6px; }
-
         .text-red { color: #dc3545 !important; }
         .text-green { color: #28a745 !important; }
-        .text-danger { color: #dc3545 !important; }
         .underline { text-decoration: underline; }
 
         @media print {
             .app-wrapper { padding: 0 !important; }
-            #page-title, .bottom-section, .btn-menu, .header-toggle { display: none !important; }
+            #page-title, .bottom-section, .top-row { display: none !important; }
             #page-grading { display: block !important; }
             .container { border: none; box-shadow: none; }
             table { min-width: 100% !important; }
@@ -115,10 +119,19 @@
         <div class="container">
             <div class="header-section">
                 <div class="top-row">
-                    <button class="btn-menu" onclick="showPage('page-title')">Menu</button>
-                    <div style="font-weight: 900; color: #0066cc; font-size: 0.8rem; text-transform: uppercase;">Grading Table</div>
-                    <div style="width:40px"></div>
+                    <button class="btn-menu" onclick="showPage('page-title')">&#8593;</button>
+                    
+                    <div class="header-title-wrap">
+                        <div class="grading-title">Grading Table</div>
+                        <div class="header-toggle">
+                            <button id="btn-pms" class="header-toggle-btn active" onclick="switchMode('PMS')">PMS</button>
+                            <button id="btn-pre" class="header-toggle-btn" onclick="switchMode('PRE')">Pre</button>
+                        </div>
+                    </div>
+                    
+                    <button onclick="calculateAll()" style="background:#28a745; color:white; border:none; padding:8px 12px; border-radius:6px; font-weight:900; font-size:0.65rem;">CALC</button>
                 </div>
+
                 <div class="student-info">
                     <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
                     <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" oninput="autoSave()"></div>
@@ -140,15 +153,7 @@
                     <table>
                         <thead>
                         <tr>
-                            <th rowspan="2" style="position: sticky; left: 0; z-index: 4; background-color: #0066cc; color: white; width: 120px;">
-                                <div style="display: flex; align-items: center; justify-content: center; gap: 5px;">
-                                    <div class="header-toggle">
-                                        <button id="btn-pre" class="header-toggle-btn" onclick="switchMode('PRE')">Pre</button>
-                                        <button id="btn-pms" class="header-toggle-btn active" onclick="switchMode('PMS')">PMS</button>
-                                    </div>
-                                    <span>SUBJECTS</span>
-                                </div>
-                            </th>
+                            <th rowspan="2" style="position: sticky; left: 0; z-index: 4; width: 120px;">SUBJECTS</th>
                             <th colspan="5">Assessments</th>
                             <th colspan="5" style="background-color: #004c99">Final Weightage</th>
                         </tr>
@@ -191,17 +196,17 @@
 
             <div class="bottom-section">
                 <div class="btn-group">
-                    <button class="btn btn-save" style="background:#0066cc" onclick="downloadBackup()">Save</button>
+                    <button class="btn" style="background:#0066cc" onclick="downloadBackup()">Save</button>
                     <button class="btn" style="background:#6f42c1" onclick="document.getElementById('file-loader').click()">Load</button>
                     <button class="btn" style="background:#28a745" onclick="printReport()">PDF</button>
-                    <button class="btn" style="background:#dc3545" onclick="clearAllData()">Wipe</button>
+                    <button class="btn" style="background:#dc3545" onclick="clearAllData()">Erase</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="overlay" class="sheet-overlay" onclick="closeSheet()"></div>
+<div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;" onclick="closeSheet()"></div>
 <div id="sheet" class="bottom-sheet">
     <div id="sheet-title" style="font-weight: bold; margin-bottom: 10px; color: #0066cc; text-align: center;">Select</div>
     <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;"></div>
@@ -271,11 +276,9 @@
                 if(subj.type === 'numeric') {
                     let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
                     input.className = 'marks-input'; input.id = inputId;
-                    // NO DECIMALS
                     input.onkeydown = (e) => { if(e.key === '.') e.preventDefault(); };
                     input.oninput = function() {
                         this.value = this.value.replace(/[^0-9Ab\-]/g, '');
-                        if(this.value !== 'Ab' && this.value !== '-' && this.value !== '' && parseFloat(this.value) > subj.max) this.value = '';
                         applyMarkStyling(this, subj.max); calculateAll(); autoSave();
                     };
                     cell.appendChild(input);
@@ -286,7 +289,7 @@
                     cell.appendChild(display); cell.appendChild(hidden);
                 }
             }
-            for (let i = 0; i < 4; i++) row.insertCell(); // Result cells
+            for (let i = 0; i < 4; i++) row.insertCell();
         });
     }
 
@@ -308,10 +311,7 @@
             const row = tableBody.rows[sIdx];
             if (subjName === 'N/A') {
                 for(let i=7; i<=10; i++) row.cells[i].innerText = '-';
-                for(let i=0; i<=5; i++) document.getElementById(`in-${sIdx}-${i}`).disabled = true;
                 return;
-            } else {
-                for(let i=0; i<=5; i++) document.getElementById(`in-${sIdx}-${i}`).disabled = false;
             }
 
             activeNumericCount++;
@@ -343,7 +343,6 @@
             grandSum += total;
         });
 
-        // Column Totals
         for (let i = 0; i < 6; i++) {
             let sum = 0;
             activeSubjects.forEach((s, sIdx) => {
@@ -364,16 +363,14 @@
         const statusEl = document.getElementById('dash-status');
         const pctEl = document.getElementById('dash-pct');
         const divEl = document.getElementById('dash-div');
-
         const pill = (txt, bg, clr, brd) => `<div class="print-badge" style="background:${bg}; color:${clr}; border-color:${brd}">${txt}</div>`;
 
         if (!complete) {
-            statusEl.innerText = "AWAITED"; pctEl.innerHTML = pill("--%", "#f8f9fa", "#6c", "#dae"); divEl.innerText = "--";
+            statusEl.innerText = "AWAITED"; pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--";
         } else {
             let isFailed = (avg < 40 || coreFailCount >= 3);
             let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3");
             pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr);
-
             if (isFailed) {
                 statusEl.innerText = "FAILED"; statusEl.className = "stat-value text-danger"; divEl.innerText = "--";
             } else {
@@ -402,16 +399,13 @@
     }
 
     function openSheet(title, options, targetId) {
-        document.getElementById('sheet-title').innerText = title;
         const container = document.getElementById('options-container'); container.innerHTML = '';
         options.forEach(opt => {
             const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt;
             btn.onclick = () => { 
                 document.getElementById(targetId).value = opt;
-                if(targetId.includes('trigger') === false) {
-                    let trig = document.getElementById(targetId.replace('-val', '-trigger'));
-                    if(trig) trig.innerText = opt;
-                }
+                let trig = document.getElementById(targetId.replace('-val', '-trigger'));
+                if(trig) trig.innerText = opt;
                 closeSheet(); calculateAll(); autoSave(); 
             };
             container.appendChild(btn);
@@ -422,7 +416,13 @@
 
     function closeSheet() { document.getElementById('sheet').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; }
 
-    function switchMode(m) { currentMode = m; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); renderTable(); calculateAll(); }
+    function switchMode(m) { 
+        currentMode = m; 
+        document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
+        document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); 
+        renderTable(); 
+        calculateAll(); 
+    }
 
     function autoSave() {
         const data = {
@@ -445,9 +445,9 @@
         calculateAll();
     }
 
-    function clearAllData() { if(confirm("Wipe?")) { localStorage.clear(); location.reload(); } }
+    function clearAllData() { if(confirm("Erase all data?")) { localStorage.clear(); location.reload(); } }
     function printReport() { if (window.AndroidBridge) AndroidBridge.printPDF(); else window.print(); }
-    function checkForUpdates() { if (window.AndroidBridge) AndroidBridge.forceUpdate(); else alert("Inside App only."); }
+    function checkForUpdates() { if (window.AndroidBridge) AndroidBridge.forceUpdate(); else alert("Update via App."); }
 </script>
 </body>
 </html>

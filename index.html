@@ -45,11 +45,11 @@
         .header-toggle-btn { padding: 5px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.65rem; text-transform: uppercase; border-radius: 15px; }
         .header-toggle-btn.active { background: #28a745; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
-        /* 3. BIGGER BOLD LABELS */
+        /* IMPROVED LABELS */
         .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; padding: 6px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
         .info-field label { font-size: 0.65rem; font-weight: 900; color: #0066cc; text-transform: uppercase; margin-bottom: 1px; }
-        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.95rem; outline: none; font-weight: 900; color: #000; padding: 0; display: flex; align-items: center; }
+        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.95rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 20px; display: flex; align-items: center; }
 
         .table-container { flex: 1; padding: 2px 6px; overflow: hidden; display: flex; flex-direction: column; }
         .table-wrap { width: 100%; height: 100%; overflow: auto; border: 1.5px solid #0066cc; border-radius: 4px; }
@@ -60,7 +60,7 @@
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 2px 4px; font-size: 12px; white-space: nowrap; width: 120px; overflow: hidden; text-overflow: ellipsis; }
         
-        /* 1. CENTERED MARKS & GRADES */
+        /* CENTERED MARKS & GRADES */
         .marks-input { 
             width: 45px; height: 26px; border: 1px solid #bbb; border-radius: 4px; 
             text-align: center; font-size: 12px; font-weight: 900; outline: none; 
@@ -70,13 +70,14 @@
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2.5px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
         .footer-row td { height: 32px; font-size: 13px; color: #000; }
 
-        /* 3. BIGGER DASHBOARD LABELS */
-        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 6px; padding: 4px 6px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
-        .stat-box { background: white; padding: 4px 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 52px; }
-        .stat-label { font-size: 0.72rem; font-weight: 900; color: #0066cc; text-transform: uppercase; margin-bottom: 2px; }
-        .stat-value { font-size: 0.9rem; font-weight: 900; }
+        /* RE-SIZED DASHBOARD */
+        .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; padding: 4px 6px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
+        .stat-box { background: white; padding: 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 52px; overflow: hidden; }
+        .stat-label { font-size: 0.58rem; font-weight: 900; color: #0066cc; text-transform: uppercase; line-height: 1; margin-bottom: 2px; }
+        .stat-value { font-size: 0.85rem; font-weight: 900; width: 100%; }
         
-        .print-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-weight: 800; border: 1px solid rgba(0,0,0,0.1); }
+        /* SMALL PILLS */
+        .print-badge { display: inline-block; padding: 2px 6px; border-radius: 8px; font-weight: 800; border: 1px solid rgba(0,0,0,0.1); font-size: 0.52rem; margin: 1px; }
 
         .bottom-section { flex-shrink: 0; padding: 8px 6px 15px 6px; background: #fff; }
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
@@ -124,8 +125,12 @@
                 </div>
 
                 <div class="student-info">
-                    <div class="info-field"><label>Name</label><input type="text" id="stu-name" placeholder="Name" oninput="autoSave()"></div>
-                    <div class="info-field"><label>Roll No</label><input type="number" id="stu-roll" placeholder="0" oninput="autoSave()"></div>
+                    <div class="info-field"><label>Name</label><input type="text" id="stu-name" oninput="autoSave()"></div>
+                    <div class="info-field">
+                        <label>Roll No</label>
+                        <div id="stu-roll-trigger" class="select-trigger" onclick="promptRoll()">-</div>
+                        <input type="hidden" id="stu-roll">
+                    </div>
                     <div class="info-field"><label>Class</label><div id="stu-class-trigger" class="select-trigger" onclick="openSheet('Select Class', classOptions, 'stu-class-val')">-</div><input type="hidden" id="stu-class-val"></div>
                     <div class="info-field"><label>Section</label><div id="stu-sec-trigger" class="select-trigger" onclick="openSheet('Select Section', ['A', 'B', 'C'], 'stu-sec-val')">-</div><input type="hidden" id="stu-sec-val"></div>
                 </div>
@@ -160,7 +165,10 @@
             </div>
 
             <div class="dashboard-section">
-                <div class="stat-box"><span class="stat-label">Failed Subjects</span><div class="stat-value" id="dash-fails" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3px;">NONE</div></div>
+                <div class="stat-box">
+                    <span class="stat-label">Failed Subjects</span>
+                    <div class="stat-value" id="dash-fails" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">NONE</div>
+                </div>
                 <div class="stat-box" style="border: 1.5px solid #0066cc; background: #f9fbfd;"><span class="stat-label">Result Status</span><div class="stat-value" id="dash-status">AWAITED</div></div>
                 <div class="stat-box" style="align-items: center;"><span class="stat-label">Percentage</span><div id="dash-pct">--%</div><hr style="width: 80%; margin: 2px 0; border: 0; border-top: 1px solid #ddd;"><span class="stat-label">Division</span><div id="dash-div">--</div></div>
             </div>
@@ -222,30 +230,33 @@
         if(pageId === 'page-grading') { renderTable(); loadCache(); }
     }
 
+    function promptRoll() {
+        let r = prompt("Enter Roll No:");
+        if (r !== null) {
+            document.getElementById('stu-roll').value = r;
+            document.getElementById('stu-roll-trigger').innerText = r || '-';
+            autoSave();
+        }
+    }
+
     function renderTable() {
         const tableBody = document.getElementById('tableBody');
         tableBody.innerHTML = '';
         activeSubjects = (currentMode === 'PMS') ? subjectsPMS : subjectsPRE;
-
         activeSubjects.forEach((subj, sIdx) => {
             let row = tableBody.insertRow();
             let sCell = row.insertCell(); sCell.className = 'subject-name';
             if (subj.options) {
                 let trigger = document.createElement('div');
-                trigger.id = `subj-trigger-${sIdx}`;
-                trigger.style.cssText = "color: #0066cc; cursor: pointer; display: inline-block; border-bottom: 1px dashed #0066cc;";
-                trigger.innerText = subj.name;
-                trigger.onclick = () => openSheet('Select Subject', subj.options, `subj-val-${sIdx}`);
-                let hidden = document.createElement('input');
-                hidden.type = 'hidden'; hidden.id = `subj-val-${sIdx}`; hidden.value = subj.name;
+                trigger.id = `subj-trigger-${sIdx}`; trigger.style.cssText = "color: #0066cc; cursor: pointer; display: inline-block; border-bottom: 1px dashed #0066cc;";
+                trigger.innerText = subj.name; trigger.onclick = () => openSheet('Select Subject', subj.options, `subj-val-${sIdx}`);
+                let hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.id = `subj-val-${sIdx}`; hidden.value = subj.name;
                 sCell.appendChild(trigger); sCell.appendChild(hidden);
             } else { sCell.innerText = subj.name; }
-
             for (let i = 0; i <= 5; i++) {
                 let cell = row.insertCell(); let inputId = `in-${sIdx}-${i}`;
                 if(subj.type === 'numeric') {
-                    let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
-                    input.className = 'marks-input'; input.id = inputId;
+                    let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric'; input.className = 'marks-input'; input.id = inputId;
                     input.onkeydown = (e) => { if(e.key === '.') e.preventDefault(); };
                     input.oninput = function() {
                         if (this.value === '--') { this.value = 'Ab'; }
@@ -302,15 +313,12 @@
         renderFails(failedList);
     }
 
-    // 2. FAILED SUBJECTS FILLED PILLS
     function renderFails(list) { 
         const el = document.getElementById('dash-fails'); el.innerHTML = ''; 
         if(list.length === 0) { el.innerText = "NONE"; return; } 
         list.forEach(item => { 
             let b = document.createElement('span'); b.className = 'print-badge'; 
-            b.style.fontSize = '0.58rem'; b.style.margin = '1px'; b.style.color = 'white'; 
-            b.style.backgroundColor = item.type === 'exempt' ? '#28a745' : '#dc3545';
-            b.style.borderColor = 'transparent';
+            b.style.color = 'white'; b.style.backgroundColor = item.type === 'exempt' ? '#28a745' : '#dc3545';
             b.innerText = item.name; el.appendChild(b); 
         }); 
     }
@@ -321,7 +329,7 @@
     function switchMode(m) { if (currentMode === m) return; if (!confirm("Switching modes will clear current data. Continue?")) return; currentMode = m; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); resetLocalInputs(); renderTable(); calculateAll(); autoSave(); }
     function resetLocalInputs() { localStorage.removeItem('marksCache'); document.querySelectorAll('input').forEach(inp => { if(inp.type !== 'hidden') inp.value = ''; }); document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-'); }
     function autoSave() { const data = { mode: currentMode, student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value }, marks: [] }; document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value})); localStorage.setItem('marksCache', JSON.stringify(data)); }
-    function loadCache() { const saved = localStorage.getItem('marksCache'); if(!saved) return; const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); document.getElementById('stu-name').value = data.student.name || ''; document.getElementById('stu-roll').value = data.student.roll || ''; document.getElementById('stu-class-val').value = data.student.class || ''; document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; document.getElementById('stu-sec-val').value = data.student.sec || ''; document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); calculateAll(); }
+    function loadCache() { const saved = localStorage.getItem('marksCache'); if(!saved) return; const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); document.getElementById('stu-name').value = data.student.name || ''; document.getElementById('stu-roll').value = data.student.roll || ''; document.getElementById('stu-roll-trigger').innerText = data.student.roll || '-'; document.getElementById('stu-class-val').value = data.student.class || ''; document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; document.getElementById('stu-sec-val').value = data.student.sec || ''; document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); calculateAll(); }
     function downloadBackup() { const data = localStorage.getItem('marksCache'); if(!data) { alert("No data to save!"); return; } const name = document.getElementById('stu-name').value || "Report"; if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`); }
     function importData(event) { const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('marksCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
     function clearAllData() { if(confirm("Erase all data?")) { resetLocalInputs(); renderTable(); calculateAll(); } }

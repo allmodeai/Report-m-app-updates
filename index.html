@@ -1,5 +1,4 @@
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -119,7 +118,7 @@
             <h1>Report Maker</h1>
             <div class="title-btn-group">
                 <button class="title-btn btn-go" onclick="showPage('page-grading')">Start Grading</button>
-                <button class="title-btn btn-up" onclick="showPopup('Update via App.', false, null, '#ff9800')">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
+                <button class="title-btn btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
             </div>
         </div>
     </div>
@@ -267,7 +266,11 @@
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
-        if(pageId === 'page-grading') { renderTable(); loadCache(); }
+        if(pageId === 'page-grading') { 
+            renderTable(); 
+            loadCache(); 
+            if(!localStorage.getItem('marksCache')) calculateAll(); // Forces initialization if completely new
+        }
     }
 
     function renderTable() {
@@ -301,9 +304,4 @@
                     let display = document.createElement('div'); display.className = 'marks-input'; display.id = inputId + '-trigger'; display.innerText = '-';
                     display.onclick = () => openSheet(subj.name, validGrades, inputId + '-val');
                     let hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.id = inputId + '-val';
-                    cell.appendChild(display); cell.appendChild(hidden);
-                }
-            }
-            for (let i = 0; i < 4; i++) row.insertCell();
-        });
- 
+                    cell.appendChild(display); cell.appendChild(h     

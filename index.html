@@ -22,36 +22,42 @@
             box-sizing: border-box; 
         }
 
-        .page { display: none; height: 100%; width: 100%; flex-direction: column; overflow: hidden; }
-        .page.active { display: flex; }
-
-        /* --- TITLE SCREEN --- */
-        #page-title { justify-content: center; align-items: center; background: #0066cc; }
-        .launch-card { background: white; padding: 30px 20px; border-radius: 28px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); width: 88%; height: 62vh; text-align: center; position: relative; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+        .page { height: 100%; width: 100%; flex-direction: column; overflow: hidden; }
         
-        .launch-card::before {
-            content: ""; position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
-            width: 240px; height: 240px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230066cc'%3E%3Cpath opacity='0.08' d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-size: contain; pointer-events: none; z-index: 0;
+        /* --- TITLE SCREEN --- */
+        #page-title { display: flex; justify-content: center; align-items: center; background: #0066cc; }
+        
+        .launch-card { 
+            background: white; padding: 30px 20px; border-radius: 28px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4); width: 88%; height: 62vh; 
+            text-align: center; position: relative; display: flex; 
+            flex-direction: column; justify-content: space-between; overflow: hidden; 
         }
 
-        .launch-card h1 { color: #0066cc; font-weight: 900; text-transform: uppercase; font-size: 1.7rem; z-index: 2; position: relative; }
+        /* WATERMARK LAYER (Fixed to never block clicks) */
+        .watermark-bg {
+            position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+            width: 240px; height: 240px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230066cc'%3E%3Cpath opacity='0.08' d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-size: contain;
+            pointer-events: none; z-index: 0;
+        }
+
+        .launch-card h1 { color: #0066cc; font-weight: 900; text-transform: uppercase; font-size: 1.7rem; z-index: 10; position: relative; }
         .title-btn-group { width: 100%; z-index: 10; position: relative; }
         
-        /* ADDED CLICK ANIMATION FOR VISUAL FEEDBACK */
         .title-btn { 
             width: 100%; padding: 18px; margin-top: 12px; border: none; border-radius: 16px; 
             font-weight: 900; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: transform 0.1s ease;
-            position: relative; z-index: 10;
+            position: relative; z-index: 20;
         }
         .title-btn:active { transform: scale(0.96); opacity: 0.9; }
-
         .btn-go { background-color: #28a745; color: white; }
         .btn-up { background-color: #ff9800; color: white; }
 
         /* --- GRADING PAGE --- */
+        #page-grading { display: none; } /* Hidden by default */
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 2px; }
         .header-section { padding: 4px; flex-shrink: 0; border-bottom: 1px solid #eee; }
         .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 0 4px; }
@@ -125,11 +131,12 @@
 <body>
 
 <div class="app-wrapper">
-    <div id="page-title" class="page active">
+    <div id="page-title" class="page">
         <div class="launch-card">
+            <div class="watermark-bg"></div>
             <h1>Report Maker</h1>
             <div class="title-btn-group">
-                <button class="title-btn btn-go" onclick="showPage('page-grading')">Start Grading</button>
+                <button class="title-btn btn-go" onclick="startApp()">Start Grading</button>
                 <button class="title-btn btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
             </div>
         </div>
@@ -139,7 +146,7 @@
         <div class="container">
             <div class="header-section">
                 <div class="top-row">
-                    <button class="btn-menu" onclick="showPage('page-title')">Menu</button>
+                    <button class="btn-menu" onclick="goToMenu()">Menu</button>
                     <div class="grading-title">Grading Table</div>
                     <div class="header-toggle">
                         <button id="btn-pms" class="header-toggle-btn active" onclick="switchMode('PMS')">PMS</button>
@@ -248,6 +255,20 @@
     let currentMode = 'PMS';
     let activeSubjects = subjectsPMS;
 
+    // --- BULLETPROOF NAVIGATION LOGIC ---
+    function startApp() {
+        document.getElementById('page-title').style.display = 'none';
+        document.getElementById('page-grading').style.display = 'flex';
+        renderTable(); 
+        loadCache(); 
+        calculateAll(); 
+    }
+
+    function goToMenu() {
+        document.getElementById('page-grading').style.display = 'none';
+        document.getElementById('page-title').style.display = 'flex';
+    }
+
     // --- CRASH-PROOF STORAGE HELPERS ---
     function safeGetItem(key) { try { return localStorage.getItem(key); } catch(e) { return null; } }
     function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
@@ -258,12 +279,10 @@
     function showPopup(msg, showCancel, callback, okColor = '#dc3545', okText = 'OK') {
         document.getElementById('dialog-msg').innerText = msg;
         document.getElementById('dialog-btn-cancel').style.display = showCancel ? 'block' : 'none';
-        
         const okBtn = document.getElementById('dialog-btn-ok');
         okBtn.style.background = okColor;
         okBtn.innerText = okText;
         popupCallback = callback;
-        
         document.getElementById('dialog-overlay').style.display = 'block';
         document.getElementById('custom-dialog').classList.add('active');
     }
@@ -279,21 +298,7 @@
         closePopup();
     };
 
-    // --- MAIN LOGIC ---
-    function showPage(pageId) {
-        try {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            if(pageId === 'page-grading') { 
-                renderTable(); 
-                loadCache(); 
-                if(!safeGetItem('marksCache')) calculateAll(); 
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
+    // --- TABLE GENERATION ---
     function renderTable() {
         const tableBody = document.getElementById('tableBody');
         tableBody.innerHTML = '';
@@ -313,6 +318,4 @@
                 if(subj.type === 'numeric') {
                     let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
                     input.className = 'marks-input'; input.id = inputId;
-                    input.onkeydown = (e) => { if(e.key === '.') e.preventDefault(); };
-                    input.oninput = function() {
-                    
+                    input.onkeydown = (e) => { if(e.key === '.') e.pr

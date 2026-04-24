@@ -35,24 +35,25 @@
             flex-direction: column; justify-content: space-between; overflow: hidden;
         }
 
-        /* METHOD 2 WATERMARK: References the local file app_icon.png */
+        /* WATERMARK */
         .launch-card::before {
             content: "";
             position: absolute;
             top: 45%; left: 50%;
             transform: translate(-50%, -50%);
             width: 250px; height: 250px;
-            background-image: url("app_icon.png"); /* Referenced directly from assets */
+            background-image: url("app_icon.png"); 
             background-repeat: no-repeat;
             background-size: contain;
-            opacity: 0.8; /* Very subtle so it doesn't hide text */
+            opacity: 0.1; 
             pointer-events: none;
             z-index: 0;
         }
 
         .launch-card h1 { color: #0066cc; font-weight: 900; text-transform: uppercase; font-size: 1.7rem; z-index: 2; position: relative; }
         .title-btn-group { width: 100%; z-index: 2; position: relative; }
-        .title-btn { width: 100%; padding: 20px; margin-top: 14px; border: none; border-radius: 16px; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .title-btn { width: 100%; padding: 20px; margin-top: 14px; border: none; border-radius: 16px; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: transform 0.1s ease;}
+        .title-btn:active { transform: scale(0.96); opacity: 0.9; }
         .btn-go { background-color: #28a745; color: white; }
         .btn-up { background-color: #ff9800; color: white; }
 
@@ -88,20 +89,45 @@
         .stat-label { font-size: 0.55rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
         .stat-value { font-size: 0.8rem; font-weight: 900; }
 
-        /* BUTTON SIZING: BIGGER THAN MENU */
         .bottom-section { flex-shrink: 0; padding: 6px 4px 10px 4px; background: #fff; }
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-        .btn { padding: 10px 2px; border: none; border-radius: 7px; font-weight: 900; font-size: 0.72rem; color: white; text-transform: uppercase; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn { padding: 10px 2px; border: none; border-radius: 7px; font-weight: 900; font-size: 0.72rem; color: white; text-transform: uppercase; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.1s ease;}
+        .btn:active { transform: scale(0.95); }
         .btn-save { background: #28a745 !important; }
         .btn-load { background: #0066cc !important; }
         .btn-pdf { background: #6f42c1 !important; }
         .btn-erase { background: #dc3545 !important; }
 
         .text-red { color: #dc3545 !important; text-decoration: underline; }
+        
+        /* OVERLAYS & SHEETS (Fixed Navigation Bar Overlap) */
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
-        .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; z-index: 1001; padding: 15px; box-sizing: border-box; max-height: 80vh; overflow-y: auto; }
+        .bottom-sheet { 
+            position: fixed; bottom: 0; left: 0; width: 100%; background: white; 
+            border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; 
+            z-index: 1001; 
+            /* Added Safe Area inset to push buttons above nav bar */
+            padding: 15px 15px calc(15px + env(safe-area-inset-bottom)) 15px; 
+            box-sizing: border-box; max-height: 80vh; overflow-y: auto; 
+        }
         .bottom-sheet.active { transform: translateY(0); }
         .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
+
+        /* CUSTOM URL-FREE POPUP DIALOG */
+        .dialog-box {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+            background: white; padding: 25px 20px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            width: 80%; max-width: 320px; text-align: center; z-index: 2000;
+            opacity: 0; pointer-events: none; transition: all 0.2s ease-out;
+        }
+        .dialog-box.active { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+        .dialog-msg { font-size: 1rem; font-weight: 900; color: #0066cc; margin-bottom: 25px; line-height: 1.3; }
+        .dialog-btns { display: flex; justify-content: center; gap: 12px; }
+        .dialog-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; transition: transform 0.1s; }
+        .dialog-btn:active { transform: scale(0.95); }
+        .dialog-btn-cancel { background: #eee; color: #666; }
+        .dialog-btn-ok { background: #dc3545; color: white; }
+
         @media print { #page-title, .bottom-section, .top-row { display: none !important; } .page { display: block !important; height: auto !important; position: static !important; } }
     </style>
 </head>
@@ -112,7 +138,7 @@
         <div class="launch-card">
             <h1>Report Maker</h1>
             <div class="title-btn-group">
-                <button class="title-btn btn-go" onclick="showPage('page-grading')">Start Grading</button>
+                <button class="title-btn btn-go" onclick="startApp()">Start Grading</button>
                 <button class="title-btn btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
             </div>
         </div>
@@ -122,7 +148,7 @@
         <div class="container">
             <div class="header-section">
                 <div class="top-row">
-                    <button class="btn-menu" onclick="showPage('page-title')">Menu</button>
+                    <button class="btn-menu" onclick="goToMenu()">Menu</button>
                     <div class="grading-title">Grading Table</div>
                     <div class="header-toggle">
                         <button id="btn-pms" class="header-toggle-btn active" onclick="switchMode('PMS')">PMS</button>
@@ -189,6 +215,15 @@
     <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;"></div>
 </div>
 
+<div id="dialog-overlay" class="sheet-overlay" onclick="closePopup()"></div>
+<div id="custom-dialog" class="dialog-box">
+    <div id="dialog-msg" class="dialog-msg">Message</div>
+    <div class="dialog-btns">
+        <button id="dialog-btn-cancel" class="dialog-btn dialog-btn-cancel" onclick="closePopup()">Cancel</button>
+        <button id="dialog-btn-ok" class="dialog-btn dialog-btn-ok">OK</button>
+    </div>
+</div>
+
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
@@ -222,11 +257,48 @@
     let currentMode = 'PMS';
     let activeSubjects = subjectsPMS;
 
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        if(pageId === 'page-grading') { renderTable(); loadCache(); }
+    // --- CRASH-PROOF STORAGE ---
+    function safeGetItem(key) { try { return localStorage.getItem(key); } catch(e) { return null; } }
+    function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
+    function safeRemoveItem(key) { try { localStorage.removeItem(key); } catch(e) {} }
+
+    // --- DIRECT NAVIGATION LOGIC ---
+    function startApp() {
+        document.getElementById('page-title').style.display = 'none';
+        document.getElementById('page-grading').style.display = 'flex';
+        renderTable();
+        loadCache();
+        if(!safeGetItem('marksCache')) calculateAll();
     }
+
+    function goToMenu() {
+        document.getElementById('page-grading').style.display = 'none';
+        document.getElementById('page-title').style.display = 'flex';
+    }
+
+    // --- CUSTOM POPUP SYSTEM ---
+    let popupCallback = null;
+    function showPopup(msg, showCancel, callback, okColor = '#dc3545', okText = 'OK') {
+        document.getElementById('dialog-msg').innerText = msg;
+        document.getElementById('dialog-btn-cancel').style.display = showCancel ? 'block' : 'none';
+        const okBtn = document.getElementById('dialog-btn-ok');
+        okBtn.style.background = okColor;
+        okBtn.innerText = okText;
+        popupCallback = callback;
+        document.getElementById('dialog-overlay').style.display = 'block';
+        document.getElementById('custom-dialog').classList.add('active');
+    }
+
+    function closePopup() {
+        document.getElementById('dialog-overlay').style.display = 'none';
+        document.getElementById('custom-dialog').classList.remove('active');
+        popupCallback = null;
+    }
+
+    document.getElementById('dialog-btn-ok').onclick = () => {
+        if(popupCallback) popupCallback();
+        closePopup();
+    };
 
     function renderTable() {
         const tableBody = document.getElementById('tableBody');
@@ -304,18 +376,56 @@
 
     function renderFails(list) { const el = document.getElementById('dash-fails'); el.innerHTML = ''; if(list.length === 0) { el.innerText = "NONE"; return; } list.forEach(item => { let b = document.createElement('span'); b.className = 'print-badge'; b.style.color = 'white'; b.style.backgroundColor = item.type === 'exempt' ? '#28a745' : '#dc3545'; b.innerText = item.name; el.appendChild(b); }); }
     function applyMarkStyling(input, max) { input.classList.remove('text-red'); if (input.value !== '' && !isNaN(input.value)) { if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red'); } }
+    
     function openSheet(title, options, targetId) { document.getElementById('sheet-title').innerText = title; const container = document.getElementById('options-container'); container.innerHTML = ''; options.forEach(opt => { const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt; btn.onclick = () => { let input = document.getElementById(targetId); if(input) input.value = opt; let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt; closeSheet(); calculateAll(); autoSave(); }; container.appendChild(btn); }); document.getElementById('overlay').style.display = 'block'; document.getElementById('sheet').classList.add('active'); }
     function closeSheet() { document.getElementById('sheet').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; }
-    function switchMode(m) { if (currentMode === m) return; if (!confirm("Switching modes will clear current data. Continue?")) return; currentMode = m; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); resetLocalInputs(); renderTable(); calculateAll(); autoSave(); }
-    function resetLocalInputs() { localStorage.removeItem('marksCache'); document.querySelectorAll('input').forEach(inp => { if(inp.type !== 'hidden') inp.value = ''; }); document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-'); }
-    function autoSave() { const data = { mode: currentMode, student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value }, marks: [] }; document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value})); localStorage.setItem('marksCache', JSON.stringify(data)); }
-    function loadCache() { const saved = localStorage.getItem('marksCache'); if(!saved) return; const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); document.getElementById('stu-name').value = data.student.name || ''; document.getElementById('stu-roll').value = data.student.roll || ''; document.getElementById('stu-class-val').value = data.student.class || ''; document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; document.getElementById('stu-sec-val').value = data.student.sec || ''; document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); calculateAll(); }
-    function downloadBackup() { const data = localStorage.getItem('marksCache'); if(!data) { alert("No data to save!"); return; } const name = document.getElementById('stu-name').value || "Report"; if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`); }
-    function importData(event) { const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('marksCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
-    function clearAllData() { if(confirm("Erase all data?")) { resetLocalInputs(); renderTable(); calculateAll(); } }
+    
+    function switchMode(m) { 
+        if (currentMode === m) return; 
+        showPopup("Switching modes will clear current data. Continue?", true, () => {
+            currentMode = m; 
+            document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
+            document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); 
+            resetLocalInputs(); renderTable(); calculateAll(); autoSave();
+        });
+    }
+
+    function resetLocalInputs() { safeRemoveItem('marksCache'); document.querySelectorAll('input').forEach(inp => { if(inp.type !== 'hidden') inp.value = ''; }); document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-'); }
+    function autoSave() { const data = { mode: currentMode, student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value }, marks: [] }; document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value})); safeSetItem('marksCache', JSON.stringify(data)); }
+    
+    function loadCache() { const saved = safeGetItem('marksCache'); if(!saved) return; const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); document.getElementById('stu-name').value = data.student.name || ''; document.getElementById('stu-roll').value = data.student.roll || ''; document.getElementById('stu-class-val').value = data.student.class || ''; document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; document.getElementById('stu-sec-val').value = data.student.sec || ''; document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); calculateAll(); }
+    
+    function downloadBackup() { const data = safeGetItem('marksCache'); if(!data) { showPopup("No data to save!", false, null, '#0066cc'); return; } const name = document.getElementById('stu-name').value || "Report"; if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`); }
+    function importData(event) { const reader = new FileReader(); reader.onload = (e) => { safeSetItem('marksCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
+    
+    function clearAllData() { 
+        showPopup("Erase all data?", true, () => {
+            resetLocalInputs(); renderTable(); calculateAll();
+        });
+    }
+
     function printReport() { if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF(); else window.print(); }
-    function checkForUpdates() { if (typeof AndroidBridge !== "undefined") AndroidBridge.forceUpdate(); else alert("Update via App."); }
-    window.onload = () => { if(localStorage.getItem('marksCache')) showPage('page-grading'); };
+    
+    function checkForUpdates() {
+        if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) {
+            AndroidBridge.forceUpdate();
+        } else {
+            showPopup("Update feature only works inside the Android app.", false, null, '#ff9800');
+        }
+    }
+
+    // INITIALIZATION (Protected)
+    window.onload = () => { 
+        try {
+            if(safeGetItem('marksCache')) {
+                startApp();
+            } else {
+                document.getElementById('page-title').style.display = 'flex';
+            }
+        } catch(e) {
+            document.getElementById('page-title').style.display = 'flex';
+        }
+    };
 </script>
 </body>
-</html>  
+</html>

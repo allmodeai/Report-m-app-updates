@@ -36,13 +36,10 @@
             background-repeat: no-repeat;
         }
 
-        /* CHANGED: Made the launch card semi-transparent (frosted glass) */
+        /* CHANGED: Made the launch card completely transparent (removed background, blur, and shadow) */
         .launch-card {
-            background: rgba(255, 255, 255, 0.85); /* 85% solid white */
-            backdrop-filter: blur(8px); /* Adds a nice frosted glass blur to the background */
-            -webkit-backdrop-filter: blur(8px);
-            padding: 30px 20px; border-radius: 28px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6); 
+            background: transparent; 
+            padding: 30px 20px; 
             width: 88%; 
             height: 85vh; 
             text-align: center; position: relative; display: flex;

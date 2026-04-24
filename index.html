@@ -17,6 +17,7 @@
 
         .app-wrapper {
             display: flex; flex-direction: column; height: 100%; width: 100%;
+            /* These env() rules protect your app from hiding behind the transparent navigation bars! */
             padding-top: env(safe-area-inset-top, 5px);
             padding-bottom: env(safe-area-inset-bottom, 10px);
             box-sizing: border-box;
@@ -36,7 +37,6 @@
             background-repeat: no-repeat;
         }
 
-        /* CHANGED: Made the launch card completely transparent (removed background, blur, and shadow) */
         .launch-card {
             background: transparent; 
             padding: 30px 20px; 
@@ -60,8 +60,6 @@
             pointer-events: none;
             z-index: 0;
         }
-
-        .launch-card h1 { color: #0066cc; font-weight: 900; text-transform: uppercase; font-size: 1.8rem; z-index: 2; position: relative; }
         
         .title-btn-group { 
             width: 100%; z-index: 2; position: relative; 
@@ -175,7 +173,6 @@
 <div class="app-wrapper">
     <div id="page-title" class="page active">
         <div class="launch-card">
-            <h1>Report Maker</h1>
             <div class="title-btn-group">
                 <button class="btn-go" onclick="startApp()">Start Grading</button>
                 <button class="btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>

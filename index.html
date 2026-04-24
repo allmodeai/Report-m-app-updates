@@ -35,17 +35,17 @@
             flex-direction: column; justify-content: space-between; overflow: hidden;
         }
 
-        /* WATERMARK */
+        /* METHOD 2 WATERMARK: References the local file app_icon.png */
         .launch-card::before {
             content: "";
             position: absolute;
             top: 45%; left: 50%;
             transform: translate(-50%, -50%);
             width: 250px; height: 250px;
-            background-image: url("app_icon.png"); 
+            background-image: url("app_icon.png"); /* Referenced directly from assets */
             background-repeat: no-repeat;
             background-size: contain;
-            opacity: 0.1; 
+            opacity: 0.8; /* Very subtle so it doesn't hide text */
             pointer-events: none;
             z-index: 0;
         }
@@ -80,6 +80,9 @@
         td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 11px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         .marks-input { width: 42px; height: 20px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+        
+        /* Ensures disabled inputs still show their text color instead of defaulting to grey text */
+        .marks-input:disabled { color: #888; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
         .footer-row td { height: 24px; font-size: 11px; }
@@ -89,6 +92,7 @@
         .stat-label { font-size: 0.55rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
         .stat-value { font-size: 0.8rem; font-weight: 900; }
 
+        /* BUTTON SIZING: BIGGER THAN MENU */
         .bottom-section { flex-shrink: 0; padding: 6px 4px 10px 4px; background: #fff; }
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
         .btn { padding: 10px 2px; border: none; border-radius: 7px; font-weight: 900; font-size: 0.72rem; color: white; text-transform: uppercase; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.1s ease;}
@@ -100,13 +104,12 @@
 
         .text-red { color: #dc3545 !important; text-decoration: underline; }
         
-        /* OVERLAYS & SHEETS (Fixed Navigation Bar Overlap) */
+        /* OVERLAYS & SHEETS */
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
         .bottom-sheet { 
             position: fixed; bottom: 0; left: 0; width: 100%; background: white; 
             border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; 
             z-index: 1001; 
-            /* Added Safe Area inset to push buttons above nav bar */
             padding: 15px 15px calc(15px + env(safe-area-inset-bottom)) 15px; 
             box-sizing: border-box; max-height: 80vh; overflow-y: auto; 
         }
@@ -341,26 +344,67 @@
     function calculateAll() {
         let activeNumericCount = 0; let failCount = 0; let grandSum = 0; let coreFails = []; let langFails = []; let dataCompleted = true;
         const tableBody = document.getElementById('tableBody');
+        
         activeSubjects.forEach((subj, sIdx) => {
-            if (subj.type !== 'numeric') return;
             let subjName = subj.name;
             let hiddenInp = document.getElementById(`subj-val-${sIdx}`);
             if(hiddenInp) subjName = hiddenInp.value;
             const row = tableBody.rows[sIdx];
+            
+            // --- NEW: N/A INPUT LOCKOUT SYSTEM ---
+            for (let i = 0; i <= 5; i++) {
+                let inp = document.getElementById(`in-${sIdx}-${i}`);
+                let trig = document.getElementById(`in-${sIdx}-${i}-trigger`);
+                let hiddenVal = document.getElementById(`in-${sIdx}-${i}-val`);
+                
+                if (subjName === 'N/A') {
+                    // Disable and gray out inputs
+                    if(inp) { inp.disabled = true; inp.value = ''; inp.style.backgroundColor = '#e9ecef'; inp.style.borderColor = '#ddd'; }
+                    if(trig) { trig.style.pointerEvents = 'none'; trig.innerText = '-'; trig.style.backgroundColor = '#e9ecef'; trig.style.borderColor = '#ddd'; }
+                    if(hiddenVal) hiddenVal.value = '';
+                } else {
+                    // Re-enable inputs
+                    if(inp) { inp.disabled = false; inp.style.backgroundColor = 'transparent'; inp.style.borderColor = '#bbb'; }
+                    if(trig) { trig.style.pointerEvents = 'auto'; trig.style.backgroundColor = 'transparent'; trig.style.borderColor = '#bbb'; }
+                }
+            }
+
+            if (subj.type !== 'numeric') return;
             if (subjName === 'N/A') { for(let i=7; i<=10; i++) row.cells[i].innerText = '-'; return; }
+            
             activeNumericCount++;
             const getV = (i) => { let val = document.getElementById(`in-${sIdx}-${i}`).value; return (val === 'Ab' || val === '-' || val === '') ? 0 : parseFloat(val); };
             const m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / subj.max) * 25);
             const q25 = Math.round(((getV(1) + getV(3)) / 2 / subj.max) * 25);
             const a50 = Math.round((getV(5) / subj.max) * 50);
             const total = m25 + q25 + a50;
+            
             row.cells[7].innerText = m25; row.cells[8].innerText = q25; row.cells[9].innerText = a50; row.cells[10].innerText = total;
             row.cells[10].classList.remove('text-red'); if (total < 40) row.cells[10].classList.add('text-red');
+            
             let rowFilled = true; for(let i=0; i<=5; i++) if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
-            if(rowFilled) { if(total < 40) { if(subj.exempt) langFails.push({ name: subjName, type: 'exempt' }); else { coreFails.push({ name: subjName, type: 'core' }); failCount++; } } } else { dataCompleted = false; }
+            
+            if(rowFilled) { 
+                if(total < 40) { 
+                    if(subj.exempt) langFails.push({ name: subjName, type: 'exempt' }); 
+                    else { coreFails.push({ name: subjName, type: 'core' }); failCount++; } 
+                } 
+            } else { dataCompleted = false; }
+            
             grandSum += total;
         });
-        for (let i = 0; i < 6; i++) { let sum = 0; activeSubjects.forEach((s, sIdx) => { if(s.type === 'numeric') { let v = document.getElementById(`in-${sIdx}-${i}`).value; sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); } }); document.getElementById(`gt-${i}`).innerText = sum; }
+        
+        for (let i = 0; i < 6; i++) { 
+            let sum = 0; 
+            activeSubjects.forEach((s, sIdx) => { 
+                if(s.type === 'numeric') { 
+                    let v = document.getElementById(`in-${sIdx}-${i}`).value; 
+                    sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); 
+                } 
+            }); 
+            document.getElementById(`gt-${i}`).innerText = sum; 
+        }
+        
         document.getElementById('gt-total').innerText = grandSum;
         const avg = activeNumericCount > 0 ? (grandSum / activeNumericCount) : 0;
         updateDashboard(avg, coreFails.concat(langFails), failCount, dataCompleted);
@@ -374,7 +418,26 @@
         renderFails(failedList);
     }
 
-    function renderFails(list) { const el = document.getElementById('dash-fails'); el.innerHTML = ''; if(list.length === 0) { el.innerText = "NONE"; return; } list.forEach(item => { let b = document.createElement('span'); b.className = 'print-badge'; b.style.color = 'white'; b.style.backgroundColor = item.type === 'exempt' ? '#28a745' : '#dc3545'; b.innerText = item.name; el.appendChild(b); }); }
+    // --- NEW: OUTLINED FAILED SUBJECTS PILLS ---
+    function renderFails(list) { 
+        const el = document.getElementById('dash-fails'); 
+        el.innerHTML = ''; 
+        if(list.length === 0) { el.innerText = "NONE"; return; } 
+        
+        list.forEach(item => { 
+            let b = document.createElement('span'); 
+            b.className = 'print-badge'; 
+            let color = item.type === 'exempt' ? '#28a745' : '#dc3545';
+            
+            b.style.color = color;
+            b.style.backgroundColor = 'transparent'; // No background fill
+            b.style.border = `1px solid ${color}`; // Outline matches text color
+            
+            b.innerText = item.name; 
+            el.appendChild(b); 
+        }); 
+    }
+    
     function applyMarkStyling(input, max) { input.classList.remove('text-red'); if (input.value !== '' && !isNaN(input.value)) { if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red'); } }
     
     function openSheet(title, options, targetId) { document.getElementById('sheet-title').innerText = title; const container = document.getElementById('options-container'); container.innerHTML = ''; options.forEach(opt => { const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt; btn.onclick = () => { let input = document.getElementById(targetId); if(input) input.value = opt; let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt; closeSheet(); calculateAll(); autoSave(); }; container.appendChild(btn); }); document.getElementById('overlay').style.display = 'block'; document.getElementById('sheet').classList.add('active'); }
@@ -414,7 +477,6 @@
         }
     }
 
-    // INITIALIZATION (Protected)
     window.onload = () => { 
         try {
             if(safeGetItem('marksCache')) {

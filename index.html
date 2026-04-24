@@ -94,11 +94,10 @@
         .header-toggle-btn { padding: 4px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.6rem; text-transform: uppercase; border-radius: 15px; }
         .header-toggle-btn.active { background: #28a745; color: white; }
 
-        /* REDUCED STUDENT INFO BOX */
-        .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2px; padding: 2px 4px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
+        .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3px; padding: 4px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
-        .info-field label { font-size: 0.6rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
-        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.85rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 16px; display: flex; align-items: center; }
+        .info-field label { font-size: 0.65rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
+        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.9rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 18px; display: flex; align-items: center; }
 
         /* NO-SCROLL TABLE */
         .table-container { flex: 1; padding: 0 4px; overflow: hidden; display: flex; flex-direction: column; }
@@ -106,11 +105,11 @@
         table { border-collapse: collapse; min-width: 850px; width: 100%; height: 100%; table-layout: fixed; }
         
         th { background: #0066cc; color: white; padding: 2px; border: 1px solid #0052a3; font-size: 8px; }
-        
-        /* INCREASED FIRST ROW HEADERS */
-        .top-header { font-size: 11px !important; padding: 4px 2px !important; letter-spacing: 0.5px; text-transform: uppercase; }
-
         td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
+        
+        /* MAKES THE LAST COLUMN BOLD */
+        tbody td:last-child { font-weight: 900; font-size: 11px; }
+
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 11px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         
         .marks-input { width: 42px; height: 19px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
@@ -197,9 +196,9 @@
                     <table id="main-table">
                         <thead>
                         <tr>
-                            <th rowspan="2" class="top-header" style="width: 110px; position: sticky; left: 0; z-index: 10;">SUBJECTS</th>
-                            <th colspan="5" class="top-header">Assessments</th>
-                            <th colspan="5" class="top-header" style="background-color: #004c99">Final Weightage</th>
+                            <th rowspan="2" style="width: 110px; position: sticky; left: 0; z-index: 10;">SUBJECTS</th>
+                            <th colspan="5">Assessments</th>
+                            <th colspan="5" style="background-color: #004c99">Final Weightage</th>
                         </tr>
                         <tr>
                             <th>U I</th><th>Qtr</th><th>U II</th><th>HY</th><th>U III</th>

@@ -26,20 +26,22 @@
         .page.active { display: flex; }
 
         /* --- TITLE SCREEN --- */
-        /* RESTORED: Background Image for the Title Screen */
         #page-title { 
             justify-content: center; 
             align-items: center; 
-            background-color: #0066cc; /* Fallback color */
-            background-image: url('title_bg.jpg'); 
-            background-size: cover; 
+            background-color: #0066cc; 
+            background-image: url('https://allmodeai.github.io/Report-m-app-updates/title_bg.jpg');
+            
+            /* THIS IS THE FIX: Forces image to fit perfectly inside the screen bounds */
+            background-size: 100% 100%; 
+            
             background-position: center center;
             background-repeat: no-repeat;
         }
 
         .launch-card {
             background: white; padding: 30px 20px; border-radius: 28px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6); /* Slightly darkened shadow to stand out against background image */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6); 
             width: 88%; 
             height: 85vh; 
             text-align: center; position: relative; display: flex;
@@ -53,7 +55,7 @@
             top: 40%; left: 50%;
             transform: translate(-50%, -50%);
             width: 250px; height: 250px;
-            background-image: url("https://allmodeai.github.io/Report-m-app-updates/title_bg.jpg"); 
+            background-image: url("https://allmodeai.github.io/Report-m-app-updates/Report_makerAppicon.jpg"); 
             background-repeat: no-repeat;
             background-size: contain;
             opacity: 0.1; 
@@ -97,9 +99,7 @@
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 2px; }
         .header-section { padding: 4px; flex-shrink: 0; border-bottom: 1px solid #eee; }
         .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 0 4px; }
-        
         .btn-menu { background: #004c99; color: white; border: none; padding: 5px 12px; border-radius: 6px; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; }
-        
         .grading-title { font-weight: 900; color: #0066cc; font-size: 0.8rem; text-transform: uppercase; }
         .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 2px; border: 1px solid #e68a00; }
         .header-toggle-btn { padding: 4px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.6rem; text-transform: uppercase; border-radius: 15px; }
@@ -120,11 +120,12 @@
         
         td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
         
+        /* MAKES THE LAST COLUMN BOLD */
         tbody td:last-child { font-weight: 900; font-size: 11px; }
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 13px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         
-        .marks-input { width: 42px; height: 19px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
+        .marks-input { width: 42px; height: 19px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 13px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
         .marks-input:disabled { color: #888; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }

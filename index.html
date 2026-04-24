@@ -32,22 +32,22 @@
             background: white; padding: 30px 20px; border-radius: 28px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.4); 
             width: 88%; 
-            height: 85vh; /* 1. INCREASED HEIGHT TO PUSH BUTTONS TO BOTTOM */
+            height: 85vh; 
             text-align: center; position: relative; display: flex;
             flex-direction: column; justify-content: space-between; overflow: hidden;
         }
 
-        /* METHOD 2 WATERMARK */
+        /* WATERMARK INTEGRATION: Using Report_makerAppicon.jpg */
         .launch-card::before {
             content: "";
             position: absolute;
             top: 40%; left: 50%;
             transform: translate(-50%, -50%);
             width: 250px; height: 250px;
-            background-image: url("app_icon.png");
+            background-image: url("Report_makerAppicon.jpg"); 
             background-repeat: no-repeat;
             background-size: contain;
-            opacity: 0.1;
+            opacity: 0.1; 
             pointer-events: none;
             z-index: 0;
         }
@@ -56,27 +56,24 @@
         
         .title-btn-group { 
             width: 100%; z-index: 2; position: relative; 
-            margin-top: auto; /* Pushes the group to the bottom of the card */
+            margin-top: auto; 
             padding-bottom: 10px;
         }
         
-        /* 3. BROADER 3D START BUTTON */
         .btn-go { 
             width: 100%; padding: 24px 10px; background-color: #28a745; color: white; 
             border: none; border-radius: 18px; font-weight: 900; font-size: 1.3rem; 
             text-transform: uppercase; cursor: pointer; 
-            box-shadow: 0 8px 0 #1e7e34, 0 15px 25px rgba(0,0,0,0.25); /* 3D Shadow Edge */
+            box-shadow: 0 8px 0 #1e7e34, 0 15px 25px rgba(0,0,0,0.25); 
             transition: all 0.1s ease; 
             margin-bottom: 20px;
             display: block;
         }
-        /* Pushes down physically when clicked */
         .btn-go:active { 
             transform: translateY(8px); 
             box-shadow: 0 0px 0 #1e7e34, 0 5px 10px rgba(0,0,0,0.2); 
         }
 
-        /* 2. REDUCED UPDATE BUTTON */
         .btn-up { 
             width: 55%; padding: 12px 10px; background-color: #ff9800; color: white; 
             border: none; border-radius: 12px; font-weight: bold; font-size: 0.8rem; 
@@ -111,7 +108,6 @@
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 11px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         .marks-input { width: 42px; height: 20px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
         
-        /* Ensures disabled inputs show color */
         .marks-input:disabled { color: #888; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
@@ -121,6 +117,17 @@
         .stat-box { background: white; padding: 2px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 48px; }
         .stat-label { font-size: 0.55rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
         .stat-value { font-size: 0.8rem; font-weight: 900; }
+
+        /* CAPSULE SHAPED PILLS */
+        .print-badge { 
+            display: inline-block; 
+            padding: 2px 8px; /* More horizontal padding for capsule shape */
+            border-radius: 50px; /* High radius creates the pill/capsule shape */
+            font-weight: 800; 
+            font-size: 0.55rem; 
+            margin: 1px 2px; 
+            border: 1px solid rgba(0,0,0,0.1); /* Fallback border */
+        }
 
         .bottom-section { flex-shrink: 0; padding: 6px 4px 10px 4px; background: #fff; }
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
@@ -281,8 +288,8 @@
         { name: 'Hindi', type: 'numeric', max: 100, exempt: true },
         { name: 'Mathematics', type: 'numeric', max: 100 },
         { name: 'Rhymes', type: 'numeric', max: 100 },
-        { name: 'G.K.', type: 'numeric', max: 100, options: ['G.K.', 'N/A', 'P.G.'] },
-        { name: 'Computer', type: 'numeric', max: 100, options: ['N/A', 'Computer', 'N/A']},
+        { name: 'G.K.', type: 'numeric', max: 100, options: ['G.K.', 'P.G.', 'N/A'] },
+        { name: 'Computer', type: 'numeric', max: 100, options: ['Computer', 'N/A'] },
         { name: 'Drawing', type: 'grade' }
     ];
 

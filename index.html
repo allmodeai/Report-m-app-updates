@@ -118,7 +118,7 @@
         .stat-label { font-size: 0.62rem; font-weight: 900; color: #0066cc; text-transform: uppercase; margin-bottom: 2px; }
         .stat-value { font-size: 0.8rem; font-weight: 900; }
 
-        /* CAPSULE SHAPED PILLS (Default) */
+        /* CAPSULE SHAPED PILLS */
         .print-badge { 
             display: inline-block; 
             padding: 2px 8px; 
@@ -129,19 +129,14 @@
             border: 1px solid rgba(0,0,0,0.1); 
         }
 
-        /* 1. SPECIFIC STYLING FOR THE PERCENTAGE PILL */
         #dash-pct .print-badge {
-            padding: 3px 15px;   /* Significantly broader/taller pill box */
-            font-size: 0.72rem;  /* Slightly reduced text to allow for more box area */
-            border-width: 1.5px; /* Pronounced outline */
+            padding: 3px 15px; 
+            font-size: 0.72rem; 
+            border-width: 1.5px; 
             margin: 1px 0;
         }
 
-        /* Ensures division text stays balanced */
-        #dash-div {
-            font-weight: 900;
-            font-size: 0.8rem;
-        }
+        #dash-div { font-weight: 900; font-size: 0.8rem; }
 
         .bottom-section { flex-shrink: 0; padding: 6px 4px 10px 4px; background: #fff; }
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
@@ -373,13 +368,19 @@
                 if(subj.type === 'numeric') {
                     let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
                     input.className = 'marks-input'; input.id = inputId;
-                    input.onkeydown = (e) => { if(e.key === '.') e.preventDefault(); };
+                    
+                    // --- NEW STRICT INPUT LOGIC (MAX TWO DASHES) ---
                     input.oninput = function() {
-                        if (this.value === '--') { this.value = 'Ab'; }
-                        this.value = this.value.replace(/[^0-9Ab\-]/g, '');
-                        if(this.value !== 'Ab' && this.value !== '-' && this.value !== '' && parseFloat(this.value) > subj.max) this.value = '';
+                        if (this.value.includes('--')) { this.value = 'Ab'; }
+                        if (this.value !== 'Ab' && this.value !== '-') {
+                            this.value = this.value.replace(/[^0-9]/g, '');
+                        }
+                        if(this.value !== '' && parseFloat(this.value) > subj.max) {
+                            this.value = ''; 
+                        }
                         applyMarkStyling(this, subj.max); calculateAll(); autoSave();
                     };
+
                     cell.appendChild(input);
                 } else {
                     let display = document.createElement('div'); display.className = 'marks-input'; display.id = inputId + '-trigger'; display.innerText = '-';

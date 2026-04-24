@@ -30,32 +30,62 @@
 
         .launch-card {
             background: white; padding: 30px 20px; border-radius: 28px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4); width: 88%; height: 65vh;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4); 
+            width: 88%; 
+            height: 85vh; /* 1. INCREASED HEIGHT TO PUSH BUTTONS TO BOTTOM */
             text-align: center; position: relative; display: flex;
             flex-direction: column; justify-content: space-between; overflow: hidden;
         }
 
-        /* METHOD 2 WATERMARK: References the local file app_icon.png */
+        /* METHOD 2 WATERMARK */
         .launch-card::before {
             content: "";
             position: absolute;
-            top: 45%; left: 50%;
+            top: 40%; left: 50%;
             transform: translate(-50%, -50%);
             width: 250px; height: 250px;
-            background-image: url("app_icon.png"); /* Referenced directly from assets */
+            background-image: url("app_icon.png");
             background-repeat: no-repeat;
             background-size: contain;
-            opacity: 0.8; /* Very subtle so it doesn't hide text */
+            opacity: 0.1;
             pointer-events: none;
             z-index: 0;
         }
 
-        .launch-card h1 { color: #0066cc; font-weight: 900; text-transform: uppercase; font-size: 1.7rem; z-index: 2; position: relative; }
-        .title-btn-group { width: 100%; z-index: 2; position: relative; }
-        .title-btn { width: 100%; padding: 20px; margin-top: 14px; border: none; border-radius: 16px; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: transform 0.1s ease;}
-        .title-btn:active { transform: scale(0.96); opacity: 0.9; }
-        .btn-go { background-color: #28a745; color: white; }
-        .btn-up { background-color: #ff9800; color: white; }
+        .launch-card h1 { color: #0066cc; font-weight: 900; text-transform: uppercase; font-size: 1.8rem; z-index: 2; position: relative; }
+        
+        .title-btn-group { 
+            width: 100%; z-index: 2; position: relative; 
+            margin-top: auto; /* Pushes the group to the bottom of the card */
+            padding-bottom: 10px;
+        }
+        
+        /* 3. BROADER 3D START BUTTON */
+        .btn-go { 
+            width: 100%; padding: 24px 10px; background-color: #28a745; color: white; 
+            border: none; border-radius: 18px; font-weight: 900; font-size: 1.3rem; 
+            text-transform: uppercase; cursor: pointer; 
+            box-shadow: 0 8px 0 #1e7e34, 0 15px 25px rgba(0,0,0,0.25); /* 3D Shadow Edge */
+            transition: all 0.1s ease; 
+            margin-bottom: 20px;
+            display: block;
+        }
+        /* Pushes down physically when clicked */
+        .btn-go:active { 
+            transform: translateY(8px); 
+            box-shadow: 0 0px 0 #1e7e34, 0 5px 10px rgba(0,0,0,0.2); 
+        }
+
+        /* 2. REDUCED UPDATE BUTTON */
+        .btn-up { 
+            width: 55%; padding: 12px 10px; background-color: #ff9800; color: white; 
+            border: none; border-radius: 12px; font-weight: bold; font-size: 0.8rem; 
+            text-transform: uppercase; cursor: pointer; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+            transition: transform 0.1s ease; 
+            margin: 0 auto; display: block;
+        }
+        .btn-up:active { transform: scale(0.94); }
 
         /* --- GRADING PAGE --- */
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 2px; }
@@ -81,7 +111,7 @@
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 11px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         .marks-input { width: 42px; height: 20px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
         
-        /* Ensures disabled inputs still show their text color instead of defaulting to grey text */
+        /* Ensures disabled inputs show color */
         .marks-input:disabled { color: #888; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
@@ -92,7 +122,6 @@
         .stat-label { font-size: 0.55rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
         .stat-value { font-size: 0.8rem; font-weight: 900; }
 
-        /* BUTTON SIZING: BIGGER THAN MENU */
         .bottom-section { flex-shrink: 0; padding: 6px 4px 10px 4px; background: #fff; }
         .btn-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
         .btn { padding: 10px 2px; border: none; border-radius: 7px; font-weight: 900; font-size: 0.72rem; color: white; text-transform: uppercase; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.1s ease;}
@@ -141,8 +170,8 @@
         <div class="launch-card">
             <h1>Report Maker</h1>
             <div class="title-btn-group">
-                <button class="title-btn btn-go" onclick="startApp()">Start Grading</button>
-                <button class="title-btn btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
+                <button class="btn-go" onclick="startApp()">Start Grading</button>
+                <button class="btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
             </div>
         </div>
     </div>
@@ -252,8 +281,8 @@
         { name: 'Hindi', type: 'numeric', max: 100, exempt: true },
         { name: 'Mathematics', type: 'numeric', max: 100 },
         { name: 'Rhymes', type: 'numeric', max: 100 },
-        { name: 'G.K.', type: 'numeric', max: 100, options: ['G.K.', 'P.G.', 'N/A'] },
-        { name: 'Computer', type: 'numeric', max: 100, options: ['Computer', 'N/A'] },
+        { name: 'G.K.', type: 'numeric', max: 100, options: ['G.K.', 'N/A', 'P.G.'] },
+        { name: 'Computer', type: 'numeric', max: 100, options: ['N/A', 'Computer', 'N/A']},
         { name: 'Drawing', type: 'grade' }
     ];
 
@@ -317,6 +346,7 @@
                 let hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.id = `subj-val-${sIdx}`; hidden.value = subj.name;
                 sCell.appendChild(trigger); sCell.appendChild(hidden);
             } else { sCell.innerText = subj.name; }
+            
             for (let i = 0; i <= 5; i++) {
                 let cell = row.insertCell(); let inputId = `in-${sIdx}-${i}`;
                 if(subj.type === 'numeric') {
@@ -351,19 +381,15 @@
             if(hiddenInp) subjName = hiddenInp.value;
             const row = tableBody.rows[sIdx];
             
-            // --- NEW: N/A INPUT LOCKOUT SYSTEM ---
             for (let i = 0; i <= 5; i++) {
                 let inp = document.getElementById(`in-${sIdx}-${i}`);
                 let trig = document.getElementById(`in-${sIdx}-${i}-trigger`);
                 let hiddenVal = document.getElementById(`in-${sIdx}-${i}-val`);
-                
                 if (subjName === 'N/A') {
-                    // Disable and gray out inputs
                     if(inp) { inp.disabled = true; inp.value = ''; inp.style.backgroundColor = '#e9ecef'; inp.style.borderColor = '#ddd'; }
                     if(trig) { trig.style.pointerEvents = 'none'; trig.innerText = '-'; trig.style.backgroundColor = '#e9ecef'; trig.style.borderColor = '#ddd'; }
                     if(hiddenVal) hiddenVal.value = '';
                 } else {
-                    // Re-enable inputs
                     if(inp) { inp.disabled = false; inp.style.backgroundColor = 'transparent'; inp.style.borderColor = '#bbb'; }
                     if(trig) { trig.style.pointerEvents = 'auto'; trig.style.backgroundColor = 'transparent'; trig.style.borderColor = '#bbb'; }
                 }
@@ -383,7 +409,6 @@
             row.cells[10].classList.remove('text-red'); if (total < 40) row.cells[10].classList.add('text-red');
             
             let rowFilled = true; for(let i=0; i<=5; i++) if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
-            
             if(rowFilled) { 
                 if(total < 40) { 
                     if(subj.exempt) langFails.push({ name: subjName, type: 'exempt' }); 
@@ -418,21 +443,17 @@
         renderFails(failedList);
     }
 
-    // --- NEW: OUTLINED FAILED SUBJECTS PILLS ---
     function renderFails(list) { 
         const el = document.getElementById('dash-fails'); 
         el.innerHTML = ''; 
         if(list.length === 0) { el.innerText = "NONE"; return; } 
-        
         list.forEach(item => { 
             let b = document.createElement('span'); 
             b.className = 'print-badge'; 
             let color = item.type === 'exempt' ? '#28a745' : '#dc3545';
-            
             b.style.color = color;
-            b.style.backgroundColor = 'transparent'; // No background fill
-            b.style.border = `1px solid ${color}`; // Outline matches text color
-            
+            b.style.backgroundColor = 'transparent'; 
+            b.style.border = `1px solid ${color}`;
             b.innerText = item.name; 
             el.appendChild(b); 
         }); 

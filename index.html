@@ -106,22 +106,19 @@
         th { background: #0066cc; color: white; padding: 2px; border: 1px solid #0052a3; font-size: 8px; }
         td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 11px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
-        
-        /* Shaved 1px off input height to guarantee table compression */
         .marks-input { width: 42px; height: 19px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
         .marks-input:disabled { color: #888; }
 
-        /* 1. SHRUNK GRAND TOTAL ROW */
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
         .footer-row td { height: 18px; font-size: 11px; }
 
-        /* 2. EXPANDED DASHBOARD SECTION */
+        /* DASHBOARD SECTION */
         .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; padding: 6px 4px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
         .stat-box { background: white; padding: 4px; border-radius: 6px; text-align: center; border: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; min-height: 60px; }
         .stat-label { font-size: 0.62rem; font-weight: 900; color: #0066cc; text-transform: uppercase; margin-bottom: 2px; }
-        .stat-value { font-size: 0.9rem; font-weight: 900; }
+        .stat-value { font-size: 0.8rem; font-weight: 900; }
 
-        /* CAPSULE SHAPED PILLS */
+        /* CAPSULE SHAPED PILLS (Default) */
         .print-badge { 
             display: inline-block; 
             padding: 2px 8px; 
@@ -130,6 +127,20 @@
             font-size: 0.55rem; 
             margin: 1px 2px; 
             border: 1px solid rgba(0,0,0,0.1); 
+        }
+
+        /* 1. SPECIFIC STYLING FOR THE PERCENTAGE PILL */
+        #dash-pct .print-badge {
+            padding: 3px 15px;   /* Significantly broader/taller pill box */
+            font-size: 0.72rem;  /* Slightly reduced text to allow for more box area */
+            border-width: 1.5px; /* Pronounced outline */
+            margin: 1px 0;
+        }
+
+        /* Ensures division text stays balanced */
+        #dash-div {
+            font-weight: 900;
+            font-size: 0.8rem;
         }
 
         .bottom-section { flex-shrink: 0; padding: 6px 4px 10px 4px; background: #fff; }
@@ -236,7 +247,7 @@
             <div class="dashboard-section">
                 <div class="stat-box"><span class="stat-label">Failed Subjects</span><div class="stat-value" id="dash-fails" style="display: flex; flex-wrap: wrap; justify-content: center;">NONE</div></div>
                 <div class="stat-box" style="border: 1.5px solid #0066cc; background: #f9fbfd;"><span class="stat-label">Result Status</span><div class="stat-value" id="dash-status">AWAITED</div></div>
-                <div class="stat-box" style="align-items: center;"><span class="stat-label">Percentage</span><div id="dash-pct">--%</div><hr style="width: 80%; margin: 1px 0; border: 0; border-top: 1px solid #ddd;"><span class="stat-label">Division</span><div id="dash-div">--</div></div>
+                <div class="stat-box" style="align-items: center;"><span class="stat-label">Percentage</span><div id="dash-pct"><div class="print-badge" style="background:#fff; color:#666; border-color:#ddd;">--%</div></div><hr style="width: 80%; margin: 1px 0; border: 0; border-top: 1px solid #ddd;"><span class="stat-label">Division</span><div id="dash-div">--</div></div>
             </div>
 
             <div class="bottom-section">

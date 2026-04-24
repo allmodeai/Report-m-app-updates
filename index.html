@@ -31,16 +31,17 @@
             align-items: center; 
             background-color: #0066cc; 
             background-image: url('https://allmodeai.github.io/Report-m-app-updates/title_bg.jpg');
-            
-            /* THIS IS THE FIX: Forces image to fit perfectly inside the screen bounds */
             background-size: 100% 100%; 
-            
             background-position: center center;
             background-repeat: no-repeat;
         }
 
+        /* CHANGED: Made the launch card semi-transparent (frosted glass) */
         .launch-card {
-            background: white; padding: 30px 20px; border-radius: 28px;
+            background: rgba(255, 255, 255, 0.85); /* 85% solid white */
+            backdrop-filter: blur(8px); /* Adds a nice frosted glass blur to the background */
+            -webkit-backdrop-filter: blur(8px);
+            padding: 30px 20px; border-radius: 28px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.6); 
             width: 88%; 
             height: 85vh; 
@@ -52,8 +53,8 @@
         .launch-card::before {
             content: "";
             position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(100%, 100%);
+            top: 40%; left: 50%;
+            transform: translate(-50%, -50%);
             width: 250px; height: 250px;
             background-image: url("https://allmodeai.github.io/Report-m-app-updates/Report_makerAppicon.jpg"); 
             background-repeat: no-repeat;

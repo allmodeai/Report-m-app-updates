@@ -1,6 +1,6 @@
 {
-  "versionCode": 2,
-  "versionName": "1.1.0",
+  "versionCode": 3,
+  "versionName": "1.2.0",
   "url": "https://github.com/allmodeai/Report-m-app-updates/releases/download/v1.1.0/Report_maker_v1.1.0.apk",
-  "changelog": "Version 1.1.0 stable release."
+  "changelog": "Massive UI/UX upgrade! v1.3.0 introduces a true edge-to-edge transparent layout, strict 2-dash input limits for absent marks, enhanced table readability with larger fonts and bold totals, and a fully transparent launch screen."
 }

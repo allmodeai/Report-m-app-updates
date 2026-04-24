@@ -88,35 +88,32 @@
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 2px; }
         .header-section { padding: 4px; flex-shrink: 0; border-bottom: 1px solid #eee; }
         .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 0 4px; }
-        
-        /* REVERTED MENU BUTTON SIZE */
         .btn-menu { background: #004c99; color: white; border: none; padding: 5px 12px; border-radius: 6px; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; }
-        
         .grading-title { font-weight: 900; color: #0066cc; font-size: 0.8rem; text-transform: uppercase; }
         .header-toggle { background: #ff9800; border-radius: 20px; display: flex; padding: 2px; border: 1px solid #e68a00; }
         .header-toggle-btn { padding: 4px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.6rem; text-transform: uppercase; border-radius: 15px; }
         .header-toggle-btn.active { background: #28a745; color: white; }
 
-        .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3px; padding: 4px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
+        /* REDUCED STUDENT INFO BOX */
+        .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2px; padding: 2px 4px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
-        .info-field label { font-size: 0.65rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
-        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.9rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 18px; display: flex; align-items: center; }
+        .info-field label { font-size: 0.6rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
+        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.85rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 16px; display: flex; align-items: center; }
 
         /* NO-SCROLL TABLE */
         .table-container { flex: 1; padding: 0 4px; overflow: hidden; display: flex; flex-direction: column; }
         .table-wrap { width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; border: 1.5px solid #0066cc; border-radius: 4px; }
         table { border-collapse: collapse; min-width: 850px; width: 100%; height: 100%; table-layout: fixed; }
         
-        th { background: #0066cc; color: white; padding: 2px 1px; border: 1px solid #0052a3; font-size: 11px; text-transform: uppercase; line-height: 1.1; }
-        .top-header { font-size: 14px !important; letter-spacing: 0.5px; padding: 5px 2px !important; }
+        th { background: #0066cc; color: white; padding: 2px; border: 1px solid #0052a3; font-size: 8px; }
         
-        td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
-        
-        tbody td:last-child { font-weight: 900; font-size: 11px; }
+        /* INCREASED FIRST ROW HEADERS */
+        .top-header { font-size: 11px !important; padding: 4px 2px !important; letter-spacing: 0.5px; text-transform: uppercase; }
 
-        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 13px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
+        td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
+        .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 11px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         
-        .marks-input { width: 42px; height: 19px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 13px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
+        .marks-input { width: 42px; height: 19px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
         .marks-input:disabled { color: #888; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
@@ -205,11 +202,11 @@
                             <th colspan="5" class="top-header" style="background-color: #004c99">Final Weightage</th>
                         </tr>
                         <tr>
-                            <th>Unit I</th><th>Qtr</th><th>Unit II</th><th>Half Yr</th><th>Unit III</th>
-                            <th style="background-color: #004c99">Ann<br>100</th>
-                            <th style="background-color: #004c99">M<br>25%</th>
-                            <th style="background-color: #004c99">QH<br>25%</th>
-                            <th style="background-color: #004c99">Ann<br>50%</th>
+                            <th>U I</th><th>Qtr</th><th>U II</th><th>HY</th><th>U III</th>
+                            <th style="background-color: #004c99">Ann 100</th>
+                            <th style="background-color: #004c99">M 25%</th>
+                            <th style="background-color: #004c99">QH 25%</th>
+                            <th style="background-color: #004c99">Ann 50%</th>
                             <th style="background-color: #004c99">Total</th>
                         </tr>
                         </thead>
@@ -289,10 +286,12 @@
     let currentMode = 'PMS';
     let activeSubjects = subjectsPMS;
 
+    // --- CRASH-PROOF STORAGE ---
     function safeGetItem(key) { try { return localStorage.getItem(key); } catch(e) { return null; } }
     function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
     function safeRemoveItem(key) { try { localStorage.removeItem(key); } catch(e) {} }
 
+    // --- DIRECT NAVIGATION LOGIC ---
     function startApp() {
         document.getElementById('page-title').style.display = 'none';
         document.getElementById('page-grading').style.display = 'flex';
@@ -306,6 +305,7 @@
         document.getElementById('page-title').style.display = 'flex';
     }
 
+    // --- CUSTOM POPUP SYSTEM ---
     let popupCallback = null;
     function showPopup(msg, showCancel, callback, okColor = '#dc3545', okText = 'OK') {
         document.getElementById('dialog-msg').innerText = msg;
@@ -350,6 +350,7 @@
                     let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
                     input.className = 'marks-input'; input.id = inputId;
                     
+                    // --- STRICT INPUT LOGIC (MAX TWO DASHES) ---
                     input.oninput = function() {
                         if (this.value.includes('--')) { this.value = 'Ab'; }
                         if (this.value !== 'Ab' && this.value !== '-') {

@@ -120,12 +120,12 @@
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 13px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         
-        /* CHANGED: Set to exactly 44px by 22px, with a 12px font size */
-        .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
+        /* CHANGED: Set to exactly 48px by 24px, with a 13px font size */
+        .marks-input { width: 48px; height: 24px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 13px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
         .marks-input:disabled { color: #888; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
-        .footer-row td { height: 18px; font-size: 11px; }
+        .footer-row td { height: 22px; font-size: 11px; }
 
         /* DASHBOARD SECTION */
         .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; padding: 6px 4px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
@@ -359,6 +359,13 @@
                         if (this.value !== 'Ab' && this.value !== '-') {
                             this.value = this.value.replace(/[^0-9]/g, '');
                         }
+                        
+                        // --- DOUBLE ZERO LOCKOUT LOGIC ---
+                        if (this.value.startsWith('00')) {
+                            this.value = '00';
+                        }
+                        // ---------------------------------
+
                         if(this.value !== '' && parseFloat(this.value) > subj.max) {
                             this.value = ''; 
                         }

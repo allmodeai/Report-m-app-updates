@@ -110,7 +110,6 @@
         .table-wrap { width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; border: 1.5px solid #0066cc; border-radius: 4px; }
         table { border-collapse: collapse; min-width: 850px; width: 100%; height: 100%; table-layout: fixed; }
         
-        /* CHANGED: Base table header font-size reduced to 8px for the sub-headers */
         th { background: #0066cc; color: white; padding: 2px 1px; border: 1px solid #0052a3; font-size: 8px; text-transform: uppercase; line-height: 1.1; }
         .top-header { font-size: 10px !important; padding: 2px 2px !important; }
         
@@ -121,9 +120,11 @@
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 13px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         
-        .marks-input { width: 42px; height: 19px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 13px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
+        /* CHANGED: Shrunk dimensions slightly (42x20) and reduced font size back to 11px for a cleaner look */
+        .marks-input { width: 42px; height: 20px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 11px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
         .marks-input:disabled { color: #888; }
 
+        /* Returned footer height back to normal */
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
         .footer-row td { height: 18px; font-size: 11px; }
 

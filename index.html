@@ -67,7 +67,7 @@
             transform: translateY(25px); 
         }
         
-        /* START GRADING BUTTON: Pill shape, reduced size, bigger grid */
+        /* START GRADING BUTTON */
         .btn-go { 
             width: 80%; padding: 16px 10px; 
             background-color: #ff6600; 
@@ -89,20 +89,23 @@
             box-shadow: 0 0px 0 #cc5200, 0 5px 10px rgba(0,0,0,0.2); 
         }
 
-        /* UPDATE APP BUTTON: Pill shape, much narrower, bigger grid */
+        /* UPDATE APP BUTTON: Narrowed to 26%, absolute position prep */
         .btn-up { 
-            width: 28%; padding: 8px 2px; 
+            width: 26%; 
+            padding: 12px 4px 18px 4px; /* Extra bottom padding for version text */
             background-color: #ffcc00; 
             background-image: 
                 linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), 
                 linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
-            background-size: 16px 10px; 
+            background-size: 16px 16px; 
             color: #222; 
             border: none; border-radius: 50px; font-weight: 900; font-size: 0.65rem; 
             text-transform: uppercase; cursor: pointer; 
-            box-shadow: 0 5px 9px rgba(0,0,0,0.15); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
             transition: transform 0.1s ease; 
             margin: 0 auto; display: block;
+            position: relative; /* REQUIRED for the absolute text inside */
+            text-align: center;
         }
         .btn-up:active { transform: scale(0.94); }
 
@@ -190,7 +193,11 @@
         <div class="launch-card">
             <div class="title-btn-group">
                 <button class="btn-go" onclick="startApp()">Start Grading</button>
-                <button class="btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal; color: #222;">v1.2.0</span></button>
+                
+                <button class="btn-up" onclick="checkForUpdates()">
+                    Update App 
+                    <span style="position: absolute; bottom: 4px; left: 0; width: 100%; font-size: 8px; opacity: 0.75; font-weight: bold; color: #222; letter-spacing: 0.5px;">v1.2.0</span>
+                </button>
             </div>
         </div>
     </div>

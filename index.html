@@ -17,7 +17,6 @@
 
         .app-wrapper {
             display: flex; flex-direction: column; height: 100%; width: 100%;
-            /* These env() rules protect your app from hiding behind the transparent navigation bars! */
             padding-top: env(safe-area-inset-top, 5px);
             padding-bottom: env(safe-area-inset-bottom, 10px);
             box-sizing: border-box;
@@ -112,7 +111,9 @@
         table { border-collapse: collapse; min-width: 850px; width: 100%; height: 100%; table-layout: fixed; }
         
         th { background: #0066cc; color: white; padding: 2px 1px; border: 1px solid #0052a3; font-size: 11px; text-transform: uppercase; line-height: 1.1; }
-        .top-header { font-size: 14px !important; letter-spacing: 0.5px; padding: 5px 2px !important; }
+        
+        /* CHANGED: Shrunk the first row title header size and padding */
+        .top-header { font-size: 10px !important; padding: 2px 2px !important; }
         
         td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
         

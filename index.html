@@ -64,25 +64,42 @@
             width: 100%; z-index: 2; position: relative; 
             margin-top: auto; 
             padding-bottom: 10px;
+            /* SHIFT DOWN: Nudges the buttons closer to the bottom edge */
+            transform: translateY(25px); 
         }
         
+        /* START GRADING BUTTON: Orange with White Graph */
         .btn-go { 
-            width: 100%; padding: 24px 10px; background-color: #28a745; color: white; 
+            width: 100%; padding: 24px 10px; 
+            background-color: #ff6600; /* Orange Base */
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.25) 1px, transparent 1px), 
+                linear-gradient(90deg, rgba(255,255,255,0.25) 1px, transparent 1px);
+            background-size: 8px 8px; /* Graph Paper Size */
+            color: white; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* Helps text pop against grid */
             border: none; border-radius: 18px; font-weight: 900; font-size: 1.3rem; 
             text-transform: uppercase; cursor: pointer; 
-            box-shadow: 0 8px 0 #1e7e34, 0 15px 25px rgba(0,0,0,0.25); 
+            box-shadow: 0 8px 0 #cc5200, 0 15px 25px rgba(0,0,0,0.25); /* Orange 3D shadow */
             transition: all 0.1s ease; 
             margin-bottom: 20px;
             display: block;
         }
         .btn-go:active { 
             transform: translateY(8px); 
-            box-shadow: 0 0px 0 #1e7e34, 0 5px 10px rgba(0,0,0,0.2); 
+            box-shadow: 0 0px 0 #cc5200, 0 5px 10px rgba(0,0,0,0.2); 
         }
 
+        /* UPDATE APP BUTTON: Yellow with Dark Graph */
         .btn-up { 
-            width: 55%; padding: 12px 10px; background-color: #ff9800; color: white; 
-            border: none; border-radius: 12px; font-weight: bold; font-size: 0.8rem; 
+            width: 55%; padding: 12px 10px; 
+            background-color: #ffcc00; /* Yellow Base */
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), 
+                linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
+            background-size: 6px 6px; /* Slightly smaller grid */
+            color: #222; /* Dark text so it is readable on yellow */
+            border: none; border-radius: 12px; font-weight: 900; font-size: 0.8rem; 
             text-transform: uppercase; cursor: pointer; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
             transition: transform 0.1s ease; 
@@ -120,12 +137,11 @@
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 13px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         
-        /* CHANGED: Set to exactly 48px by 24px, with a 13px font size */
-        .marks-input { width: 48px; height: 24px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 13px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
+        .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
         .marks-input:disabled { color: #888; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
-        .footer-row td { height: 22px; font-size: 11px; }
+        .footer-row td { height: 18px; font-size: 11px; }
 
         /* DASHBOARD SECTION */
         .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; padding: 6px 4px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
@@ -175,7 +191,7 @@
         <div class="launch-card">
             <div class="title-btn-group">
                 <button class="btn-go" onclick="startApp()">Start Grading</button>
-                <button class="btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal;">v1.2.0</span></button>
+                <button class="btn-up" onclick="checkForUpdates()">Update App <br> <span style="font-size: 10px; opacity: 0.8; font-weight: normal; color: #222;">v1.2.0</span></button>
             </div>
         </div>
     </div>
@@ -360,11 +376,10 @@
                             this.value = this.value.replace(/[^0-9]/g, '');
                         }
                         
-                        // --- DOUBLE ZERO LOCKOUT LOGIC ---
+                        // DOUBLE ZERO LOCKOUT LOGIC
                         if (this.value.startsWith('00')) {
                             this.value = '00';
                         }
-                        // ---------------------------------
 
                         if(this.value !== '' && parseFloat(this.value) > subj.max) {
                             this.value = ''; 

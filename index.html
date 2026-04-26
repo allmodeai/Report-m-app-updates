@@ -25,11 +25,11 @@
         .page { display: none; height: 100%; width: 100%; flex-direction: column; overflow: hidden; }
         .page.active { display: flex; }
 
-       /* --- TITLE SCREEN --- */
+        /* --- TITLE SCREEN --- */
         #page-title { 
-            position: absolute; /* Forces it to ignore the app-wrapper padding */
+            position: absolute; 
             top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 100; /* Keeps it strictly on top */
+            z-index: 100; 
             justify-content: center; 
             align-items: center; 
             background-color: #0066cc; 
@@ -70,7 +70,7 @@
             transform: translateY(25px); 
         }
         
-        /* START GRADING BUTTON */
+        /* START GRADING BUTTON: 3D Emboss Style */
         .btn-go { 
             width: 80%; padding: 16px 10px; 
             background-color: #ff6600; 
@@ -79,24 +79,37 @@
                 linear-gradient(90deg, rgba(255,255,255,0.25) 1px, transparent 1px);
             background-size: 20px 20px; 
             color: white; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3); 
-            border: none; border-radius: 50px; font-weight: 900; font-size: 1.2rem; 
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Stronger text shadow for 3D feel */
+            border: 1px solid #ff9966; /* Light edge to highlight the top curve */
+            border-radius: 50px; font-weight: 900; font-size: 1.2rem; 
             text-transform: uppercase; cursor: pointer; 
-            box-shadow: 0 8px 0 #cc5200, 0 15px 25px rgba(0,0,0,0.25); 
+            
+            /* THE MAGIC EMBOSS SHADOWS */
+            box-shadow: 
+                inset 0 6px 10px rgba(255,255,255,0.5),  /* Inner top highlight (Emboss effect) */
+                inset 0 -6px 10px rgba(0,0,0,0.3),       /* Inner bottom shadow (Emboss effect) */
+                0 8px 0 #cc5200,                         /* Outer 3D physical base */
+                0 15px 25px rgba(0,0,0,0.4);             /* Outer drop shadow */
+                
             transition: all 0.1s ease; 
             margin: 0 auto 20px auto;
             display: block;
         }
         .btn-go:active { 
             transform: translateY(8px); 
-            box-shadow: 0 0px 0 #cc5200, 0 5px 10px rgba(0,0,0,0.2); 
+            /* Keeps the inner emboss when squished, but removes the physical base */
+            box-shadow: 
+                inset 0 6px 10px rgba(255,255,255,0.5), 
+                inset 0 -6px 10px rgba(0,0,0,0.3), 
+                0 0 0 #cc5200, 
+                0 5px 10px rgba(0,0,0,0.3); 
         }
 
-        /* UPDATE APP BUTTON: Smaller Circle */
+        /* UPDATE APP BUTTON */
         .btn-up { 
-            width: 60px; /* Reduced from 85px */
-            height: 60px; /* Reduced from 85px */
-            padding: 0 0 10px 0; /* Adjusted to keep text centered */
+            width: 70px; 
+            height: 70px; 
+            padding: 0 0 10px 0; 
             background-color: #ffcc00; 
             background-image: 
                 linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), 
@@ -106,7 +119,7 @@
             border: none; 
             border-radius: 50%; 
             font-weight: 900; 
-            font-size: 0.55rem; /* Reduced slightly to fit smaller circle */
+            font-size: 0.55rem; 
             text-transform: uppercase; 
             cursor: pointer; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
@@ -329,232 +342,4 @@
     let activeSubjects = subjectsPMS;
 
     function safeGetItem(key) { try { return localStorage.getItem(key); } catch(e) { return null; } }
-    function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
-    function safeRemoveItem(key) { try { localStorage.removeItem(key); } catch(e) {} }
-
-    function startApp() {
-        document.getElementById('page-title').style.display = 'none';
-        document.getElementById('page-grading').style.display = 'flex';
-        renderTable();
-        loadCache();
-        if(!safeGetItem('marksCache')) calculateAll();
-    }
-
-    function goToMenu() {
-        document.getElementById('page-grading').style.display = 'none';
-        document.getElementById('page-title').style.display = 'flex';
-    }
-
-    let popupCallback = null;
-    function showPopup(msg, showCancel, callback, okColor = '#dc3545', okText = 'OK') {
-        document.getElementById('dialog-msg').innerText = msg;
-        document.getElementById('dialog-btn-cancel').style.display = showCancel ? 'block' : 'none';
-        const okBtn = document.getElementById('dialog-btn-ok');
-        okBtn.style.background = okColor;
-        okBtn.innerText = okText;
-        popupCallback = callback;
-        document.getElementById('dialog-overlay').style.display = 'block';
-        document.getElementById('custom-dialog').classList.add('active');
-    }
-
-    function closePopup() {
-        document.getElementById('dialog-overlay').style.display = 'none';
-        document.getElementById('custom-dialog').classList.remove('active');
-        popupCallback = null;
-    }
-
-    document.getElementById('dialog-btn-ok').onclick = () => {
-        if(popupCallback) popupCallback();
-        closePopup();
-    };
-
-    function renderTable() {
-        const tableBody = document.getElementById('tableBody');
-        tableBody.innerHTML = '';
-        activeSubjects = (currentMode === 'PMS') ? subjectsPMS : subjectsPRE;
-        activeSubjects.forEach((subj, sIdx) => {
-            let row = tableBody.insertRow();
-            let sCell = row.insertCell(); sCell.className = 'subject-name';
-            if (subj.options) {
-                let trigger = document.createElement('div');
-                trigger.id = `subj-trigger-${sIdx}`; trigger.style.cssText = "color: #0066cc; cursor: pointer; display: inline-block; border-bottom: 1px dashed #0066cc;";
-                trigger.innerText = subj.name; trigger.onclick = () => openSheet('Select Subject', subj.options, `subj-val-${sIdx}`);
-                let hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.id = `subj-val-${sIdx}`; hidden.value = subj.name;
-                sCell.appendChild(trigger); sCell.appendChild(hidden);
-            } else { sCell.innerText = subj.name; }
-            
-            for (let i = 0; i <= 5; i++) {
-                let cell = row.insertCell(); let inputId = `in-${sIdx}-${i}`;
-                if(subj.type === 'numeric') {
-                    let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
-                    input.className = 'marks-input'; input.id = inputId;
-                    
-                    input.oninput = function() {
-                        if (this.value.includes('--')) { this.value = 'Ab'; }
-                        if (this.value !== 'Ab' && this.value !== '-') {
-                            this.value = this.value.replace(/[^0-9]/g, '');
-                        }
-                        
-                        if (this.value.startsWith('00')) {
-                            this.value = '00';
-                        }
-
-                        if(this.value !== '' && parseFloat(this.value) > subj.max) {
-                            this.value = ''; 
-                        }
-                        applyMarkStyling(this, subj.max); calculateAll(); autoSave();
-                    };
-
-                    cell.appendChild(input);
-                } else {
-                    let display = document.createElement('div'); display.className = 'marks-input'; display.id = inputId + '-trigger'; display.innerText = '-';
-                    display.onclick = () => openSheet(subj.name, validGrades, inputId + '-val');
-                    let hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.id = inputId + '-val';
-                    cell.appendChild(display); cell.appendChild(hidden);
-                }
-            }
-            for (let i = 0; i < 4; i++) row.insertCell();
-        });
-    }
-
-    function calculateAll() {
-        let activeNumericCount = 0; let failCount = 0; let grandSum = 0; let coreFails = []; let langFails = []; let dataCompleted = true;
-        const tableBody = document.getElementById('tableBody');
-        
-        activeSubjects.forEach((subj, sIdx) => {
-            let subjName = subj.name;
-            let hiddenInp = document.getElementById(`subj-val-${sIdx}`);
-            if(hiddenInp) subjName = hiddenInp.value;
-            const row = tableBody.rows[sIdx];
-            
-            for (let i = 0; i <= 5; i++) {
-                let inp = document.getElementById(`in-${sIdx}-${i}`);
-                let trig = document.getElementById(`in-${sIdx}-${i}-trigger`);
-                let hiddenVal = document.getElementById(`in-${sIdx}-${i}-val`);
-                if (subjName === 'N/A') {
-                    if(inp) { inp.disabled = true; inp.value = ''; inp.style.backgroundColor = '#e9ecef'; inp.style.borderColor = '#ddd'; }
-                    if(trig) { trig.style.pointerEvents = 'none'; trig.innerText = '-'; trig.style.backgroundColor = '#e9ecef'; trig.style.borderColor = '#ddd'; }
-                    if(hiddenVal) hiddenVal.value = '';
-                } else {
-                    if(inp) { inp.disabled = false; inp.style.backgroundColor = 'transparent'; inp.style.borderColor = '#bbb'; }
-                    if(trig) { trig.style.pointerEvents = 'auto'; trig.style.backgroundColor = 'transparent'; trig.style.borderColor = '#bbb'; }
-                }
-            }
-
-            if (subj.type !== 'numeric') return;
-            if (subjName === 'N/A') { for(let i=7; i<=10; i++) row.cells[i].innerText = '-'; return; }
-            
-            activeNumericCount++;
-            const getV = (i) => { let val = document.getElementById(`in-${sIdx}-${i}`).value; return (val === 'Ab' || val === '-' || val === '') ? 0 : parseFloat(val); };
-            const m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / subj.max) * 25);
-            const q25 = Math.round(((getV(1) + getV(3)) / 2 / subj.max) * 25);
-            const a50 = Math.round((getV(5) / subj.max) * 50);
-            const total = m25 + q25 + a50;
-            
-            row.cells[7].innerText = m25; row.cells[8].innerText = q25; row.cells[9].innerText = a50; row.cells[10].innerText = total;
-            row.cells[10].classList.remove('text-red'); if (total < 40) row.cells[10].classList.add('text-red');
-            
-            let rowFilled = true; for(let i=0; i<=5; i++) if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
-            if(rowFilled) { 
-                if(total < 40) { 
-                    if(subj.exempt) langFails.push({ name: subjName, type: 'exempt' }); 
-                    else { coreFails.push({ name: subjName, type: 'core' }); failCount++; } 
-                } 
-            } else { dataCompleted = false; }
-            
-            grandSum += total;
-        });
-        
-        for (let i = 0; i < 6; i++) { 
-            let sum = 0; 
-            activeSubjects.forEach((s, sIdx) => { 
-                if(s.type === 'numeric') { 
-                    let v = document.getElementById(`in-${sIdx}-${i}`).value; 
-                    sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); 
-                } 
-            }); 
-            document.getElementById(`gt-${i}`).innerText = sum; 
-        }
-        
-        document.getElementById('gt-total').innerText = grandSum;
-        const avg = activeNumericCount > 0 ? (grandSum / activeNumericCount) : 0;
-        updateDashboard(avg, coreFails.concat(langFails), failCount, dataCompleted);
-    }
-
-    function updateDashboard(avg, failedList, coreFailCount, complete) {
-        const statusEl = document.getElementById('dash-status'); const pctEl = document.getElementById('dash-pct'); const divEl = document.getElementById('dash-div');
-        const pill = (txt, bg, clr, brd) => `<div class="print-badge" style="background:${bg}; color:${clr}; border-color:${brd}">${txt}</div>`;
-        if (!complete) { statusEl.innerText = "AWAITED"; statusEl.className = "stat-value"; pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--"; }
-        else { let isFailed = (avg < 40 || coreFailCount >= 3); let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3"); pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr); if (isFailed) { statusEl.innerText = "FAILED"; statusEl.className = "stat-value text-danger"; divEl.innerText = "--"; } else { statusEl.innerText = "PROMOTED"; statusEl.className = "stat-value text-green"; divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd"); } }
-        renderFails(failedList);
-    }
-
-    function renderFails(list) { 
-        const el = document.getElementById('dash-fails'); 
-        el.innerHTML = ''; 
-        if(list.length === 0) { el.innerText = "NONE"; return; } 
-        list.forEach(item => { 
-            let b = document.createElement('span'); 
-            b.className = 'print-badge'; 
-            let color = item.type === 'exempt' ? '#28a745' : '#dc3545';
-            b.style.color = color;
-            b.style.backgroundColor = 'transparent'; 
-            b.style.border = `1px solid ${color}`;
-            b.innerText = item.name; 
-            el.appendChild(b); 
-        }); 
-    }
-    
-    function applyMarkStyling(input, max) { input.classList.remove('text-red'); if (input.value !== '' && !isNaN(input.value)) { if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red'); } }
-    
-    function openSheet(title, options, targetId) { document.getElementById('sheet-title').innerText = title; const container = document.getElementById('options-container'); container.innerHTML = ''; options.forEach(opt => { const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt; btn.onclick = () => { let input = document.getElementById(targetId); if(input) input.value = opt; let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt; closeSheet(); calculateAll(); autoSave(); }; container.appendChild(btn); }); document.getElementById('overlay').style.display = 'block'; document.getElementById('sheet').classList.add('active'); }
-    function closeSheet() { document.getElementById('sheet').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; }
-    
-    function switchMode(m) { 
-        if (currentMode === m) return; 
-        showPopup("Switching modes will clear current data. Continue?", true, () => {
-            currentMode = m; 
-            document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
-            document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); 
-            resetLocalInputs(); renderTable(); calculateAll(); autoSave();
-        });
-    }
-
-    function resetLocalInputs() { safeRemoveItem('marksCache'); document.querySelectorAll('input').forEach(inp => { if(inp.type !== 'hidden') inp.value = ''; }); document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-'); }
-    function autoSave() { const data = { mode: currentMode, student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value }, marks: [] }; document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value})); safeSetItem('marksCache', JSON.stringify(data)); }
-    
-    function loadCache() { const saved = safeGetItem('marksCache'); if(!saved) return; const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); document.getElementById('stu-name').value = data.student.name || ''; document.getElementById('stu-roll').value = data.student.roll || ''; document.getElementById('stu-class-val').value = data.student.class || ''; document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; document.getElementById('stu-sec-val').value = data.student.sec || ''; document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); calculateAll(); }
-    
-    function downloadBackup() { const data = safeGetItem('marksCache'); if(!data) { showPopup("No data to save!", false, null, '#0066cc'); return; } const name = document.getElementById('stu-name').value || "Report"; if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`); }
-    function importData(event) { const reader = new FileReader(); reader.onload = (e) => { safeSetItem('marksCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
-    
-    function clearAllData() { 
-        showPopup("Erase all data?", true, () => {
-            resetLocalInputs(); renderTable(); calculateAll();
-        });
-    }
-
-    function printReport() { if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF(); else window.print(); }
-    
-    function checkForUpdates() {
-        if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) {
-            AndroidBridge.forceUpdate();
-        } else {
-            showPopup("Update feature only works inside the Android app.", false, null, '#ff9800');
-        }
-    }
-
-    window.onload = () => { 
-        try {
-            if(safeGetItem('marksCache')) {
-                startApp();
-            } else {
-                document.getElementById('page-title').style.display = 'flex';
-            }
-        } catch(e) {
-            document.getElementById('page-title').style.display = 'flex';
-        }
-    };
-</script>
-</body>
-</html>
+    function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(

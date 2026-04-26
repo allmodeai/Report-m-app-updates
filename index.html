@@ -34,7 +34,8 @@
             align-items: center; 
             background-color: #0066cc; 
             background-image: url('https://allmodeai.github.io/Report-m-app-updates/title_bg.jpg');
-            background-size: 100% 100%; 
+            /* THE FIX: 'cover' prevents squishing by maintaining the aspect ratio */
+            background-size: cover; 
             background-position: center center;
             background-repeat: no-repeat;
         }
@@ -79,7 +80,7 @@
             -webkit-tap-highlight-color: transparent;
         }
         
-        /* START GRADING BUTTON: Purely Cosmetic Emboss Effect */
+        /* START GRADING BUTTON */
         .btn-go { 
             width: 100%; padding: 16px 10px; 
             background-color: #ff6600; 
@@ -116,7 +117,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* UPDATE APP BUTTON: Matching purely cosmetic emboss */
+        /* UPDATE APP BUTTON */
         .btn-up { 
             width: 100%; height: 100%; 
             padding: 0 0 10px 0; 
@@ -126,12 +127,11 @@
                 linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
             background-size: 16px 16px; 
             color: #222; 
-            border: 1px solid #ffe680; /* Light highlight edge */
+            border: 1px solid #ffe680; 
             border-radius: 50%; 
             font-weight: 900; 
             font-size: 0.55rem; 
             text-transform: uppercase; 
-            /* Inner highlight and shadow to match Start button, outer drop shadow removed */
             box-shadow: 
                 inset 0 4px 6px rgba(255,255,255,0.6), 
                 inset 0 -4px 6px rgba(0,0,0,0.15); 
@@ -147,7 +147,7 @@
             pointer-events: none; 
         }
         .btn-up-wrapper:active .btn-up { 
-            transform: scale(0.92); /* Squeeze on tap */
+            transform: scale(0.92); 
             box-shadow: 
                 inset 0 4px 6px rgba(255,255,255,0.6), 
                 inset 0 -4px 6px rgba(0,0,0,0.15); 

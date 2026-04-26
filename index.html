@@ -578,15 +578,8 @@
     }
 
     window.onload = () => { 
-        try {
-            if(safeGetItem('marksCache')) {
-                startApp();
-            } else {
-                document.getElementById('page-title').style.display = 'flex';
-            }
-        } catch(e) {
-            document.getElementById('page-title').style.display = 'flex';
-        }
+        // Always show the Title Screen first, no matter what
+        document.getElementById('page-title').style.display = 'flex';
     };
 </script>
 </body>

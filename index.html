@@ -34,7 +34,6 @@
             align-items: center; 
             background-color: #0066cc; 
             background-image: url('https://allmodeai.github.io/Report-m-app-updates/title_bg.jpg');
-            /* THE FIX: 'cover' prevents squishing by maintaining the aspect ratio */
             background-size: cover; 
             background-position: center center;
             background-repeat: no-repeat;
@@ -67,8 +66,7 @@
         .title-btn-group { 
             width: 100%; z-index: 2; position: relative; 
             margin-top: auto; 
-            padding-bottom: 10px;
-            transform: translateY(25px); 
+            padding-bottom: 35px; /* Increased to push buttons higher up */
         }
 
         /* --- THE CLICK WRAPPERS --- */

@@ -25,11 +25,8 @@
         .page { display: none; height: 100%; width: 100%; flex-direction: column; overflow: hidden; }
         .page.active { display: flex; }
 
-       /* --- TITLE SCREEN --- */
+        /* --- TITLE SCREEN --- */
         #page-title { 
-            position: absolute; /* Forces it to ignore the app-wrapper padding */
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 100; /* Keeps it strictly on top */
             justify-content: center; 
             align-items: center; 
             background-color: #0066cc; 
@@ -342,4 +339,9 @@
 
     function goToMenu() {
         document.getElementById('page-grading').style.display = 'none';
-        document.getElementById('page-title').style.di
+        document.getElementById('page-title').style.display = 'flex';
+    }
+
+    let popupCallback = null;
+    function showPopup(msg, showCancel, callback, okColor = '#dc3545', okText = 'OK') {
+        document.getElementById('dialog-msg').i

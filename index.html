@@ -113,6 +113,7 @@
             border-radius: 50%;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
+            position: relative; /* REQUIRED for the red dot */
         }
 
         /* UPDATE APP BUTTON */
@@ -149,6 +150,28 @@
             box-shadow: 
                 inset 0 4px 6px rgba(255,255,255,0.6), 
                 inset 0 -4px 6px rgba(0,0,0,0.15); 
+        }
+
+        /* --- THE RED PULSING NOTIFICATION DOT --- */
+        .update-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 14px;
+            height: 14px;
+            background-color: #ff3b30; 
+            border: 2px solid #0066cc; 
+            border-radius: 50%;
+            display: none; /* Hidden by default */
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(255, 59, 48, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
         }
 
         /* --- GRADING PAGE --- */
@@ -239,6 +262,8 @@
                 </div>
                 
                 <div class="btn-up-wrapper" onclick="checkForUpdates()">
+                    <div id="update-badge" class="update-badge"></div>
+
                     <div class="btn-up">
                         <span>Update<br>App</span> 
                         <span style="position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 7px; opacity: 0.75; font-weight: bold; color: #222; letter-spacing: 0.5px;">v1.2.0</span>
@@ -331,6 +356,15 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
+    // --- SMART UPDATE SYSTEM ---
+    // Change this manually every time you push an HTML update to GitHub
+    const LOCAL_HTML_VERSION = 1; 
+    
+    // Replace with the raw link to your update.json
+    const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
+    
+    let needsHtmlUpdate = false; // Flag to check if we need a web refresh
+
     const classOptions = ['Nursery', 'LKG', 'UKG', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
     const validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
 
@@ -364,6 +398,28 @@
     function safeGetItem(key) { try { return localStorage.getItem(key); } catch(e) { return null; } }
     function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
     function safeRemoveItem(key) { try { localStorage.removeItem(key); } catch(e) {} }
+
+    // --- HTML VERSION CHECKER ---
+    function checkVisualUpdate() {
+        try {
+            var xhr = new XMLHttpRequest();
+            // Appending time bypasses the browser's cache for this check
+            xhr.open('GET', UPDATE_JSON_URL + '?t=' + new Date().getTime(), true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    try {
+                        var data = JSON.parse(xhr.responseText);
+                        // If GitHub has a newer HTML version, trigger the red dot
+                        if (data.htmlVersion && parseInt(data.htmlVersion) > LOCAL_HTML_VERSION) {
+                            document.getElementById('update-badge').style.display = 'block';
+                            needsHtmlUpdate = true;
+                        }
+                    } catch(e) {}
+                }
+            };
+            xhr.send();
+        } catch(e) {}
+    }
 
     function startApp() {
         document.getElementById('page-title').style.display = 'none';
@@ -569,8 +625,13 @@
 
     function printReport() { if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF(); else window.print(); }
     
+    // --- SMART UPDATE BUTTON LOGIC ---
     function checkForUpdates() {
-        if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) {
+        if (needsHtmlUpdate) {
+            // RED DOT IS ON: Force the phone to refresh and pull your new GitHub code!
+            window.location.reload(true); 
+        } else if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) {
+            // RED DOT IS OFF: No HTML changes, so just trigger your normal APK popup
             AndroidBridge.forceUpdate();
         } else {
             showPopup("Update feature only works inside the Android app.", false, null, '#ff9800');
@@ -578,7 +639,9 @@
     }
 
     window.onload = () => { 
-        // Always show the Title Screen first, no matter what
+        checkVisualUpdate(); // Secretly check GitHub for HTML updates
+        
+        // Always show the Title Screen first
         document.getElementById('page-title').style.display = 'flex';
     };
 </script>

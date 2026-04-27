@@ -360,7 +360,7 @@
 <script>
     // --- SMART UPDATE SYSTEM ---
     // Change this manually every time you push an HTML update to GitHub
-    const LOCAL_HTML_VERSION = 2; 
+    const LOCAL_HTML_VERSION = 3; 
     
     // Replace with the raw link to your update.json
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
@@ -576,14 +576,14 @@
         const divEl = document.getElementById('dash-div');
         const pill = (txt, bg, clr, brd) => `<div class="print-badge" style="background:${bg}; color:${clr}; border-color:${brd}">${txt}</div>`;
         
-        // Find current class to suggest next class string
+        // --- NEW PILL BOX LOGIC ---
         let currentClass = document.getElementById('stu-class-val').value;
         let nextClassHTML = "";
         if (currentClass && currentClass !== '-') {
             let cIdx = classOptions.indexOf(currentClass);
             if (cIdx !== -1 && cIdx < classOptions.length - 1) {
-                // Creates a nice smaller label underneath PROMOTED
-                nextClassHTML = `<br><span style="font-size:0.65rem; color:#444;">➔ ${classOptions[cIdx + 1]}</span>`;
+                // Creates a green pill box, small arrow, BIG class text
+                nextClassHTML = `<div style="margin-top: 4px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; background: #e6f4ea; border: 1.5px solid #28a745; border-radius: 50px; padding: 2px 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"><span style="font-size: 0.65rem; color: #28a745;">➔</span><span style="font-size: 1.3rem; font-weight: 900; color: #1e7e34; line-height: 1;">${classOptions[cIdx + 1]}</span></div>`;
             }
         }
 
@@ -604,8 +604,8 @@
                 statusEl.style.color = "#dc3545";
                 divEl.innerText = "--"; 
             } else { 
-                // Injects the PROMOTED text plus the next class!
-                statusEl.innerHTML = "PROMOTED" + nextClassHTML; 
+                // Stacks "PROMOTED" on top of the new pill box
+                statusEl.innerHTML = `<div style="font-size: 0.8rem;">PROMOTED</div>` + nextClassHTML; 
                 statusEl.className = "stat-value text-green"; 
                 statusEl.style.color = "#28a745";
                 divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd"); 

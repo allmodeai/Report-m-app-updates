@@ -360,7 +360,7 @@
 <script>
     // --- SMART UPDATE SYSTEM ---
     // Change this manually every time you push an HTML update to GitHub
-    const LOCAL_HTML_VERSION = 4; 
+    const LOCAL_HTML_VERSION = 5; 
     
     // Replace with the raw link to your update.json
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
@@ -582,8 +582,8 @@
         if (currentClass && currentClass !== '-') {
             let cIdx = classOptions.indexOf(currentClass);
             if (cIdx !== -1 && cIdx < classOptions.length - 1) {
-                // Creates a green pill box with proportional, smaller text
-                nextClassHTML = `<div style="margin-top: 4px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; background: #e6f4ea; border: 1.5px solid #28a745; border-radius: 50px; padding: 2px 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"><span style="font-size: 0.6rem; color: #28a745;">➔</span><span style="font-size: 0.95rem; font-weight: 900; color: #1e7e34; line-height: 1;">${classOptions[cIdx + 1]}</span></div>`;
+                // Larger arrow (0.75rem), slightly smaller class text (0.85rem)
+                nextClassHTML = `<div style="margin-top: 4px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; background: #e6f4ea; border: 1.5px solid #28a745; border-radius: 50px; padding: 2px 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"><span style="font-size: 0.75rem; color: #28a745;">➔</span><span style="font-size: 0.85rem; font-weight: 900; color: #1e7e34; line-height: 1;">${classOptions[cIdx + 1]}</span></div>`;
             }
         }
 
@@ -604,7 +604,6 @@
                 statusEl.style.color = "#dc3545";
                 divEl.innerText = "--"; 
             } else { 
-                // Stacks "PROMOTED" on top of the refined pill box
                 statusEl.innerHTML = `<div style="font-size: 0.75rem;">PROMOTED</div>` + nextClassHTML; 
                 statusEl.className = "stat-value text-green"; 
                 statusEl.style.color = "#28a745";

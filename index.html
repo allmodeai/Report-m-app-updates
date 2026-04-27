@@ -66,7 +66,7 @@
         .title-btn-group { 
             width: 100%; z-index: 2; position: relative; 
             margin-top: auto; 
-            padding-bottom: 35px; /* Increased to push buttons higher up */
+            padding-bottom: 35px; 
         }
 
         /* --- THE CLICK WRAPPERS --- */
@@ -113,7 +113,7 @@
             border-radius: 50%;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
-            position: relative; /* REQUIRED for the red dot */
+            position: relative; 
         }
 
         /* UPDATE APP BUTTON */
@@ -162,7 +162,7 @@
             background-color: #ff3b30; 
             border: 2px solid #0066cc; 
             border-radius: 50%;
-            display: none; /* Hidden by default */
+            display: none; 
             z-index: 10;
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             animation: pulse-red 2s infinite;
@@ -231,6 +231,8 @@
         .btn-erase { background: #dc3545 !important; }
 
         .text-red { color: #dc3545 !important; text-decoration: underline; }
+        .text-danger { color: #dc3545 !important; }
+        .text-green { color: #28a745 !important; }
         
         /* OVERLAYS & SHEETS */
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
@@ -358,12 +360,12 @@
 <script>
     // --- SMART UPDATE SYSTEM ---
     // Change this manually every time you push an HTML update to GitHub
-    const LOCAL_HTML_VERSION = 1; 
+    const LOCAL_HTML_VERSION = 2; 
     
     // Replace with the raw link to your update.json
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
-    let needsHtmlUpdate = false; // Flag to check if we need a web refresh
+    let needsHtmlUpdate = false; 
 
     const classOptions = ['Nursery', 'LKG', 'UKG', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
     const validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
@@ -403,13 +405,11 @@
     function checkVisualUpdate() {
         try {
             var xhr = new XMLHttpRequest();
-            // Appending time bypasses the browser's cache for this check
             xhr.open('GET', UPDATE_JSON_URL + '?t=' + new Date().getTime(), true);
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     try {
                         var data = JSON.parse(xhr.responseText);
-                        // If GitHub has a newer HTML version, trigger the red dot
                         if (data.htmlVersion && parseInt(data.htmlVersion) > LOCAL_HTML_VERSION) {
                             document.getElementById('update-badge').style.display = 'block';
                             needsHtmlUpdate = true;
@@ -571,10 +571,46 @@
     }
 
     function updateDashboard(avg, failedList, coreFailCount, complete) {
-        const statusEl = document.getElementById('dash-status'); const pctEl = document.getElementById('dash-pct'); const divEl = document.getElementById('dash-div');
+        const statusEl = document.getElementById('dash-status'); 
+        const pctEl = document.getElementById('dash-pct'); 
+        const divEl = document.getElementById('dash-div');
         const pill = (txt, bg, clr, brd) => `<div class="print-badge" style="background:${bg}; color:${clr}; border-color:${brd}">${txt}</div>`;
-        if (!complete) { statusEl.innerText = "AWAITED"; statusEl.className = "stat-value"; pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--"; }
-        else { let isFailed = (avg < 40 || coreFailCount >= 3); let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3"); pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr); if (isFailed) { statusEl.innerText = "FAILED"; statusEl.className = "stat-value text-danger"; divEl.innerText = "--"; } else { statusEl.innerText = "PROMOTED"; statusEl.className = "stat-value text-green"; divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd"); } }
+        
+        // Find current class to suggest next class string
+        let currentClass = document.getElementById('stu-class-val').value;
+        let nextClassHTML = "";
+        if (currentClass && currentClass !== '-') {
+            let cIdx = classOptions.indexOf(currentClass);
+            if (cIdx !== -1 && cIdx < classOptions.length - 1) {
+                // Creates a nice smaller label underneath PROMOTED
+                nextClassHTML = `<br><span style="font-size:0.65rem; color:#444;">➔ ${classOptions[cIdx + 1]}</span>`;
+            }
+        }
+
+        if (!complete) { 
+            statusEl.innerHTML = "AWAITED"; 
+            statusEl.className = "stat-value"; 
+            statusEl.style.color = "";
+            pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); 
+            divEl.innerText = "--"; 
+        } else { 
+            let isFailed = (avg < 40 || coreFailCount >= 3); 
+            let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3"); 
+            pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr); 
+            
+            if (isFailed) { 
+                statusEl.innerHTML = "FAILED"; 
+                statusEl.className = "stat-value text-danger"; 
+                statusEl.style.color = "#dc3545";
+                divEl.innerText = "--"; 
+            } else { 
+                // Injects the PROMOTED text plus the next class!
+                statusEl.innerHTML = "PROMOTED" + nextClassHTML; 
+                statusEl.className = "stat-value text-green"; 
+                statusEl.style.color = "#28a745";
+                divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd"); 
+            } 
+        }
         renderFails(failedList);
     }
 
@@ -628,10 +664,8 @@
     // --- SMART UPDATE BUTTON LOGIC ---
     function checkForUpdates() {
         if (needsHtmlUpdate) {
-            // RED DOT IS ON: Force the phone to refresh and pull your new GitHub code!
             window.location.reload(true); 
         } else if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) {
-            // RED DOT IS OFF: No HTML changes, so just trigger your normal APK popup
             AndroidBridge.forceUpdate();
         } else {
             showPopup("Update feature only works inside the Android app.", false, null, '#ff9800');
@@ -639,9 +673,7 @@
     }
 
     window.onload = () => { 
-        checkVisualUpdate(); // Secretly check GitHub for HTML updates
-        
-        // Always show the Title Screen first
+        checkVisualUpdate(); 
         document.getElementById('page-title').style.display = 'flex';
     };
 </script>

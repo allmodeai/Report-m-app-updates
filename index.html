@@ -359,10 +359,7 @@
 
 <script>
     // --- SMART UPDATE SYSTEM ---
-    // Change this manually every time you push an HTML update to GitHub
-    const LOCAL_HTML_VERSION = 6; 
-    
-    // Replace with the raw link to your update.json
+    const LOCAL_HTML_VERSION = 7; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 
@@ -570,7 +567,7 @@
         updateDashboard(avg, coreFails.concat(langFails), failCount, dataCompleted);
     }
 
-   function updateDashboard(avg, failedList, coreFailCount, complete) {
+    function updateDashboard(avg, failedList, coreFailCount, complete) {
         const statusEl = document.getElementById('dash-status'); 
         const pctEl = document.getElementById('dash-pct'); 
         const divEl = document.getElementById('dash-div');
@@ -663,22 +660,20 @@
     // --- SMART UPDATE BUTTON LOGIC ---
     function checkForUpdates() {
         if (needsHtmlUpdate) {
-            // 1. INSTANT VISUAL FEEDBACK (Stops the need for multiple clicks)
+            // INSTANT VISUAL FEEDBACK
             document.getElementById('update-badge').style.display = 'none';
             const btnUp = document.querySelector('.btn-up');
-            btnUp.style.backgroundColor = '#28a745'; // Turns green
+            btnUp.style.backgroundColor = '#28a745'; 
             btnUp.style.borderColor = '#1e7e34';
             btnUp.style.color = '#fff';
             btnUp.innerHTML = `<span style="font-size:0.6rem; font-weight:900;">Updating...</span>`;
             
-            // 2. THE HARD REFRESH (Delayed by 200ms so you can actually see the button turn green)
+            // AGGRESSIVE CACHE REPLACEMENT
             setTimeout(() => {
-                // 'replace' is much stronger than 'href' for busting Android caches
                 window.location.replace(window.location.href.split('?')[0] + '?v=' + new Date().getTime());
             }, 200);
 
         } else if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) {
-            // RED DOT IS OFF: Normal APK update check
             AndroidBridge.forceUpdate();
         } else {
             showPopup("Update feature only works inside the Android app.", false, null, '#ff9800');

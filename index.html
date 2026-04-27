@@ -359,7 +359,7 @@
 
 <script>
     // --- SMART UPDATE SYSTEM ---
-    const LOCAL_HTML_VERSION = 8; 
+    const LOCAL_HTML_VERSION = 9; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 
@@ -429,8 +429,8 @@
     function goToMenu() {
         document.getElementById('page-grading').style.display = 'none';
         document.getElementById('page-title').style.display = 'flex';
+        checkVisualUpdate(); // This secretly checks GitHub again every time you return to the menu!
     }
-
     let popupCallback = null;
     function showPopup(msg, showCancel, callback, okColor = '#dc3545', okText = 'OK') {
         document.getElementById('dialog-msg').innerText = msg;

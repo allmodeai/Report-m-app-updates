@@ -1,4 +1,4 @@
-ù<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -69,7 +69,6 @@
             padding-bottom: 35px; 
         }
 
-        /* --- THE CLICK WRAPPERS --- */
         .btn-go-wrapper {
             width: 80%;
             margin: 0 auto 20px auto;
@@ -78,7 +77,6 @@
             -webkit-tap-highlight-color: transparent;
         }
         
-        /* START GRADING BUTTON */
         .btn-go { 
             width: 100%; padding: 16px 10px; 
             background-color: #ff6600; 
@@ -102,9 +100,6 @@
         }
         .btn-go-wrapper:active .btn-go { 
             transform: scale(0.96); 
-            box-shadow: 
-                inset 0 4px 6px rgba(255,255,255,0.4), 
-                inset 0 -4px 6px rgba(0,0,0,0.2); 
         }
 
         .btn-up-wrapper {
@@ -116,7 +111,6 @@
             position: relative; 
         }
 
-        /* UPDATE APP BUTTON */
         .btn-up { 
             width: 100%; height: 100%; 
             padding: 0 0 10px 0; 
@@ -145,20 +139,12 @@
             box-sizing: border-box;
             pointer-events: none; 
         }
-        .btn-up-wrapper:active .btn-up { 
-            transform: scale(0.92); 
-            box-shadow: 
-                inset 0 4px 6px rgba(255,255,255,0.6), 
-                inset 0 -4px 6px rgba(0,0,0,0.15); 
-        }
+        .btn-up-wrapper:active .btn-up { transform: scale(0.92); }
 
-        /* --- THE RED PULSING NOTIFICATION DOT --- */
         .update-badge {
             position: absolute;
-            top: -2px;
-            right: -2px;
-            width: 14px;
-            height: 14px;
+            top: -2px; right: -2px;
+            width: 14px; height: 14px;
             background-color: #ff3b30; 
             border: 2px solid #0066cc; 
             border-radius: 50%;
@@ -199,7 +185,6 @@
         
         td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
         
-        /* MAKES THE LAST COLUMN BOLD */
         tbody td:last-child { font-weight: 900; font-size: 11px; }
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 13px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
@@ -207,8 +192,13 @@
         .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
         .marks-input:disabled { color: #888; }
 
+        /* DUAL INPUT STYLE FOR ENGLISH */
+        .dual-box { display: flex; flex-direction: column; gap: 1px; padding: 1px; align-items: center; }
+        .marks-input-mini { width: 38px; height: 14px; font-size: 9px; border: 1px solid #ccc; border-radius: 2px; text-align: center; font-weight: 900; outline: none; transition: all 0.2s; }
+
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
         .footer-row td { height: 18px; font-size: 11px; }
+        .pct-row { background: #eef6ff; color: #004c99; }
 
         /* DASHBOARD SECTION */
         .dashboard-section { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; padding: 6px 4px; background: #f4f7f6; border-top: 1px solid #e0e0e0; }
@@ -265,10 +255,9 @@
                 
                 <div class="btn-up-wrapper" onclick="checkForUpdates()">
                     <div id="update-badge" class="update-badge"></div>
-
                     <div class="btn-up">
                         <span>Update<br>App</span> 
-                        <span style="position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 7px; opacity: 0.75; font-weight: bold; color: #222; letter-spacing: 0.5px;">v1.3.1</span>
+                        <span style="position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 7px; opacity: 0.75; font-weight: bold; color: #222; letter-spacing: 0.5px;">v1.3.2</span>
                     </div>
                 </div>
             </div>
@@ -318,6 +307,11 @@
                             <td id="gt-0">0</td><td id="gt-1">0</td><td id="gt-2">0</td><td id="gt-3">0</td><td id="gt-4">0</td><td id="gt-5">0</td>
                             <td></td><td></td><td></td><td id="gt-total">0</td>
                         </tr>
+                        <tr class="footer-row pct-row">
+                            <td class="subject-name" style="background: #eef6ff;">Percentage</td>
+                            <td id="pct-0">0%</td><td id="pct-1">0%</td><td id="pct-2">0%</td><td id="pct-3">0%</td><td id="pct-4">0%</td><td id="pct-5">0%</td>
+                            <td></td><td></td><td></td><td id="pct-total">0%</td>
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -358,17 +352,15 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    // --- SMART UPDATE SYSTEM ---
-    const LOCAL_HTML_VERSION = 15; 
+    const LOCAL_HTML_VERSION = 16; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 
-
     const classOptions = ['Nursery', 'LKG', 'UKG', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
     const validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
 
     const subjectsPMS = [
-        { name: 'English (I+II)', type: 'numeric', max: 200 },
+        { name: 'English (I+II)', type: 'numeric', max: 200, dual: true, options: ['English (I+II)', 'Eng II'] },
         { name: 'TEL/Hindi', type: 'numeric', max: 100, exempt: true },
         { name: 'Bengali', type: 'numeric', max: 100, exempt: true },
         { name: 'Mathematics', type: 'numeric', max: 100 },
@@ -398,7 +390,6 @@
     function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
     function safeRemoveItem(key) { try { localStorage.removeItem(key); } catch(e) {} }
 
-    // --- HTML VERSION CHECKER ---
     function checkVisualUpdate() {
         try {
             var xhr = new XMLHttpRequest();
@@ -429,8 +420,9 @@
     function goToMenu() {
         document.getElementById('page-grading').style.display = 'none';
         document.getElementById('page-title').style.display = 'flex';
-        checkVisualUpdate(); // This secretly checks GitHub again every time you return to the menu!
+        checkVisualUpdate();
     }
+
     let popupCallback = null;
     function showPopup(msg, showCancel, callback, okColor = '#dc3545', okText = 'OK') {
         document.getElementById('dialog-msg').innerText = msg;
@@ -449,10 +441,7 @@
         popupCallback = null;
     }
 
-    document.getElementById('dialog-btn-ok').onclick = () => {
-        if(popupCallback) popupCallback();
-        closePopup();
-    };
+    document.getElementById('dialog-btn-ok').onclick = () => { if(popupCallback) popupCallback(); closePopup(); };
 
     function renderTable() {
         const tableBody = document.getElementById('tableBody');
@@ -470,28 +459,25 @@
             } else { sCell.innerText = subj.name; }
             
             for (let i = 0; i <= 5; i++) {
-                let cell = row.insertCell(); let inputId = `in-${sIdx}-${i}`;
+                let cell = row.insertCell(); 
+                let inputId = `in-${sIdx}-${i}`;
                 if(subj.type === 'numeric') {
-                    let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
-                    input.className = 'marks-input'; input.id = inputId;
-                    
-                    input.oninput = function() {
-                        if (this.value.indexOf('--') !== -1) { this.value = 'Ab'; }
-                        if (this.value !== 'Ab' && this.value !== '-') {
-                            this.value = this.value.replace(/[^0-9]/g, '');
-                        }
-                        
-                        if (this.value.indexOf('00') === 0) {
-                            this.value = '00';
-                        }
-
-                        if(this.value !== '' && parseFloat(this.value) > subj.max) {
-                            this.value = ''; 
-                        }
-                        applyMarkStyling(this, subj.max); calculateAll(); autoSave();
-                    };
-
-                    cell.appendChild(input);
+                    if(subj.dual) {
+                        let wrapper = document.createElement('div'); wrapper.className = 'dual-box';
+                        let i1 = document.createElement('input'); i1.className = 'marks-input-mini'; i1.id = `${inputId}-a`; i1.placeholder = "P1";
+                        let i2 = document.createElement('input'); i2.className = 'marks-input-mini'; i2.id = `${inputId}-b`; i2.placeholder = "P2";
+                        [i1, i2].forEach(inp => {
+                            inp.inputMode = 'numeric';
+                            inp.oninput = function() { validateNumeric(this, 100, true); calculateAll(); autoSave(); };
+                        });
+                        wrapper.appendChild(i1); wrapper.appendChild(i2);
+                        cell.appendChild(wrapper);
+                    } else {
+                        let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
+                        input.className = 'marks-input'; input.id = inputId;
+                        input.oninput = function() { validateNumeric(this, subj.max, false); calculateAll(); autoSave(); };
+                        cell.appendChild(input);
+                    }
                 } else {
                     let display = document.createElement('div'); display.className = 'marks-input'; display.id = inputId + '-trigger'; display.innerText = '-';
                     display.onclick = () => openSheet(subj.name, validGrades, inputId + '-val');
@@ -503,8 +489,18 @@
         });
     }
 
+    function validateNumeric(el, max, isDual = false) {
+        if (el.value.indexOf('--') !== -1) { el.value = 'Ab'; }
+        if (el.value !== 'Ab' && el.value !== '-') { el.value = el.value.replace(/[^0-9]/g, ''); }
+        if (el.value !== '' && parseFloat(el.value) > max) { el.value = ''; }
+        if (!isDual) applyMarkStyling(el, max);
+    }
+
     function calculateAll() {
-        let activeNumericCount = 0; let failCount = 0; let grandSum = 0; let coreFails = []; let langFails = []; let dataCompleted = true;
+        let activeNumericCount = 0; let failCount = 0; let grandSum = 0; 
+        let coreFails = []; let langFails = []; let dataCompleted = true;
+        let columnTotals = [0,0,0,0,0,0]; let columnMaxPossible = [0,0,0,0,0,0];
+        
         const tableBody = document.getElementById('tableBody');
         
         activeSubjects.forEach((subj, sIdx) => {
@@ -513,56 +509,132 @@
             if(hiddenInp) subjName = hiddenInp.value;
             const row = tableBody.rows[sIdx];
             
+            let effectiveMax = subj.max;
+            let effectiveDual = subj.dual;
+
+            // Automatically switch behavior if Eng II is selected
+            if (subj.dual && subjName === 'Eng II') {
+                effectiveMax = 100;
+                effectiveDual = false;
+            }
+
+            // Handle UI logic for N/A and Dual toggles
             for (let i = 0; i <= 5; i++) {
-                let inp = document.getElementById(`in-${sIdx}-${i}`);
-                let trig = document.getElementById(`in-${sIdx}-${i}-trigger`);
-                let hiddenVal = document.getElementById(`in-${sIdx}-${i}-val`);
+                let elA = document.getElementById(`in-${sIdx}-${i}-a`);
+                let elB = document.getElementById(`in-${sIdx}-${i}-b`);
+                let elS = document.getElementById(`in-${sIdx}-${i}`);
+                
                 if (subjName === 'N/A') {
-                    if(inp) { inp.disabled = true; inp.value = ''; inp.style.backgroundColor = '#e9ecef'; inp.style.borderColor = '#ddd'; }
-                    if(trig) { trig.style.pointerEvents = 'none'; trig.innerText = '-'; trig.style.backgroundColor = '#e9ecef'; trig.style.borderColor = '#ddd'; }
-                    if(hiddenVal) hiddenVal.value = '';
+                    if(elA) elA.disabled = true; if(elB) elB.disabled = true; if(elS) elS.disabled = true;
                 } else {
-                    if(inp) { inp.disabled = false; inp.style.backgroundColor = 'transparent'; inp.style.borderColor = '#bbb'; }
-                    if(trig) { trig.style.pointerEvents = 'auto'; trig.style.backgroundColor = 'transparent'; trig.style.borderColor = '#bbb'; }
+                    if(elA) elA.disabled = false; if(elB) elB.disabled = false; if(elS) elS.disabled = false;
+                }
+
+                if (subj.dual) {
+                    if (subjName === 'Eng II') {
+                        if(elB) elB.style.display = 'none';
+                        if(elA) { elA.className = 'marks-input'; elA.placeholder = ''; }
+                    } else {
+                        if(elB) elB.style.display = 'block';
+                        if(elA) { elA.className = 'marks-input-mini'; elA.placeholder = 'P1'; }
+                    }
                 }
             }
 
-            if (subj.type !== 'numeric') return;
-            if (subjName === 'N/A') { for(let i=7; i<=10; i++) row.cells[i].innerText = '-'; return; }
+            if (subj.type !== 'numeric' || subjName === 'N/A') {
+                if(subjName === 'N/A') for(let i=7; i<=10; i++) row.cells[i].innerText = '-';
+                return;
+            }
             
             activeNumericCount++;
-            const getV = (i) => { let val = document.getElementById(`in-${sIdx}-${i}`).value; return (val === 'Ab' || val === '-' || val === '') ? 0 : parseFloat(val); };
-            const m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / subj.max) * 25);
-            const q25 = Math.round(((getV(1) + getV(3)) / 2 / subj.max) * 25);
-            const a50 = Math.round((getV(5) / subj.max) * 50);
+            const getV = (i) => {
+                if(effectiveDual) {
+                    let v1 = document.getElementById(`in-${sIdx}-${i}-a`).value;
+                    let v2 = document.getElementById(`in-${sIdx}-${i}-b`).value;
+                    let sum = 0;
+                    sum += (v1 === 'Ab' || v1 === '-' || v1 === '') ? 0 : parseFloat(v1);
+                    sum += (v2 === 'Ab' || v2 === '-' || v2 === '') ? 0 : parseFloat(v2);
+                    return sum;
+                } else if (subj.dual && !effectiveDual) {
+                    let val = document.getElementById(`in-${sIdx}-${i}-a`).value;
+                    return (val === 'Ab' || val === '-' || val === '') ? 0 : parseFloat(val);
+                } else {
+                    let val = document.getElementById(`in-${sIdx}-${i}`).value;
+                    return (val === 'Ab' || val === '-' || val === '') ? 0 : parseFloat(val);
+                }
+            };
+
+            // Update column totals and input styling
+            for(let i=0; i<=5; i++) {
+                columnTotals[i] += getV(i);
+                columnMaxPossible[i] += effectiveMax;
+                
+                if(subj.dual) {
+                    let elA = document.getElementById(`in-${sIdx}-${i}-a`);
+                    let elB = document.getElementById(`in-${sIdx}-${i}-b`);
+                    if(elA && elB && !elA.disabled) {
+                        elA.classList.remove('text-red');
+                        elB.classList.remove('text-red');
+                        
+                        if (effectiveDual) {
+                            let v1 = elA.value, v2 = elB.value;
+                            let n1 = (v1 === 'Ab' || v1 === '-' || v1 === '') ? 0 : parseFloat(v1);
+                            let n2 = (v2 === 'Ab' || v2 === '-' || v2 === '') ? 0 : parseFloat(v2);
+                            
+                            if (v1 !== '' || v2 !== '') {
+                                if (n1 + n2 < 80) {
+                                    if (v1 !== '' && n1 < 40) elA.classList.add('text-red');
+                                    if (v2 !== '' && n2 < 40) elB.classList.add('text-red');
+                                }
+                            }
+                        } else {
+                            if (elA.value !== '' && !isNaN(elA.value)) {
+                                if ((parseFloat(elA.value)/effectiveMax)*100 < 40) elA.classList.add('text-red');
+                            }
+                        }
+                    }
+                }
+            }
+
+            const m25 = Math.round(((getV(0) + getV(2) + getV(4)) / 3 / effectiveMax) * 25);
+            const q25 = Math.round(((getV(1) + getV(3)) / 2 / effectiveMax) * 25);
+            const a50 = Math.round((getV(5) / effectiveMax) * 50);
             const total = m25 + q25 + a50;
             
             row.cells[7].innerText = m25; row.cells[8].innerText = q25; row.cells[9].innerText = a50; row.cells[10].innerText = total;
-            row.cells[10].classList.remove('text-red'); if (total < 40) row.cells[10].classList.add('text-red');
+            row.cells[10].classList.toggle('text-red', total < 40);
             
-            let rowFilled = true; for(let i=0; i<=5; i++) if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
-            if(rowFilled) { 
-                if(total < 40) { 
-                    if(subj.exempt) langFails.push({ name: subjName, type: 'exempt' }); 
-                    else { coreFails.push({ name: subjName, type: 'core' }); failCount++; } 
-                } 
+            let rowFilled = true;
+            for(let i=0; i<=5; i++) {
+                if(effectiveDual) {
+                    if(document.getElementById(`in-${sIdx}-${i}-a`).value === "" || document.getElementById(`in-${sIdx}-${i}-b`).value === "") rowFilled = false;
+                } else if (subj.dual && !effectiveDual) {
+                    if(document.getElementById(`in-${sIdx}-${i}-a`).value === "") rowFilled = false;
+                } else {
+                    if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
+                }
+            }
+            
+            if(rowFilled) {
+                if(total < 40) {
+                    if(subj.exempt) langFails.push({ name: subjName, type: 'exempt' });
+                    else { coreFails.push({ name: subjName, type: 'core' }); failCount++; }
+                }
             } else { dataCompleted = false; }
-            
             grandSum += total;
         });
         
-        for (let i = 0; i < 6; i++) { 
-            let sum = 0; 
-            activeSubjects.forEach((s, sIdx) => { 
-                if(s.type === 'numeric') { 
-                    let v = document.getElementById(`in-${sIdx}-${i}`).value; 
-                    sum += (v === 'Ab' || v === '-' || v === '') ? 0 : parseFloat(v); 
-                } 
-            }); 
-            document.getElementById(`gt-${i}`).innerText = sum; 
+        // Update Grand Totals UI
+        for (let i = 0; i < 6; i++) {
+            document.getElementById(`gt-${i}`).innerText = columnTotals[i];
+            let pct = columnMaxPossible[i] > 0 ? ((columnTotals[i]/columnMaxPossible[i])*100).toFixed(1) : 0;
+            document.getElementById(`pct-${i}`).innerText = pct + "%";
         }
-        
         document.getElementById('gt-total').innerText = grandSum;
+        let totalMaxPossible = activeNumericCount * 100;
+        let grandPct = totalMaxPossible > 0 ? ((grandSum / totalMaxPossible)*100).toFixed(1) : 0;
+        document.getElementById('pct-total').innerText = grandPct + "%";
+
         const avg = activeNumericCount > 0 ? (grandSum / activeNumericCount) : 0;
         updateDashboard(avg, coreFails.concat(langFails), failCount, dataCompleted);
     }
@@ -573,62 +645,65 @@
         const divEl = document.getElementById('dash-div');
         const pill = (txt, bg, clr, brd) => `<div class="print-badge" style="background:${bg}; color:${clr}; border-color:${brd}">${txt}</div>`;
         
-        // --- NEW PILL BOX LOGIC ---
         let currentClass = document.getElementById('stu-class-val').value;
         let nextClassHTML = "";
         if (currentClass && currentClass !== '-') {
             let cIdx = classOptions.indexOf(currentClass);
             if (cIdx !== -1 && cIdx < classOptions.length - 1) {
-                // Larger arrow (0.75rem), slightly smaller class text (0.85rem)
                nextClassHTML = `<div style="font-size: 0.55rem; color: #666; margin: 1px 0; font-weight: bold; text-transform: lowercase;">to</div><div style="display: inline-flex; align-items: center; justify-content: center; gap: 4px; background: #e6f4ea; border: 1.5px solid #28a745; border-radius: 50px; padding: 2px 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"><span style="font-size: 0.75rem; color: #28a745;">➔</span><span style="font-size: 0.85rem; font-weight: 900; color: #1e7e34; line-height: 1;">${classOptions[cIdx + 1]}</span></div>`;
             }
         }
 
         if (!complete) { 
-            statusEl.innerHTML = "AWAITED"; 
-            statusEl.className = "stat-value"; 
-            statusEl.style.color = "";
-            pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); 
-            divEl.innerText = "--"; 
+            statusEl.innerHTML = "AWAITED"; statusEl.style.color = "";
+            pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--"; 
         } else { 
             let isFailed = (avg < 40 || coreFailCount >= 3); 
             let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3"); 
             pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr); 
-            
             if (isFailed) { 
-                statusEl.innerHTML = "FAILED"; 
-                statusEl.className = "stat-value text-danger"; 
-                statusEl.style.color = "#dc3545";
-                divEl.innerText = "--"; 
+                statusEl.innerHTML = "FAILED"; statusEl.style.color = "#dc3545"; divEl.innerText = "--"; 
             } else { 
                 statusEl.innerHTML = `<div style="font-size: 0.75rem;">PROMOTED</div>` + nextClassHTML; 
-                statusEl.className = "stat-value text-green"; 
-                statusEl.style.color = "#28a745";
-                divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd"); 
+                statusEl.style.color = "#28a745"; divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd"); 
             } 
         }
         renderFails(failedList);
     }
 
     function renderFails(list) { 
-        const el = document.getElementById('dash-fails'); 
-        el.innerHTML = ''; 
+        const el = document.getElementById('dash-fails'); el.innerHTML = ''; 
         if(list.length === 0) { el.innerText = "NONE"; return; } 
         list.forEach(item => { 
-            let b = document.createElement('span'); 
-            b.className = 'print-badge'; 
+            let b = document.createElement('span'); b.className = 'print-badge'; 
             let color = item.type === 'exempt' ? '#28a745' : '#dc3545';
-            b.style.color = color;
-            b.style.backgroundColor = 'transparent'; 
-            b.style.border = `1px solid ${color}`;
-            b.innerText = item.name; 
-            el.appendChild(b); 
+            b.style.color = color; b.style.backgroundColor = 'transparent'; b.style.border = `1px solid ${color}`;
+            b.innerText = item.name; el.appendChild(b); 
         }); 
     }
     
-    function applyMarkStyling(input, max) { input.classList.remove('text-red'); if (input.value !== '' && !isNaN(input.value)) { if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red'); } }
+    function applyMarkStyling(input, max) { 
+        input.classList.remove('text-red'); 
+        if (input.value !== '' && !isNaN(input.value)) { 
+            if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red'); 
+        } 
+    }
     
-    function openSheet(title, options, targetId) { document.getElementById('sheet-title').innerText = title; const container = document.getElementById('options-container'); container.innerHTML = ''; options.forEach(opt => { const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt; btn.onclick = () => { let input = document.getElementById(targetId); if(input) input.value = opt; let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt; closeSheet(); calculateAll(); autoSave(); }; container.appendChild(btn); }); document.getElementById('overlay').style.display = 'block'; document.getElementById('sheet').classList.add('active'); }
+    function openSheet(title, options, targetId) { 
+        document.getElementById('sheet-title').innerText = title; 
+        const container = document.getElementById('options-container'); container.innerHTML = ''; 
+        options.forEach(opt => { 
+            const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt; 
+            btn.onclick = () => { 
+                let input = document.getElementById(targetId); if(input) input.value = opt; 
+                let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt; 
+                closeSheet(); calculateAll(); autoSave(); 
+            }; 
+            container.appendChild(btn); 
+        }); 
+        document.getElementById('overlay').style.display = 'block'; 
+        document.getElementById('sheet').classList.add('active'); 
+    }
     function closeSheet() { document.getElementById('sheet').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; }
     
     function switchMode(m) { 
@@ -642,37 +717,45 @@
     }
 
     function resetLocalInputs() { safeRemoveItem('marksCache'); document.querySelectorAll('input').forEach(inp => { if(inp.type !== 'hidden') inp.value = ''; }); document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-'); }
-    function autoSave() { const data = { mode: currentMode, student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value }, marks: [] }; document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value})); safeSetItem('marksCache', JSON.stringify(data)); }
     
-    function loadCache() { const saved = safeGetItem('marksCache'); if(!saved) return; const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); document.getElementById('stu-name').value = data.student.name || ''; document.getElementById('stu-roll').value = data.student.roll || ''; document.getElementById('stu-class-val').value = data.student.class || ''; document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; document.getElementById('stu-sec-val').value = data.student.sec || ''; document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); calculateAll(); }
+    function autoSave() { 
+        const data = { mode: currentMode, student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value }, marks: [] }; 
+        document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value})); 
+        safeSetItem('marksCache', JSON.stringify(data)); 
+    }
     
-    function downloadBackup() { const data = safeGetItem('marksCache'); if(!data) { showPopup("No data to save!", false, null, '#0066cc'); return; } const name = document.getElementById('stu-name').value || "Report"; if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`); }
+    function loadCache() { 
+        const saved = safeGetItem('marksCache'); if(!saved) return; 
+        const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; 
+        document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
+        document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); 
+        document.getElementById('stu-name').value = data.student.name || ''; 
+        document.getElementById('stu-roll').value = data.student.roll || ''; 
+        document.getElementById('stu-class-val').value = data.student.class || ''; 
+        document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; 
+        document.getElementById('stu-sec-val').value = data.student.sec || ''; 
+        document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; 
+        data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); 
+        calculateAll(); 
+    }
+    
+    function downloadBackup() { 
+        const data = safeGetItem('marksCache'); if(!data) { showPopup("No data to save!", false, null, '#0066cc'); return; } 
+        const name = document.getElementById('stu-name').value || "Report"; 
+        if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`); 
+    }
     function importData(event) { const reader = new FileReader(); reader.onload = (e) => { safeSetItem('marksCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
     
-    function clearAllData() { 
-        showPopup("Erase all data?", true, () => {
-            resetLocalInputs(); renderTable(); calculateAll();
-        });
-    }
-
+    function clearAllData() { showPopup("Erase all data?", true, () => { resetLocalInputs(); renderTable(); calculateAll(); }); }
     function printReport() { if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF(); else window.print(); }
     
-    // --- SMART UPDATE BUTTON LOGIC ---
     function checkForUpdates() {
         if (needsHtmlUpdate) {
-            // INSTANT VISUAL FEEDBACK
             document.getElementById('update-badge').style.display = 'none';
             const btnUp = document.querySelector('.btn-up');
-            btnUp.style.backgroundColor = '#28a745'; 
-            btnUp.style.borderColor = '#1e7e34';
-            btnUp.style.color = '#fff';
+            btnUp.style.backgroundColor = '#28a745'; btnUp.style.color = '#fff';
             btnUp.innerHTML = `<span style="font-size:0.6rem; font-weight:900;">Updating...</span>`;
-            
-            // AGGRESSIVE CACHE REPLACEMENT
-            setTimeout(() => {
-                window.location.replace(window.location.href.split('?')[0] + '?v=' + new Date().getTime());
-            }, 200);
-
+            setTimeout(() => { window.location.replace(window.location.href.split('?')[0] + '?v=' + new Date().getTime()); }, 200);
         } else if (typeof AndroidBridge !== "undefined" && AndroidBridge.forceUpdate) {
             AndroidBridge.forceUpdate();
         } else {
@@ -680,10 +763,7 @@
         }
     }
 
-    window.onload = () => { 
-        checkVisualUpdate(); 
-        document.getElementById('page-title').style.display = 'flex';
-    };
+    window.onload = () => { checkVisualUpdate(); document.getElementById('page-title').style.display = 'flex'; };
 </script>
 </body>
 </html>

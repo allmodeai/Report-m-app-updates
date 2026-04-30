@@ -257,7 +257,7 @@
                     <div id="update-badge" class="update-badge"></div>
                     <div class="btn-up">
                         <span>Update<br>App</span> 
-                        <span style="position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 7px; opacity: 0.75; font-weight: bold; color: #222; letter-spacing: 0.5px;">v1.3.2</span>
+                        <span style="position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 7px; opacity: 0.75; font-weight: bold; color: #222; letter-spacing: 0.5px;">v1.3.3</span>
                     </div>
                 </div>
             </div>
@@ -352,7 +352,7 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 16; 
+    const LOCAL_HTML_VERSION = 17; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 
@@ -464,8 +464,8 @@
                 if(subj.type === 'numeric') {
                     if(subj.dual) {
                         let wrapper = document.createElement('div'); wrapper.className = 'dual-box';
-                        let i1 = document.createElement('input'); i1.className = 'marks-input-mini'; i1.id = `${inputId}-a`; i1.placeholder = "P1";
-                        let i2 = document.createElement('input'); i2.className = 'marks-input-mini'; i2.id = `${inputId}-b`; i2.placeholder = "P2";
+                        let i1 = document.createElement('input'); i1.className = 'marks-input-mini'; i1.id = `${inputId}-a`; i1.placeholder = "E-I";
+                        let i2 = document.createElement('input'); i2.className = 'marks-input-mini'; i2.id = `${inputId}-b`; i2.placeholder = "E-II";
                         [i1, i2].forEach(inp => {
                             inp.inputMode = 'numeric';
                             inp.oninput = function() { validateNumeric(this, 100, true); calculateAll(); autoSave(); };
@@ -536,7 +536,7 @@
                         if(elA) { elA.className = 'marks-input'; elA.placeholder = ''; }
                     } else {
                         if(elB) elB.style.display = 'block';
-                        if(elA) { elA.className = 'marks-input-mini'; elA.placeholder = 'P1'; }
+                        if(elA) { elA.className = 'marks-input-mini'; elA.placeholder = 'E-I'; }
                     }
                 }
             }

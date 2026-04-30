@@ -257,7 +257,7 @@
                     <div id="update-badge" class="update-badge"></div>
                     <div class="btn-up">
                         <span>Update<br>App</span> 
-                        <span style="position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 7px; opacity: 0.75; font-weight: bold; color: #222; letter-spacing: 0.5px;">v1.3.4</span>
+                        <span style="position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 7px; opacity: 0.75; font-weight: bold; color: #222; letter-spacing: 0.5px;">v1.3.5</span>
                     </div>
                 </div>
             </div>
@@ -352,7 +352,7 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 18; 
+    const LOCAL_HTML_VERSION = 19; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 
@@ -360,7 +360,7 @@
     const validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
 
     const subjectsPMS = [
-        { name: 'English (I+II)', type: 'numeric', max: 200, dual: true, options: ['English (I+II)', 'Eng II'] },
+        { name: 'English (I+II)', type: 'numeric', max: 200, dual: true, options: ['Eng II', 'English (I+II)', 'Eng II'] },
         { name: 'TEL/Hindi', type: 'numeric', max: 100, exempt: true },
         { name: 'Bengali', type: 'numeric', max: 100, exempt: true },
         { name: 'Mathematics', type: 'numeric', max: 100 },
@@ -379,7 +379,7 @@
         { name: 'Mathematics', type: 'numeric', max: 100 },
         { name: 'Rhymes', type: 'numeric', max: 100 },
         { name: 'G.K.', type: 'numeric', max: 100, options: ['G.K.', 'P.G.', 'N/A'] },
-        { name: 'Computer', type: 'numeric', max: 100, options: ['Computer', 'N/A'] },
+        { name: 'Computer', type: 'numeric', max: 100, options: ['N/A', 'Computer', 'N/A'] },
         { name: 'Drawing', type: 'grade' }
     ];
 

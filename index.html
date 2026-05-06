@@ -66,7 +66,7 @@
         /* NEW TAGLINE MOVED UP CLOSER TO LOGO */
         .app-subtitle {
             position: absolute;
-            top: calc(40% - 101px); 
+            top: calc(40% - 30px); 
             left: 0;
             width: 100%;
             text-align: center;
@@ -94,7 +94,7 @@
             -webkit-tap-highlight-color: transparent;
         }
         
-       /* RESTORED CAPSULE SHAPE GLOW (NOW YELLOW) */
+        /* RESTORED CAPSULE SHAPE GLOW (NOW YELLOW) */
         @keyframes pulse-glow {
             0% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 5px 0px rgba(255, 255, 0, 0.5); }
             50% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 25px 5px rgba(255, 255, 0, 1); }
@@ -183,7 +183,7 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
         }
 
-        /* PROFESSIONAL FOOTER */
+        /* PROFESSIONAL FOOTER - HIGH VISIBILITY PURE WHITE WITH SHADOW */
         .launch-footer {
             position: absolute;
             bottom: calc(5px + env(safe-area-inset-bottom));
@@ -194,12 +194,12 @@
             gap: 6px;
             text-align: center;
             z-index: 10;
-            color: rgba(255, 255, 255, 0.8);
-            text-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+            color: #ffffff; /* Pure white text */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.8); /* Heavy black drop shadow */
         }
         .developer-credit { font-size: 0.6rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
         .footer-links { font-size: 0.55rem; font-weight: 700; }
-        .footer-links span { margin: 0 8px; text-decoration: underline; cursor: pointer; color: rgba(255, 255, 255, 0.95); }
+        .footer-links span { margin: 0 8px; text-decoration: underline; cursor: pointer; color: #ffffff; }
 
         /* --- GRADING PAGE --- */
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 2px; }
@@ -290,7 +290,7 @@
     <div id="page-title" class="page active">
         <div class="launch-card">
             
-            <div class="app-subtitle">Automated Student Assessment <br> Protocol</div>
+            <div class="app-subtitle">Automated Student Assessment<br>Protocol</div>
 
             <div class="title-btn-group">
                 <div class="btn-go-wrapper" onclick="startApp(this.querySelector('.btn-go'))">
@@ -306,7 +306,7 @@
             </div>
 
             <div class="launch-footer">
-                <div class="developer-credit">Developed by CS Lab • v1.3.21</div>
+                <div class="developer-credit">Developed by CS Lab • v1.3.22</div>
                 <div class="footer-links">
                     <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
                     |
@@ -405,7 +405,7 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 27; 
+    const LOCAL_HTML_VERSION = 23; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 

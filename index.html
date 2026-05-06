@@ -75,10 +75,10 @@
             z-index: 2;
         }
         
-        .title-btn-group { 
+       .title-btn-group { 
             width: 100%; z-index: 2; position: relative; 
             margin-top: auto; 
-            padding-bottom: 50px; 
+            padding-bottom: 75px; /* Increased from 50px to push buttons higher */
         }
 
         .btn-go-wrapper {
@@ -89,12 +89,11 @@
             -webkit-tap-highlight-color: transparent;
         }
         
-        @keyframes pulse-glow {
-            0% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 5px rgba(255, 102, 0, 0.4); }
-            50% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 20px rgba(255, 102, 0, 0.9); }
-            100% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 5px rgba(255, 102, 0, 0.4); }
-        }
-
+       @keyframes pulse-glow {
+            0% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 10px rgba(255, 102, 0, 0.5); }
+            50% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 40px rgba(255, 102, 0, 1), 0 0 15px rgba(255, 255, 255, 0.4); }
+            100% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 10px rgba(255, 102, 0, 0.5); }
+        }2
         .btn-go { 
             width: 100%; padding: 16px 10px; 
             background-color: #ff6600; 
@@ -176,10 +175,10 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
         }
 
-        /* NEW PROFESSIONAL FOOTER */
+       /* NEW PROFESSIONAL FOOTER */
         .launch-footer {
             position: absolute;
-            bottom: calc(15px + env(safe-area-inset-bottom));
+            bottom: calc(5px + env(safe-area-inset-bottom)); /* Decreased from 15px to sit closer to the bottom edge */
             left: 0;
             width: 100%;
             display: flex;
@@ -299,7 +298,7 @@
             </div>
 
             <div class="launch-footer">
-                <div class="developer-credit">Developed by CS Lab • v1.3.6</div>
+                <div class="developer-credit">Developed by CS Lab • v1.3.7</div>
                 <div class="footer-links">
                     <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
                     |
@@ -398,7 +397,7 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 20; 
+    const LOCAL_HTML_VERSION = 21; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 

@@ -45,7 +45,7 @@
             width: 88%; 
             height: 85vh; 
             text-align: center; position: relative; display: flex;
-            flex-direction: column; justify-content: space-between; overflow: hidden;
+            flex-direction: column; overflow: hidden;
         }
 
         /* WATERMARK INTEGRATION */
@@ -58,15 +58,27 @@
             background-image: url("https://allmodeai.github.io/Report-m-app-updates/Report_makerAppicon.jpg"); 
             background-repeat: no-repeat;
             background-size: contain;
-            opacity: 0.1; 
+            opacity: 0.12; 
             pointer-events: none;
             z-index: 0;
+        }
+
+        /* NEW TAGLINE */
+        .app-subtitle {
+            margin-top: 55vh;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 900;
+            font-size: 0.7rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
+            z-index: 2;
         }
         
         .title-btn-group { 
             width: 100%; z-index: 2; position: relative; 
             margin-top: auto; 
-            padding-bottom: 35px; 
+            padding-bottom: 50px; 
         }
 
         .btn-go-wrapper {
@@ -77,6 +89,12 @@
             -webkit-tap-highlight-color: transparent;
         }
         
+        @keyframes pulse-glow {
+            0% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 5px rgba(255, 102, 0, 0.4); }
+            50% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 20px rgba(255, 102, 0, 0.9); }
+            100% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 5px rgba(255, 102, 0, 0.4); }
+        }
+
         .btn-go { 
             width: 100%; padding: 16px 10px; 
             background-color: #ff6600; 
@@ -97,10 +115,9 @@
             box-sizing: border-box;
             text-align: center;
             pointer-events: none; 
+            animation: pulse-glow 2.5s infinite;
         }
-        .btn-go-wrapper:active .btn-go { 
-            transform: scale(0.96); 
-        }
+        .btn-go-wrapper:active .btn-go { transform: scale(0.96); animation: none; }
 
         .btn-up-wrapper {
             width: 60px; height: 60px;
@@ -113,7 +130,6 @@
 
         .btn-up { 
             width: 100%; height: 100%; 
-            padding: 0 0 10px 0; 
             background-color: #ffcc00; 
             background-image: 
                 linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), 
@@ -123,7 +139,7 @@
             border: 1px solid #ffe680; 
             border-radius: 50%; 
             font-weight: 900; 
-            font-size: 0.55rem; 
+            font-size: 0.65rem; 
             text-transform: uppercase; 
             box-shadow: 
                 inset 0 4px 6px rgba(255,255,255,0.6), 
@@ -159,6 +175,24 @@
             70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(255, 59, 48, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
         }
+
+        /* NEW PROFESSIONAL FOOTER */
+        .launch-footer {
+            position: absolute;
+            bottom: calc(15px + env(safe-area-inset-bottom));
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: center;
+            z-index: 10;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+        }
+        .developer-credit { font-size: 0.6rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+        .footer-links { font-size: 0.55rem; font-weight: 700; }
+        .footer-links span { margin: 0 8px; text-decoration: underline; cursor: pointer; color: rgba(255, 255, 255, 0.95); }
 
         /* --- GRADING PAGE --- */
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 2px; }
@@ -248,8 +282,11 @@
 <div class="app-wrapper">
     <div id="page-title" class="page active">
         <div class="launch-card">
+            
+            <div class="app-subtitle">Automated Student Assessment Protocol</div>
+
             <div class="title-btn-group">
-                <div class="btn-go-wrapper" onclick="startApp()">
+                <div class="btn-go-wrapper" onclick="startApp(this.querySelector('.btn-go'))">
                     <div class="btn-go">Start Grading</div>
                 </div>
                 
@@ -257,10 +294,19 @@
                     <div id="update-badge" class="update-badge"></div>
                     <div class="btn-up">
                         <span>Update<br>App</span> 
-                        <span style="position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 7px; opacity: 0.75; font-weight: bold; color: #222; letter-spacing: 0.5px;">v1.3.5</span>
                     </div>
                 </div>
             </div>
+
+            <div class="launch-footer">
+                <div class="developer-credit">Developed by CS Lab • v1.3.5</div>
+                <div class="footer-links">
+                    <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
+                    |
+                    <span onclick="showPopup('For institutional use only. Ensure manual verification of all calculated academic records before final submission.', false, null, '#0066cc', 'Close')">Terms of Service</span>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -409,12 +455,25 @@
         } catch(e) {}
     }
 
-    function startApp() {
-        document.getElementById('page-title').style.display = 'none';
-        document.getElementById('page-grading').style.display = 'flex';
-        renderTable();
-        loadCache();
-        if(!safeGetItem('marksCache')) calculateAll();
+    // NEW LOADING STATE FOR START BUTTON
+    function startApp(btnElement) {
+        if (btnElement) {
+            const originalHTML = btnElement.innerHTML;
+            btnElement.style.animation = "none";
+            btnElement.innerHTML = `<span style="opacity: 0.8; letter-spacing: 2px;">LOADING...</span>`;
+            
+            setTimeout(() => {
+                document.getElementById('page-title').style.display = 'none';
+                document.getElementById('page-grading').style.display = 'flex';
+                renderTable();
+                loadCache();
+                if(!safeGetItem('marksCache')) calculateAll();
+                
+                // Reset button in case they go back
+                btnElement.innerHTML = originalHTML;
+                btnElement.style.animation = "pulse-glow 2.5s infinite";
+            }, 400); // 400ms artificial delay for perceived loading
+        }
     }
 
     function goToMenu() {

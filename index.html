@@ -26,24 +26,24 @@
         .page.active { display: flex; }
 
         /* --- TITLE SCREEN --- */
-        #page-title { 
-            position: absolute; 
+        #page-title {
+            position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 100; 
-            justify-content: center; 
-            align-items: center; 
-            background-color: #338c31; 
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            background-color: #338c31;
             background-image: url('https://allmodeai.github.io/Report-m-app-updates/title_bg.jpg');
-            background-size: cover; 
+            background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
         }
 
         .launch-card {
-            background: transparent; 
-            padding: 30px 20px; 
-            width: 88%; 
-            height: 85vh; 
+            background: transparent;
+            padding: 30px 20px;
+            width: 88%;
+            height: 85vh;
             text-align: center; position: relative; display: flex;
             flex-direction: column; justify-content: space-between; overflow: hidden;
         }
@@ -55,10 +55,10 @@
             top: 40%; left: 50%;
             transform: translate(-50%, -50%);
             width: 250px; height: 250px;
-            background-image: url("https://allmodeai.github.io/Report-m-app-updates/Report_makerAppicon.jpg"); 
+            background-image: url("https://allmodeai.github.io/Report-m-app-updates/Report_makerAppicon.jpg");
             background-repeat: no-repeat;
             background-size: contain;
-            opacity: 0.12; 
+            opacity: 0.12;
             pointer-events: none;
             z-index: 0;
         }
@@ -66,7 +66,7 @@
         /* NEW TAGLINE MOVED UP CLOSER TO LOGO */
         .app-subtitle {
             position: absolute;
-            top: calc(40% - 101px); 
+            top: calc(40% - 101px);
             left: 0;
             width: 100%;
             text-align: center;
@@ -79,11 +79,11 @@
             z-index: 2;
             margin: 0;
         }
-        
-        .title-btn-group { 
-            width: 100%; z-index: 2; position: relative; 
-            margin-top: auto; 
-            padding-bottom: 75px; 
+
+        .title-btn-group {
+            width: 100%; z-index: 2; position: relative;
+            margin-top: auto;
+            padding-bottom: 75px;
         }
 
         .btn-go-wrapper {
@@ -93,7 +93,7 @@
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
         }
-        
+
        /* RESTORED CAPSULE SHAPE GLOW (NOW YELLOW) */
         @keyframes pulse-glow {
             0% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 5px 0px rgba(255, 255, 0, 0.5); }
@@ -101,27 +101,27 @@
             100% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 5px 0px rgba(255, 255, 0, 0.5); }
         }
 
-        .btn-go { 
-            width: 100%; padding: 16px 10px; 
-            background-color: #ff6600; 
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.25) 1px, transparent 1px), 
+        .btn-go {
+            width: 100%; padding: 16px 10px;
+            background-color: #ff6600;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.25) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.25) 1px, transparent 1px);
-            background-size: 20px 20px; 
-            color: white; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3); 
-            border: 2px solid #ff9966; 
-            border-radius: 50px; 
-            font-weight: 900; font-size: 1.2rem; 
-            text-transform: uppercase; 
-            box-shadow: 
-                inset 0 4px 6px rgba(255,255,255,0.4), 
-                inset 0 -4px 6px rgba(0,0,0,0.2); 
-            transition: all 0.1s ease; 
+            background-size: 20px 20px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            border: 2px solid #ff9966;
+            border-radius: 50px;
+            font-weight: 900; font-size: 1.2rem;
+            text-transform: uppercase;
+            box-shadow:
+                inset 0 4px 6px rgba(255,255,255,0.4),
+                inset 0 -4px 6px rgba(0,0,0,0.2);
+            transition: all 0.1s ease;
             display: block;
             box-sizing: border-box;
             text-align: center;
-            pointer-events: none; 
+            pointer-events: none;
             animation: pulse-glow 3s infinite ease-in-out;
         }
         .btn-go-wrapper:active .btn-go { transform: scale(0.96); animation: none; }
@@ -132,35 +132,35 @@
             border-radius: 50%;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
-            position: relative; 
+            position: relative;
         }
 
-        .btn-up { 
-            width: 100%; height: 100%; 
-            background-color: #ffcc00; 
-            background-image: 
-                linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), 
+        .btn-up {
+            width: 100%; height: 100%;
+            background-color: #ffcc00;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
-            background-size: 16px 16px; 
-            color: #222; 
-            border: 1px solid #ffe680; 
-            border-radius: 50%; 
-            font-weight: 900; 
-            font-size: 0.65rem; 
-            text-transform: uppercase; 
-            box-shadow: 
-                inset 0 4px 6px rgba(255,255,255,0.6), 
-                inset 0 -4px 6px rgba(0,0,0,0.15); 
-            transition: transform 0.1s ease; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            position: relative; 
+            background-size: 16px 16px;
+            color: #222;
+            border: 1px solid #ffe680;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            box-shadow:
+                inset 0 4px 6px rgba(255,255,255,0.6),
+                inset 0 -4px 6px rgba(0,0,0,0.15);
+            transition: transform 0.1s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
             text-align: center;
             line-height: 1.2;
             box-sizing: border-box;
-            pointer-events: none; 
+            pointer-events: none;
         }
         .btn-up-wrapper:active .btn-up { transform: scale(0.92); }
 
@@ -168,10 +168,10 @@
             position: absolute;
             top: -2px; right: -2px;
             width: 14px; height: 14px;
-            background-color: #ff3b30; 
-            border: 2px solid #0066cc; 
+            background-color: #ff3b30;
+            border: 2px solid #0066cc;
             border-radius: 50%;
-            display: none; 
+            display: none;
             z-index: 10;
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             animation: pulse-red 2s infinite;
@@ -220,16 +220,16 @@
         .table-container { flex: 1; padding: 0 4px; overflow: hidden; display: flex; flex-direction: column; }
         .table-wrap { width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; border: 1.5px solid #0066cc; border-radius: 4px; }
         table { border-collapse: collapse; min-width: 850px; width: 100%; height: 100%; table-layout: fixed; }
-        
+
         th { background: #0066cc; color: white; padding: 2px 1px; border: 1px solid #0052a3; font-size: 8px; text-transform: uppercase; line-height: 1.1; }
         .top-header { font-size: 10px !important; padding: 2px 2px !important; }
-        
+
         td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
-        
+
         tbody td:last-child { font-weight: 900; font-size: 11px; }
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 13px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
-        
+
         .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
         .marks-input:disabled { color: #888; }
 
@@ -264,7 +264,7 @@
         .text-red { color: #dc3545 !important; text-decoration: underline; }
         .text-danger { color: #dc3545 !important; }
         .text-green { color: #28a745 !important; }
-        
+
         /* OVERLAYS & SHEETS */
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
         .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; z-index: 1001; padding: 15px 15px calc(15px + env(safe-area-inset-bottom)) 15px; box-sizing: border-box; max-height: 80vh; overflow-y: auto; }
@@ -289,18 +289,18 @@
 <div class="app-wrapper">
     <div id="page-title" class="page active">
         <div class="launch-card">
-            
+
             <div class="app-subtitle">Automated Student Assessment <br> Protocol</div>
 
             <div class="title-btn-group">
                 <div class="btn-go-wrapper" onclick="startApp(this.querySelector('.btn-go'))">
                     <div class="btn-go">Start Grading</div>
                 </div>
-                
+
                 <div class="btn-up-wrapper" onclick="checkForUpdates()">
                     <div id="update-badge" class="update-badge"></div>
                     <div class="btn-up">
-                        <span>Update<br>App</span> 
+                        <span>Update<br>App</span>
                     </div>
                 </div>
             </div>
@@ -310,7 +310,7 @@
                 <div class="footer-links">
                     <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
                     |
-                    <span onclick="showPopup('For institutional use only. Ensure manual verification of all calculated academic records before final submission.', false, null, '#0066cc', 'Close')">Terms of Service</span>
+                    <span onclick="showPopup('For institutional use only. Ensure manual verification of all calculated academic records before final submission.\n\nContact us: support@cslabs999.com', false, null, '#0066cc', 'Close')">Terms of Service</span>
                 </div>
             </div>
 
@@ -405,10 +405,10 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 27; 
-    const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
-    
-    let needsHtmlUpdate = false; 
+    const LOCAL_HTML_VERSION = 28;
+    const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json";
+
+    let needsHtmlUpdate = false;
     const classOptions = ['Nursery', 'LKG', 'UKG', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
     const validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
 
@@ -467,17 +467,17 @@
             const originalHTML = btnElement.innerHTML;
             btnElement.style.animation = "none";
             btnElement.innerHTML = `<span style="opacity: 0.8; letter-spacing: 2px;">LOADING...</span>`;
-            
+
             setTimeout(() => {
                 document.getElementById('page-title').style.display = 'none';
                 document.getElementById('page-grading').style.display = 'flex';
                 renderTable();
                 loadCache();
                 if(!safeGetItem('marksCache')) calculateAll();
-                
+
                 btnElement.innerHTML = originalHTML;
                 btnElement.style.animation = "pulse-glow 3s infinite ease-in-out";
-            }, 400); 
+            }, 400);
         }
     }
 
@@ -521,9 +521,9 @@
                 let hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.id = `subj-val-${sIdx}`; hidden.value = subj.name;
                 sCell.appendChild(trigger); sCell.appendChild(hidden);
             } else { sCell.innerText = subj.name; }
-            
+
             for (let i = 0; i <= 5; i++) {
-                let cell = row.insertCell(); 
+                let cell = row.insertCell();
                 let inputId = `in-${sIdx}-${i}`;
                 if(subj.type === 'numeric') {
                     if(subj.dual) {
@@ -561,18 +561,18 @@
     }
 
     function calculateAll() {
-        let activeNumericCount = 0; let failCount = 0; let grandSum = 0; 
+        let activeNumericCount = 0; let failCount = 0; let grandSum = 0;
         let coreFails = []; let langFails = []; let dataCompleted = true;
         let columnTotals = [0,0,0,0,0,0]; let columnMaxPossible = [0,0,0,0,0,0];
-        
+
         const tableBody = document.getElementById('tableBody');
-        
+
         activeSubjects.forEach((subj, sIdx) => {
             let subjName = subj.name;
             let hiddenInp = document.getElementById(`subj-val-${sIdx}`);
             if(hiddenInp) subjName = hiddenInp.value;
             const row = tableBody.rows[sIdx];
-            
+
             let effectiveMax = subj.max;
             let effectiveDual = subj.dual;
 
@@ -587,7 +587,7 @@
                 let elA = document.getElementById(`in-${sIdx}-${i}-a`);
                 let elB = document.getElementById(`in-${sIdx}-${i}-b`);
                 let elS = document.getElementById(`in-${sIdx}-${i}`);
-                
+
                 if (subjName === 'N/A') {
                     if(elA) elA.disabled = true; if(elB) elB.disabled = true; if(elS) elS.disabled = true;
                 } else {
@@ -609,7 +609,7 @@
                 if(subjName === 'N/A') for(let i=7; i<=10; i++) row.cells[i].innerText = '-';
                 return;
             }
-            
+
             activeNumericCount++;
             const getV = (i) => {
                 if(effectiveDual) {
@@ -632,19 +632,19 @@
             for(let i=0; i<=5; i++) {
                 columnTotals[i] += getV(i);
                 columnMaxPossible[i] += effectiveMax;
-                
+
                 if(subj.dual) {
                     let elA = document.getElementById(`in-${sIdx}-${i}-a`);
                     let elB = document.getElementById(`in-${sIdx}-${i}-b`);
                     if(elA && elB && !elA.disabled) {
                         elA.classList.remove('text-red');
                         elB.classList.remove('text-red');
-                        
+
                         if (effectiveDual) {
                             let v1 = elA.value, v2 = elB.value;
                             let n1 = (v1 === 'Ab' || v1 === '-' || v1 === '') ? 0 : parseFloat(v1);
                             let n2 = (v2 === 'Ab' || v2 === '-' || v2 === '') ? 0 : parseFloat(v2);
-                            
+
                             if (v1 !== '' || v2 !== '') {
                                 if (n1 + n2 < 80) {
                                     if (v1 !== '' && n1 < 40) elA.classList.add('text-red');
@@ -664,10 +664,10 @@
             const q25 = Math.round(((getV(1) + getV(3)) / 2 / effectiveMax) * 25);
             const a50 = Math.round((getV(5) / effectiveMax) * 50);
             const total = m25 + q25 + a50;
-            
+
             row.cells[7].innerText = m25; row.cells[8].innerText = q25; row.cells[9].innerText = a50; row.cells[10].innerText = total;
             row.cells[10].classList.toggle('text-red', total < 40);
-            
+
             let rowFilled = true;
             for(let i=0; i<=5; i++) {
                 if(effectiveDual) {
@@ -678,7 +678,7 @@
                     if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
                 }
             }
-            
+
             if(rowFilled) {
                 if(total < 40) {
                     if(subj.exempt) langFails.push({ name: subjName, type: 'exempt' });
@@ -687,7 +687,7 @@
             } else { dataCompleted = false; }
             grandSum += total;
         });
-        
+
         // Update Grand Totals UI
         for (let i = 0; i < 6; i++) {
             document.getElementById(`gt-${i}`).innerText = columnTotals[i];
@@ -704,11 +704,11 @@
     }
 
     function updateDashboard(avg, failedList, coreFailCount, complete) {
-        const statusEl = document.getElementById('dash-status'); 
-        const pctEl = document.getElementById('dash-pct'); 
+        const statusEl = document.getElementById('dash-status');
+        const pctEl = document.getElementById('dash-pct');
         const divEl = document.getElementById('dash-div');
         const pill = (txt, bg, clr, brd) => `<div class="print-badge" style="background:${bg}; color:${clr}; border-color:${brd}">${txt}</div>`;
-        
+
         let currentClass = document.getElementById('stu-class-val').value;
         let nextClassHTML = "";
         if (currentClass && currentClass !== '-') {
@@ -718,101 +718,101 @@
             }
         }
 
-        if (!complete) { 
+        if (!complete) {
             statusEl.innerHTML = "AWAITED"; statusEl.style.color = "";
-            pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--"; 
-        } else { 
-            let isFailed = (avg < 40 || coreFailCount >= 3); 
-            let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3"); 
-            pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr); 
-            if (isFailed) { 
-                statusEl.innerHTML = "FAILED"; statusEl.style.color = "#dc3545"; divEl.innerText = "--"; 
-            } else { 
-                statusEl.innerHTML = `<div style="font-size: 0.75rem;">PROMOTED</div>` + nextClassHTML; 
-                statusEl.style.color = "#28a745"; divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd"); 
-            } 
+            pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--";
+        } else {
+            let isFailed = (avg < 40 || coreFailCount >= 3);
+            let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3");
+            pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr);
+            if (isFailed) {
+                statusEl.innerHTML = "FAILED"; statusEl.style.color = "#dc3545"; divEl.innerText = "--";
+            } else {
+                statusEl.innerHTML = `<div style="font-size: 0.75rem;">PROMOTED</div>` + nextClassHTML;
+                statusEl.style.color = "#28a745"; divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd");
+            }
         }
         renderFails(failedList);
     }
 
-    function renderFails(list) { 
-        const el = document.getElementById('dash-fails'); el.innerHTML = ''; 
-        if(list.length === 0) { el.innerText = "NONE"; return; } 
-        list.forEach(item => { 
-            let b = document.createElement('span'); b.className = 'print-badge'; 
+    function renderFails(list) {
+        const el = document.getElementById('dash-fails'); el.innerHTML = '';
+        if(list.length === 0) { el.innerText = "NONE"; return; }
+        list.forEach(item => {
+            let b = document.createElement('span'); b.className = 'print-badge';
             let color = item.type === 'exempt' ? '#28a745' : '#dc3545';
             b.style.color = color; b.style.backgroundColor = 'transparent'; b.style.border = `1px solid ${color}`;
-            b.innerText = item.name; el.appendChild(b); 
-        }); 
+            b.innerText = item.name; el.appendChild(b);
+        });
     }
-    
-    function applyMarkStyling(input, max) { 
-        input.classList.remove('text-red'); 
-        if (input.value !== '' && !isNaN(input.value)) { 
-            if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red'); 
-        } 
+
+    function applyMarkStyling(input, max) {
+        input.classList.remove('text-red');
+        if (input.value !== '' && !isNaN(input.value)) {
+            if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red');
+        }
     }
-    
-    function openSheet(title, options, targetId) { 
-        document.getElementById('sheet-title').innerText = title; 
-        const container = document.getElementById('options-container'); container.innerHTML = ''; 
-        options.forEach(opt => { 
-            const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt; 
-            btn.onclick = () => { 
-                let input = document.getElementById(targetId); if(input) input.value = opt; 
-                let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt; 
-                closeSheet(); calculateAll(); autoSave(); 
-            }; 
-            container.appendChild(btn); 
-        }); 
-        document.getElementById('overlay').style.display = 'block'; 
-        document.getElementById('sheet').classList.add('active'); 
+
+    function openSheet(title, options, targetId) {
+        document.getElementById('sheet-title').innerText = title;
+        const container = document.getElementById('options-container'); container.innerHTML = '';
+        options.forEach(opt => {
+            const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt;
+            btn.onclick = () => {
+                let input = document.getElementById(targetId); if(input) input.value = opt;
+                let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt;
+                closeSheet(); calculateAll(); autoSave();
+            };
+            container.appendChild(btn);
+        });
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('sheet').classList.add('active');
     }
     function closeSheet() { document.getElementById('sheet').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; }
-    
-    function switchMode(m) { 
-        if (currentMode === m) return; 
+
+    function switchMode(m) {
+        if (currentMode === m) return;
         showPopup("Switching modes will clear current data. Continue?", true, () => {
-            currentMode = m; 
-            document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
-            document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); 
+            currentMode = m;
+            document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-'+m.toLowerCase()).classList.add('active');
             resetLocalInputs(); renderTable(); calculateAll(); autoSave();
         });
     }
 
     function resetLocalInputs() { safeRemoveItem('marksCache'); document.querySelectorAll('input').forEach(inp => { if(inp.type !== 'hidden') inp.value = ''; }); document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-'); }
-    
-    function autoSave() { 
-        const data = { mode: currentMode, student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value }, marks: [] }; 
-        document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value})); 
-        safeSetItem('marksCache', JSON.stringify(data)); 
+
+    function autoSave() {
+        const data = { mode: currentMode, student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value }, marks: [] };
+        document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value}));
+        safeSetItem('marksCache', JSON.stringify(data));
     }
-    
-    function loadCache() { 
-        const saved = safeGetItem('marksCache'); if(!saved) return; 
-        const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; 
-        document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
-        document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); 
-        document.getElementById('stu-name').value = data.student.name || ''; 
-        document.getElementById('stu-roll').value = data.student.roll || ''; 
-        document.getElementById('stu-class-val').value = data.student.class || ''; 
-        document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; 
-        document.getElementById('stu-sec-val').value = data.student.sec || ''; 
-        document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; 
-        data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); 
-        calculateAll(); 
+
+    function loadCache() {
+        const saved = safeGetItem('marksCache'); if(!saved) return;
+        const data = JSON.parse(saved); currentMode = data.mode || 'PMS';
+        document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active');
+        document.getElementById('stu-name').value = data.student.name || '';
+        document.getElementById('stu-roll').value = data.student.roll || '';
+        document.getElementById('stu-class-val').value = data.student.class || '';
+        document.getElementById('stu-class-trigger').innerText = data.student.class || '-';
+        document.getElementById('stu-sec-val').value = data.student.sec || '';
+        document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-';
+        data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; });
+        calculateAll();
     }
-    
-    function downloadBackup() { 
-        const data = safeGetItem('marksCache'); if(!data) { showPopup("No data to save!", false, null, '#0066cc'); return; } 
-        const name = document.getElementById('stu-name').value || "Report"; 
-        if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`); 
+
+    function downloadBackup() {
+        const data = safeGetItem('marksCache'); if(!data) { showPopup("No data to save!", false, null, '#0066cc'); return; }
+        const name = document.getElementById('stu-name').value || "Report";
+        if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`);
     }
     function importData(event) { const reader = new FileReader(); reader.onload = (e) => { safeSetItem('marksCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
-    
+
     function clearAllData() { showPopup("Erase all data?", true, () => { resetLocalInputs(); renderTable(); calculateAll(); }); }
     function printReport() { if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF(); else window.print(); }
-    
+
     function checkForUpdates() {
         if (needsHtmlUpdate) {
             document.getElementById('update-badge').style.display = 'none';

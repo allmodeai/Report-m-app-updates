@@ -220,9 +220,9 @@
         .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
         .marks-input:disabled { color: #888; }
 
-        /* --- UPGRADED COMPACT ROWS: PULLED TO EDGES --- */
-        /* Padding removed, gap tightened to 1px so everything shifts close to top and bottom margins */
-        .dual-box { display: flex; flex-direction: column; gap: 1px; padding: 0; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 0; }
+        /* --- UPGRADED COMPACT ROWS: INCREASED GAP BETWEEN MINI BOXES AND TOTAL BOX --- */
+        /* Increased gap from 1px to 4px to add separation */
+        .dual-box { display: flex; flex-direction: column; gap: 4px; padding: 0; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 0; }
         .dual-inputs { display: flex; flex-direction: row; gap: 2px; justify-content: center; width: 100%; }
         
         /* SLIGHTLY INCREASED TOP BOXES */
@@ -299,8 +299,9 @@
                 </div>
             </div>
 
+            <!-- FOOTER LINKS -->
             <div class="launch-footer">
-                <div class="developer-credit">Developed by CS Lab • v1.3.52</div>
+                <div class="developer-credit">Developed by CS Lab • v1.3.53</div>
                 <div class="footer-links">
                     <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
                     |
@@ -387,6 +388,7 @@
     <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;"></div>
 </div>
 
+<!-- POPUP CONTAINERS REQUIRED FOR CLICK TOGGLE -->
 <div id="dialog-overlay" class="sheet-overlay" onclick="closePopup()"></div>
 <div id="custom-dialog" class="dialog-box">
     <div id="dialog-msg" class="dialog-msg">Message</div>
@@ -399,7 +401,7 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 52; 
+    const LOCAL_HTML_VERSION = 53; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 

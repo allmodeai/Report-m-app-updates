@@ -183,11 +183,11 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
         }
 
-        /* PROFESSIONAL FOOTER */
-        .launch-footer { position: absolute; bottom: calc(5px + env(safe-area-inset-bottom)); left: 0; width: 100%; text-align: center; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); }
-        .developer-credit { font-size: 0.7rem; font-weight: 900; text-transform: uppercase; } 
-        .footer-links { font-size: 0.65rem; font-weight: 700; margin-top: 4px; } 
-        .footer-links span { margin: 0 8px; text-decoration: underline; cursor: pointer; color: #ffffff; }
+        /* --- PROFESSIONAL FOOTER WITH EXPANDED TAP TARGETS AND LARGER FONT --- */
+        .launch-footer { position: absolute; bottom: calc(5px + env(safe-area-inset-bottom)); left: 0; width: 100%; text-align: center; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); z-index: 105; }
+        .developer-credit { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; } 
+        .footer-links { font-size: 0.85rem; font-weight: 700; margin-top: 6px; } 
+        .footer-links span { margin: 0 8px; text-decoration: underline; cursor: pointer; color: #ffffff; padding: 10px 4px; display: inline-block; }
 
         /* --- GRADING PAGE --- */
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 2px; }
@@ -220,14 +220,10 @@
         .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
         .marks-input:disabled { color: #888; }
 
-        /* FIXED ENGLISH CELL PROPORTIONS: REDUCED VERTICAL SPACE */
+        /* UPGRADED COMPACT ROWS: ELIMINATE EMPTY GAPS WITHIN CELL */
         .dual-box { display: flex; flex-direction: column; gap: 1px; padding: 0; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 0; }
         .dual-inputs { display: flex; flex-direction: row; gap: 1px; justify-content: center; width: 100%; }
-        
-        /* MINI BOX LAYOUT */
         .marks-input-mini { width: 22px; height: 16px; font-size: 10px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-weight: 900; outline: none; padding: 0; margin: 0; box-sizing: border-box; }
-        
-        /* TOTAL BOX SIZE TO MATCH STANDARDIZED COLUMNS */
         .dual-total { width: 44px; height: 22px; font-size: 12px; font-weight: 900; color: #004c99; background: #eef6ff; border: 1px solid #bbb; border-radius: 3px; display: flex; align-items: center; justify-content: center; margin: 1px auto 0 auto; padding: 0; box-sizing: border-box; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
@@ -264,12 +260,12 @@
         .bottom-sheet.active { transform: translateY(0); }
         .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
 
-        /* UPGRADED POPUP DIALOG WITH LARGER TEXT SIZE */
+        /* UPGRADED POPUP DIALOG WITH MASSIVE TEXT SIZE */
         .dialog-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: white; padding: 25px 20px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); width: 85%; max-width: 340px; text-align: center; z-index: 2000; opacity: 0; pointer-events: none; transition: all 0.2s ease-out; }
         .dialog-box.active { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
-        .dialog-msg { font-size: 1.15rem; font-weight: 900; color: #0066cc; margin-bottom: 25px; line-height: 1.4; text-align: center; }
+        .dialog-msg { font-size: 1.2rem; font-weight: 900; color: #0066cc; margin-bottom: 25px; line-height: 1.4; text-align: center; }
         .dialog-btns { display: flex; justify-content: center; gap: 12px; }
-        .dialog-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 900; font-size: 0.9rem; text-transform: uppercase; cursor: pointer; transition: transform 0.1s; }
+        .dialog-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 900; font-size: 1rem; text-transform: uppercase; cursor: pointer; transition: transform 0.1s; }
         .dialog-btn:active { transform: scale(0.95); }
         .dialog-btn-cancel { background: #eee; color: #666; }
         .dialog-btn-ok { background: #0066cc; color: white; }
@@ -298,12 +294,13 @@
                 </div>
             </div>
 
+            <!-- POPUP CLICK TRIGGERS (FIXED ESCAPING AND LAYOUT) -->
             <div class="launch-footer">
-                <div class="developer-credit">Developed by CS Lab • v1.3.31</div>
+                <div class="developer-credit">Developed by CS Lab • v1.3.32</div>
                 <div class="footer-links">
                     <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
                     |
-                    <span onclick="showPopup('For institutional use only. Ensure manual verification of all calculated academic records before final submission.\n\nContact us: support@cslabs999.com', false, null, '#0066cc', 'Close')">Terms of Service</span>
+                    <span onclick="showPopup('For institutional use only. Ensure manual verification of all calculated academic records before final submission.<br><br>Contact us: support@cslabs999.com', false, null, '#0066cc', 'Close')">Terms of Service</span>
                 </div>
             </div>
 
@@ -386,6 +383,7 @@
     <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;"></div>
 </div>
 
+<!-- FIXED POPUP CONTAINERS -->
 <div id="dialog-overlay" class="sheet-overlay" onclick="closePopup()"></div>
 <div id="custom-dialog" class="dialog-box">
     <div id="dialog-msg" class="dialog-msg">Message</div>
@@ -398,7 +396,7 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 47; 
+    const LOCAL_HTML_VERSION = 48; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 
@@ -480,13 +478,14 @@
         checkVisualUpdate();
     }
 
+    // FULLY CORRECTED LOGIC TO LOAD DYNAMIC POPUPS (REMOVED DEFAULT PARAMS)
     let popupCallback = null;
-    function showPopup(msg, showCancel, callback, okColor = '#0066cc', okText = 'OK') {
-        document.getElementById('dialog-msg').innerText = msg;
+    function showPopup(msg, showCancel, callback, okColor, okText) {
+        document.getElementById('dialog-msg').innerHTML = msg; // Changed to innerHTML so <br> works
         document.getElementById('dialog-btn-cancel').style.display = showCancel ? 'block' : 'none';
-        const okBtn = document.getElementById('dialog-btn-ok');
-        okBtn.style.background = okColor;
-        okBtn.innerText = okText;
+        var okBtn = document.getElementById('dialog-btn-ok');
+        okBtn.style.background = okColor || '#0066cc';
+        okBtn.innerText = okText || 'OK';
         popupCallback = callback;
         document.getElementById('dialog-overlay').style.display = 'block';
         document.getElementById('custom-dialog').classList.add('active');

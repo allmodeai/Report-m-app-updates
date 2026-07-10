@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -185,8 +185,8 @@
 
         /* PROFESSIONAL FOOTER */
         .launch-footer { position: absolute; bottom: calc(5px + env(safe-area-inset-bottom)); left: 0; width: 100%; text-align: center; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); }
-        .developer-credit { font-size: 0.7rem; font-weight: 900; text-transform: uppercase; } /* Increased from 0.6rem */
-        .footer-links { font-size: 0.65rem; font-weight: 700; margin-top: 4px; } /* Increased from 0.55rem */
+        .developer-credit { font-size: 0.7rem; font-weight: 900; text-transform: uppercase; } 
+        .footer-links { font-size: 0.65rem; font-weight: 700; margin-top: 4px; } 
         .footer-links span { margin: 0 8px; text-decoration: underline; cursor: pointer; color: #ffffff; }
 
         /* --- GRADING PAGE --- */
@@ -223,9 +223,9 @@
 
         /* UPGRADED DUAL INPUT STYLE: SIDE-BY-SIDE + TOTAL */
         .dual-box { display: flex; flex-direction: column; gap: 1px; padding: 1px 1px; align-items: center; }
-        .dual-inputs { display: flex; flex-direction: row; gap: 1px; justify-content: center; width: 100%; }
-        .marks-input-mini { width: 24px; height: 14px; font-size: 10px; border: 1px solid #ccc; border-radius: 1px; text-align: center; font-weight: 900; outline: none; padding: 0; margin: 0; }
-        .dual-total { font-size: 11px; font-weight: 900; color: #004c99; background: #eef6ff; border: 1px solid #b3d4ff; border-radius: 1px; padding: 1px 0; height: 18px; width: 40px; text-align: center; margin-top: 1px; }
+        .dual-inputs { display: flex; flex-direction: row; gap: 2px; justify-content: center; width: 100%; }
+        .marks-input-mini { width: 24px; height: 20px; font-size: 11px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-weight: 900; outline: none; padding: 0; margin: 0; }
+        .dual-total { font-size: 9px; font-weight: 900; color: #004c99; background: #eef6ff; border: 1px solid #b3d4ff; border-radius: 2px; padding: 0; width: 38px; text-align: center; margin-top: 1px; height: 18px; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
         .footer-row td { height: 18px; font-size: 11px; }
@@ -296,7 +296,7 @@
             </div>
 
             <div class="launch-footer">
-                <div class="developer-credit">Developed by CS Lab • v1.3.29</div>
+                <div class="developer-credit">Developed by CS Lab • v1.3.31</div>
                 <div class="footer-links">
                     <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
                     |
@@ -395,7 +395,7 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 39; 
+    const LOCAL_HTML_VERSION = 40; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 
@@ -578,18 +578,15 @@
             let effectiveMax = subj.max;
             let effectiveDual = subj.dual;
 
-            // Automatically switch behavior if Eng II is selected
             if (subj.dual && subjName === 'Eng II') {
                 effectiveMax = 100;
                 effectiveDual = false;
             }
 
-            // Handle UI logic for N/A and Dual toggles
             for (let i = 0; i <= 5; i++) {
                 let elA = document.getElementById(`in-${sIdx}-${i}-a`);
                 let elB = document.getElementById(`in-${sIdx}-${i}-b`);
                 let elS = document.getElementById(`in-${sIdx}-${i}`);
-                let sumBox = document.getElementById(`in-${sIdx}-${i}-sum`);
                 
                 if (subjName === 'N/A') {
                     if(elA) elA.disabled = true; if(elB) elB.disabled = true; if(elS) elS.disabled = true;
@@ -598,12 +595,9 @@
                 }
 
                 if (subj.dual) {
-                    let totalBox = document.getElementById(`in-${sIdx}-${i}-trigger`); // If we used trigger ID for it
-                    let trgBox = document.getElementById(`in-${sIdx}-${i}-sum`);
                     if (subjName === 'Eng II') {
                         if(elB) elB.style.display = 'none';
                         if(elA) { elA.className = 'marks-input'; elA.placeholder = ''; }
-                        let trBox = document.getElementById(`in-${sIdx}-${i}-trigger`);
                         if(document.getElementById(`in-${sIdx}-${i}-trigger`)) document.getElementById(`in-${sIdx}-${i}-trigger`).style.display = 'none';
                     } else {
                         if(elB) elB.style.display = 'block';
@@ -644,7 +638,6 @@
                 }
             };
 
-            // Update column totals and input styling
             for(let i=0; i<=5; i++) {
                 columnTotals[i] += getV(i);
                 columnMaxPossible[i] += effectiveMax;
@@ -706,7 +699,6 @@
             grandSum += total;
         });
         
-        // Update Grand Totals UI
         for (let i = 0; i < 6; i++) {
             document.getElementById(`gt-${i}`).innerText = columnTotals[i];
             let pct = columnMaxPossible[i] > 0 ? ((columnTotals[i]/columnMaxPossible[i])*100).toFixed(1) : 0;
@@ -848,4 +840,4 @@
     window.onload = () => { checkVisualUpdate(); document.getElementById('page-title').style.display = 'flex'; };
 </script>
 </body>
-</html>                            
+</html>

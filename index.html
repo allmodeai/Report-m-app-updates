@@ -80,7 +80,6 @@
             margin: 0;
         }
         
-        /* PUSHED BUTTON UP AWAY FROM FOOTER TEXT */
         .title-btn-group { 
             width: 100%; z-index: 2; position: relative; 
             margin-top: auto; 
@@ -221,15 +220,15 @@
         .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
         .marks-input:disabled { color: #888; }
 
-        /* FIXED ENGLISH CELL PROPORTIONS: REDUCED VERTICAL SPACE */
+        /* FIXED ENGLISH CELL PROPORTIONS: REDUCED MARGINS/PADDING TO PULL CLOSER TO EDGES */
         .dual-box { display: flex; flex-direction: column; gap: 1px; padding: 0; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 0; }
-        .dual-inputs { display: flex; flex-direction: row; gap: 1px; justify-content: center; width: 100%; }
+        .dual-inputs { display: flex; flex-direction: row; gap: 2px; justify-content: center; width: 100%; }
         
-        /* MINI BOX LAYOUT */
-        .marks-input-mini { width: 22px; height: 16px; font-size: 10px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-weight: 900; outline: none; padding: 0; margin: 0; box-sizing: border-box; }
+        /* SLIGHTLY INCREASED TOP BOXES */
+        .marks-input-mini { width: 24px; height: 18px; font-size: 11px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-weight: 900; outline: none; padding: 0; margin: 0; box-sizing: border-box; }
         
-        /* TOTAL BOX SIZE TO MATCH STANDARDIZED COLUMNS */
-        .dual-total { width: 44px; height: 22px; font-size: 12px; font-weight: 900; color: #004c99; background: #eef6ff; border: 1px solid #bbb; border-radius: 3px; display: flex; align-items: center; justify-content: center; margin: 1px auto 0 auto; padding: 0; box-sizing: border-box; }
+        /* EXACTLY THE SAME SIZE AS OTHER SUBJECT BOXES & PERFECTLY CENTERED (No margins so it hugs the bottom) */
+        .dual-total { width: 44px; height: 22px; font-size: 12px; font-weight: 900; color: #004c99; background: #eef6ff; border: 1px solid #bbb; border-radius: 3px; display: flex; align-items: center; justify-content: center; text-align: center; margin: 0 auto; padding: 0; box-sizing: border-box; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
         .footer-row td { height: 18px; font-size: 11px; }
@@ -301,7 +300,7 @@
 
             <!-- FOOTER LINKS -->
             <div class="launch-footer">
-                <div class="developer-credit">Developed by CS Lab • v1.3.34</div>
+                <div class="developer-credit">Developed by CS Lab • v1.3.52</div>
                 <div class="footer-links">
                     <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
                     |
@@ -401,7 +400,7 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 34; 
+    const LOCAL_HTML_VERSION = 52; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 
@@ -483,10 +482,9 @@
         checkVisualUpdate();
     }
 
-    // FULLY CORRECTED LOGIC TO LOAD DYNAMIC POPUPS
     let popupCallback = null;
     function showPopup(msg, showCancel, callback, okColor, okText) {
-        document.getElementById('dialog-msg').innerHTML = msg; // Allows <br> rendering
+        document.getElementById('dialog-msg').innerHTML = msg; 
         document.getElementById('dialog-btn-cancel').style.display = showCancel ? 'block' : 'none';
         var okBtn = document.getElementById('dialog-btn-ok');
         okBtn.style.background = okColor || '#0066cc';

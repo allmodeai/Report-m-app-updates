@@ -80,10 +80,11 @@
             margin: 0;
         }
         
+        /* PUSHED BUTTON UP AWAY FROM FOOTER TEXT */
         .title-btn-group { 
             width: 100%; z-index: 2; position: relative; 
             margin-top: auto; 
-            padding-bottom: 75px; 
+            padding-bottom: 90px; 
         }
 
         .btn-go-wrapper {
@@ -183,11 +184,11 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
         }
 
-        /* --- PROFESSIONAL FOOTER: TIGHTENED GAP & PUSHED DOWN --- */
+        /* --- PROFESSIONAL FOOTER: TEXT LINES MERGED --- */
         .launch-footer { position: absolute; bottom: calc(2px + env(safe-area-inset-bottom)); left: 0; width: 100%; text-align: center; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); z-index: 105; }
-        .developer-credit { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; line-height: 1; } 
-        .footer-links { font-size: 0.85rem; font-weight: 700; margin-top: 2px; } 
-        .footer-links span { margin: 0 8px; text-decoration: underline; cursor: pointer; color: #ffffff; padding: 4px; display: inline-block; }
+        .developer-credit { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; line-height: 0.8; margin-bottom: 2px; } 
+        .footer-links { font-size: 0.85rem; font-weight: 700; margin-top: 0px; } 
+        .footer-links span { margin: 0 8px; text-decoration: underline; cursor: pointer; color: #ffffff; padding: 2px 4px; display: inline-block; }
 
         /* --- GRADING PAGE --- */
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 2px; }
@@ -264,7 +265,7 @@
         .bottom-sheet.active { transform: translateY(0); }
         .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
 
-        /* UPGRADED POPUP DIALOG WITH MASSIVE TEXT SIZE */
+        /* UPGRADED POPUP DIALOG WITH LARGER TEXT SIZE */
         .dialog-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: white; padding: 25px 20px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); width: 85%; max-width: 340px; text-align: center; z-index: 2000; opacity: 0; pointer-events: none; transition: all 0.2s ease-out; }
         .dialog-box.active { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
         .dialog-msg { font-size: 1.2rem; font-weight: 900; color: #0066cc; margin-bottom: 25px; line-height: 1.4; text-align: center; }
@@ -298,9 +299,9 @@
                 </div>
             </div>
 
-            <!-- FOOTER LINKS WITH FIXED TAP FUNCTIONALITY -->
+            <!-- FOOTER LINKS -->
             <div class="launch-footer">
-                <div class="developer-credit">Developed by CS Lab • v1.3.33</div>
+                <div class="developer-credit">Developed by CS Lab • v1.3.34</div>
                 <div class="footer-links">
                     <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
                     |
@@ -400,7 +401,7 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 50; 
+    const LOCAL_HTML_VERSION = 34; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 
@@ -485,7 +486,7 @@
     // FULLY CORRECTED LOGIC TO LOAD DYNAMIC POPUPS
     let popupCallback = null;
     function showPopup(msg, showCancel, callback, okColor, okText) {
-        document.getElementById('dialog-msg').innerHTML = msg;
+        document.getElementById('dialog-msg').innerHTML = msg; // Allows <br> rendering
         document.getElementById('dialog-btn-cancel').style.display = showCancel ? 'block' : 'none';
         var okBtn = document.getElementById('dialog-btn-ok');
         okBtn.style.background = okColor || '#0066cc';

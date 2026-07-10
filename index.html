@@ -220,14 +220,15 @@
         .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
         .marks-input:disabled { color: #888; }
 
-        /* FIXED ENGLISH CELL PROPORTIONS: REDUCED MARGINS/PADDING TO PULL CLOSER TO EDGES */
+        /* --- UPGRADED COMPACT ROWS: PULLED TO EDGES --- */
+        /* Padding removed, gap tightened to 1px so everything shifts close to top and bottom margins */
         .dual-box { display: flex; flex-direction: column; gap: 1px; padding: 0; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 0; }
         .dual-inputs { display: flex; flex-direction: row; gap: 2px; justify-content: center; width: 100%; }
         
         /* SLIGHTLY INCREASED TOP BOXES */
-        .marks-input-mini { width: 24px; height: 18px; font-size: 11px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-weight: 900; outline: none; padding: 0; margin: 0; box-sizing: border-box; }
+        .marks-input-mini { width: 26px; height: 20px; font-size: 11px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-weight: 900; outline: none; padding: 0; margin: 0; box-sizing: border-box; }
         
-        /* EXACTLY THE SAME SIZE AS OTHER SUBJECT BOXES & PERFECTLY CENTERED (No margins so it hugs the bottom) */
+        /* EXACTLY THE SAME SIZE AS OTHER SUBJECT BOXES & PERFECTLY CENTERED */
         .dual-total { width: 44px; height: 22px; font-size: 12px; font-weight: 900; color: #004c99; background: #eef6ff; border: 1px solid #bbb; border-radius: 3px; display: flex; align-items: center; justify-content: center; text-align: center; margin: 0 auto; padding: 0; box-sizing: border-box; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
@@ -298,7 +299,6 @@
                 </div>
             </div>
 
-            <!-- FOOTER LINKS -->
             <div class="launch-footer">
                 <div class="developer-credit">Developed by CS Lab • v1.3.52</div>
                 <div class="footer-links">
@@ -387,7 +387,6 @@
     <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;"></div>
 </div>
 
-<!-- POPUP CONTAINERS REQUIRED FOR CLICK TOGGLE -->
 <div id="dialog-overlay" class="sheet-overlay" onclick="closePopup()"></div>
 <div id="custom-dialog" class="dialog-box">
     <div id="dialog-msg" class="dialog-msg">Message</div>
@@ -482,6 +481,7 @@
         checkVisualUpdate();
     }
 
+    // FULLY CORRECTED LOGIC TO LOAD DYNAMIC POPUPS
     let popupCallback = null;
     function showPopup(msg, showCancel, callback, okColor, okText) {
         document.getElementById('dialog-msg').innerHTML = msg; 

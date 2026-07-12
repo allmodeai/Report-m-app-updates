@@ -83,7 +83,7 @@
         .title-btn-group { 
             width: 100%; z-index: 2; position: relative; 
             margin-top: auto; 
-            padding-bottom: 75px; 
+            padding-bottom: 90px; 
         }
 
         .btn-go-wrapper {
@@ -183,11 +183,11 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
         }
 
-        /* --- PROFESSIONAL FOOTER WITH EXPANDED TAP TARGETS AND LARGER FONT --- */
-        .launch-footer { position: absolute; bottom: calc(5px + env(safe-area-inset-bottom)); left: 0; width: 100%; text-align: center; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); z-index: 105; }
-        .developer-credit { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; } 
-        .footer-links { font-size: 0.85rem; font-weight: 700; margin-top: 6px; } 
-        .footer-links span { margin: 0 8px; text-decoration: underline; cursor: pointer; color: #ffffff; padding: 10px 4px; display: inline-block; }
+        /* --- PROFESSIONAL FOOTER: TEXT LINES MERGED --- */
+        .launch-footer { position: absolute; bottom: calc(2px + env(safe-area-inset-bottom)); left: 0; width: 100%; text-align: center; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); z-index: 105; }
+        .developer-credit { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; line-height: 0.8; margin-bottom: 2px; } 
+        .footer-links { font-size: 0.85rem; font-weight: 700; margin-top: 0px; } 
+        .footer-links span { margin: 0 8px; text-decoration: underline; cursor: pointer; color: #ffffff; padding: 2px 4px; display: inline-block; }
 
         /* --- GRADING PAGE --- */
         .container { background: white; border-radius: 8px; display: flex; flex-direction: column; height: 100%; overflow: hidden; margin: 2px; }
@@ -217,14 +217,19 @@
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 13px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         
-        .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
+        /* STANDARD MARKS INPUT */
+        .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: block; padding: 0; box-sizing: border-box; line-height: 20px; }
         .marks-input:disabled { color: #888; }
 
-        /* UPGRADED COMPACT ROWS: ELIMINATE EMPTY GAPS WITHIN CELL */
-        .dual-box { display: flex; flex-direction: column; gap: 1px; padding: 0; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 0; }
-        .dual-inputs { display: flex; flex-direction: row; gap: 1px; justify-content: center; width: 100%; }
-        .marks-input-mini { width: 22px; height: 16px; font-size: 10px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-weight: 900; outline: none; padding: 0; margin: 0; box-sizing: border-box; }
-        .dual-total { width: 44px; height: 22px; font-size: 12px; font-weight: 900; color: #004c99; background: #eef6ff; border: 1px solid #bbb; border-radius: 3px; display: flex; align-items: center; justify-content: center; margin: 1px auto 0 auto; padding: 0; box-sizing: border-box; }
+        /* ENGLISH CELL PROPORTIONS */
+        .dual-box { display: flex; flex-direction: column; gap: 6px; padding: 0; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 0; }
+        .dual-inputs { display: flex; flex-direction: row; gap: 2px; justify-content: center; width: 100%; }
+        
+        /* MINI BOX LAYOUT */
+        .marks-input-mini { width: 26px; height: 20px; font-size: 11px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-weight: 900; outline: none; padding: 0; margin: 0; box-sizing: border-box; display: block; line-height: 18px; }
+        
+        /* TOTAL BOX SIZE TO MATCH STANDARDIZED COLUMNS */
+        .dual-total { width: 44px; height: 22px; font-size: 12px; font-weight: 900; color: #004c99; background: #eef6ff; border: 1px solid #bbb; border-radius: 3px; display: block; text-align: center; margin: 0 auto; padding: 0; box-sizing: border-box; line-height: 20px; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
         .footer-row td { height: 18px; font-size: 11px; }
@@ -260,7 +265,7 @@
         .bottom-sheet.active { transform: translateY(0); }
         .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
 
-        /* UPGRADED POPUP DIALOG WITH MASSIVE TEXT SIZE */
+        /* UPGRADED POPUP DIALOG WITH LARGER TEXT SIZE */
         .dialog-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: white; padding: 25px 20px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); width: 85%; max-width: 340px; text-align: center; z-index: 2000; opacity: 0; pointer-events: none; transition: all 0.2s ease-out; }
         .dialog-box.active { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
         .dialog-msg { font-size: 1.2rem; font-weight: 900; color: #0066cc; margin-bottom: 25px; line-height: 1.4; text-align: center; }
@@ -294,9 +299,8 @@
                 </div>
             </div>
 
-            <!-- POPUP CLICK TRIGGERS (FIXED ESCAPING AND LAYOUT) -->
             <div class="launch-footer">
-                <div class="developer-credit">Developed by CS Lab • v1.3.59</div>
+                <div class="developer-credit">Developed by CS Lab • v1.3.60</div>
                 <div class="footer-links">
                     <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
                     |
@@ -383,7 +387,6 @@
     <div id="options-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;"></div>
 </div>
 
-<!-- FIXED POPUP CONTAINERS -->
 <div id="dialog-overlay" class="sheet-overlay" onclick="closePopup()"></div>
 <div id="custom-dialog" class="dialog-box">
     <div id="dialog-msg" class="dialog-msg">Message</div>
@@ -396,7 +399,7 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 59; 
+    const LOCAL_HTML_VERSION = 60; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 
@@ -478,10 +481,10 @@
         checkVisualUpdate();
     }
 
-    // FULLY CORRECTED LOGIC TO LOAD DYNAMIC POPUPS (REMOVED DEFAULT PARAMS)
+    // FULLY CORRECTED LOGIC TO LOAD DYNAMIC POPUPS
     let popupCallback = null;
     function showPopup(msg, showCancel, callback, okColor, okText) {
-        document.getElementById('dialog-msg').innerHTML = msg; // Changed to innerHTML so <br> works
+        document.getElementById('dialog-msg').innerHTML = msg; 
         document.getElementById('dialog-btn-cancel').style.display = showCancel ? 'block' : 'none';
         var okBtn = document.getElementById('dialog-btn-ok');
         okBtn.style.background = okColor || '#0066cc';

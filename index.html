@@ -217,18 +217,18 @@
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 13px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
         
-        /* STANDARD MARKS INPUT */
+        /* STANDARD MARKS INPUT (Display Block + Exact Line-Height for perfect centering) */
         .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: block; padding: 0; box-sizing: border-box; line-height: 20px; }
         .marks-input:disabled { color: #888; }
 
         /* ENGLISH CELL PROPORTIONS */
-        .dual-box { display: flex; flex-direction: column; gap: 6px; padding: 0; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 0; }
+        .dual-box { display: flex; flex-direction: column; gap: 4px; padding: 0; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 0; }
         .dual-inputs { display: flex; flex-direction: row; gap: 2px; justify-content: center; width: 100%; }
         
-        /* MINI BOX LAYOUT */
+        /* MINI BOX LAYOUT (Display Block + Exact Line-Height) */
         .marks-input-mini { width: 26px; height: 20px; font-size: 11px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-weight: 900; outline: none; padding: 0; margin: 0; box-sizing: border-box; display: block; line-height: 18px; }
         
-        /* TOTAL BOX SIZE TO MATCH STANDARDIZED COLUMNS */
+        /* TOTAL BOX SIZE TO MATCH STANDARDIZED COLUMNS (Display Block + Exact Line-Height) */
         .dual-total { width: 44px; height: 22px; font-size: 12px; font-weight: 900; color: #004c99; background: #eef6ff; border: 1px solid #bbb; border-radius: 3px; display: block; text-align: center; margin: 0 auto; padding: 0; box-sizing: border-box; line-height: 20px; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
@@ -265,12 +265,26 @@
         .bottom-sheet.active { transform: translateY(0); }
         .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
 
-        /* UPGRADED POPUP DIALOG WITH LARGER TEXT SIZE */
-        .dialog-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: white; padding: 25px 20px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); width: 85%; max-width: 340px; text-align: center; z-index: 2000; opacity: 0; pointer-events: none; transition: all 0.2s ease-out; }
+        /* --- FIXED: COMPACT & SMALL POPUP DIALOG --- */
+        .dialog-box { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); 
+            background: white; padding: 20px 15px; border-radius: 12px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); width: 75%; max-width: 280px; 
+            text-align: center; z-index: 2000; opacity: 0; pointer-events: none; transition: all 0.2s ease-out; 
+        }
         .dialog-box.active { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
-        .dialog-msg { font-size: 1.2rem; font-weight: 900; color: #0066cc; margin-bottom: 25px; line-height: 1.4; text-align: center; }
-        .dialog-btns { display: flex; justify-content: center; gap: 12px; }
-        .dialog-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 900; font-size: 1rem; text-transform: uppercase; cursor: pointer; transition: transform 0.1s; }
+        
+        .dialog-msg { 
+            font-size: 0.85rem; /* Drastically reduced size */
+            font-weight: 900; color: #0066cc; margin-bottom: 18px; line-height: 1.35; text-align: center; 
+        }
+        
+        .dialog-btns { display: flex; justify-content: center; gap: 10px; }
+        .dialog-btn { 
+            flex: 1; padding: 10px; border: none; border-radius: 6px; 
+            font-weight: 900; font-size: 0.75rem; /* Smaller button text */
+            text-transform: uppercase; cursor: pointer; transition: transform 0.1s; 
+        }
         .dialog-btn:active { transform: scale(0.95); }
         .dialog-btn-cancel { background: #eee; color: #666; }
         .dialog-btn-ok { background: #0066cc; color: white; }
@@ -300,11 +314,11 @@
             </div>
 
             <div class="launch-footer">
-                <div class="developer-credit">Developed by CS Lab • v1.3.61</div>
+                <div class="developer-credit">Developed by CS Lab • v1.3.62</div>
                 <div class="footer-links">
                     <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
                     |
-                    <span onclick="showPopup('For institutional use only. Ensure manual verification of all calculated academic records before final submission.<br><br>Contact us: support@cslabs999.com', false, null, '#0066cc', 'Close')">Terms of Service</span>
+                    <span onclick="showPopup('For institutional use only. Ensure manual verification of all calculated academic records before final submission.<br><br>Contact us: <a href=&quot;mailto:support@cslabs999.com&quot; style=&quot;color: #004c99; text-decoration: underline;&quot;>support@cslabs999.com</a>', false, null, '#0066cc', 'Close')">Terms of Service</span>
                 </div>
             </div>
 
@@ -399,7 +413,7 @@
 <input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
 
 <script>
-    const LOCAL_HTML_VERSION = 61; 
+    const LOCAL_HTML_VERSION = 62; 
     const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
     
     let needsHtmlUpdate = false; 

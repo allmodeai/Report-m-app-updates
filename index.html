@@ -26,47 +26,45 @@
         .page.active { display: flex; }
 
         /* --- TITLE SCREEN --- */
-        #page-title { 
-            position: absolute; 
+        #page-title {
+            position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 100; 
-            justify-content: center; 
-            align-items: center; 
-            background-color: #338c31; 
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            background-color: #338c31;
             background-image: url('https://allmodeai.github.io/Report-m-app-updates/title_bg.jpg');
-            background-size: cover; 
+            background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
         }
 
         .launch-card {
-            background: transparent; 
-            padding: 30px 20px; 
-            width: 88%; 
-            height: 85vh; 
+            background: transparent;
+            padding: 30px 20px;
+            width: 88%;
+            height: 85vh;
             text-align: center; position: relative; display: flex;
             flex-direction: column; justify-content: space-between; overflow: hidden;
         }
 
-        /* WATERMARK INTEGRATION */
         .launch-card::before {
             content: "";
             position: absolute;
             top: 40%; left: 50%;
             transform: translate(-50%, -50%);
             width: 250px; height: 250px;
-            background-image: url("https://allmodeai.github.io/Report-m-app-updates/Report_makerAppicon.jpg"); 
+            background-image: url("https://allmodeai.github.io/Report-m-app-updates/Report_makerAppicon.jpg");
             background-repeat: no-repeat;
             background-size: contain;
-            opacity: 0.12; 
+            opacity: 0.12;
             pointer-events: none;
             z-index: 0;
         }
 
-        /* NEW TAGLINE MOVED UP CLOSER TO LOGO */
         .app-subtitle {
             position: absolute;
-            top: calc(40% - 101px); 
+            top: calc(40% - 101px);
             left: 0;
             width: 100%;
             text-align: center;
@@ -79,11 +77,11 @@
             z-index: 2;
             margin: 0;
         }
-        
-        .title-btn-group { 
-            width: 100%; z-index: 2; position: relative; 
-            margin-top: auto; 
-            padding-bottom: 90px; 
+
+        .title-btn-group {
+            width: 100%; z-index: 2; position: relative;
+            margin-top: auto;
+            padding-bottom: 90px;
         }
 
         .btn-go-wrapper {
@@ -93,35 +91,34 @@
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
         }
-        
-       /* RESTORED CAPSULE SHAPE GLOW (NOW YELLOW) */
+
         @keyframes pulse-glow {
             0% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 5px 0px rgba(255, 255, 0, 0.5); }
             50% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 25px 5px rgba(255, 255, 0, 1); }
             100% { box-shadow: inset 0 4px 6px rgba(255,255,255,0.4), inset 0 -4px 6px rgba(0,0,0,0.2), 0 0 5px 0px rgba(255, 255, 0, 0.5); }
         }
 
-        .btn-go { 
-            width: 100%; padding: 16px 10px; 
-            background-color: #ff6600; 
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.25) 1px, transparent 1px), 
+        .btn-go {
+            width: 100%; padding: 16px 10px;
+            background-color: #ff6600;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.25) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.25) 1px, transparent 1px);
-            background-size: 20px 20px; 
-            color: white; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3); 
-            border: 2px solid #ff9966; 
-            border-radius: 50px; 
-            font-weight: 900; font-size: 1.2rem; 
-            text-transform: uppercase; 
-            box-shadow: 
-                inset 0 4px 6px rgba(255,255,255,0.4), 
-                inset 0 -4px 6px rgba(0,0,0,0.2); 
-            transition: all 0.1s ease; 
+            background-size: 20px 20px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            border: 2px solid #ff9966;
+            border-radius: 50px;
+            font-weight: 900; font-size: 1.2rem;
+            text-transform: uppercase;
+            box-shadow:
+                inset 0 4px 6px rgba(255,255,255,0.4),
+                inset 0 -4px 6px rgba(0,0,0,0.2);
+            transition: all 0.1s ease;
             display: block;
             box-sizing: border-box;
             text-align: center;
-            pointer-events: none; 
+            pointer-events: none;
             animation: pulse-glow 3s infinite ease-in-out;
         }
         .btn-go-wrapper:active .btn-go { transform: scale(0.96); animation: none; }
@@ -132,35 +129,35 @@
             border-radius: 50%;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
-            position: relative; 
+            position: relative;
         }
 
-        .btn-up { 
-            width: 100%; height: 100%; 
-            background-color: #ffcc00; 
-            background-image: 
-                linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), 
+        .btn-up {
+            width: 100%; height: 100%;
+            background-color: #ffcc00;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
-            background-size: 16px 16px; 
-            color: #222; 
-            border: 1px solid #ffe680; 
-            border-radius: 50%; 
-            font-weight: 900; 
-            font-size: 0.65rem; 
-            text-transform: uppercase; 
-            box-shadow: 
-                inset 0 4px 6px rgba(255,255,255,0.6), 
-                inset 0 -4px 6px rgba(0,0,0,0.15); 
-            transition: transform 0.1s ease; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            position: relative; 
+            background-size: 16px 16px;
+            color: #222;
+            border: 1px solid #ffe680;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            box-shadow:
+                inset 0 4px 6px rgba(255,255,255,0.6),
+                inset 0 -4px 6px rgba(0,0,0,0.15);
+            transition: transform 0.1s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
             text-align: center;
             line-height: 1.2;
             box-sizing: border-box;
-            pointer-events: none; 
+            pointer-events: none;
         }
         .btn-up-wrapper:active .btn-up { transform: scale(0.92); }
 
@@ -168,10 +165,10 @@
             position: absolute;
             top: -2px; right: -2px;
             width: 14px; height: 14px;
-            background-color: #ff3b30; 
-            border: 2px solid #0066cc; 
+            background-color: #ff3b30;
+            border: 2px solid #0066cc;
             border-radius: 50%;
-            display: none; 
+            display: none;
             z-index: 10;
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             animation: pulse-red 2s infinite;
@@ -183,10 +180,10 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
         }
 
-        /* --- PROFESSIONAL FOOTER: TEXT LINES MERGED --- */
+        /* --- FOOTER --- */
         .launch-footer { position: absolute; bottom: calc(2px + env(safe-area-inset-bottom)); left: 0; width: 100%; text-align: center; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); z-index: 105; }
-        .developer-credit { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; line-height: 0.8; margin-bottom: 2px; } 
-        .footer-links { font-size: 0.85rem; font-weight: 700; margin-top: 0px; } 
+        .developer-credit { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; line-height: 0.8; margin-bottom: 2px; }
+        .footer-links { font-size: 0.85rem; font-weight: 700; margin-top: 0px; }
         .footer-links span { margin: 0 8px; text-decoration: underline; cursor: pointer; color: #ffffff; padding: 2px 4px; display: inline-block; }
 
         /* --- GRADING PAGE --- */
@@ -199,36 +196,32 @@
         .header-toggle-btn { padding: 4px 12px; border: none; background: transparent; color: #fff; font-weight: 900; font-size: 0.6rem; text-transform: uppercase; border-radius: 15px; }
         .header-toggle-btn.active { background: #28a745; color: white; }
 
+        /* STUDENT INFO FORM */
         .student-info { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3px; padding: 4px; border: 1.5px solid #0066cc; border-radius: 6px; background: #f9fbfd; }
         .info-field { display: flex; flex-direction: column; border-bottom: 1px solid #ddd; }
         .info-field label { font-size: 0.65rem; font-weight: 900; color: #0066cc; text-transform: uppercase; }
-        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.9rem; outline: none; font-weight: 900; color: #000; padding: 0; min-height: 18px; display: flex; align-items: center; }
+        .info-field input, .select-trigger { border: none; background: transparent; font-size: 0.9rem; outline: none; font-weight: normal; color: #000; padding: 0; min-height: 18px; display: flex; align-items: center; }
 
         /* NO-SCROLL TABLE */
         .table-container { flex: 1; padding: 0 4px; overflow: hidden; display: flex; flex-direction: column; }
         .table-wrap { width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; border: 1.5px solid #0066cc; border-radius: 4px; }
         table { border-collapse: collapse; min-width: 850px; width: 100%; height: 100%; table-layout: fixed; }
-        
+
         th { background: #0066cc; color: white; padding: 2px 1px; border: 1px solid #0052a3; font-size: 8px; text-transform: uppercase; line-height: 1.1; }
         .top-header { font-size: 10px !important; padding: 2px 2px !important; }
-        
+
         td { border: 1px solid #ddd; padding: 0; text-align: center; font-size: 10px; vertical-align: middle; }
         tbody td:last-child { font-weight: 900; font-size: 11px; }
 
         .subject-name { text-align: left; font-weight: 900; background: #f9fbfd; position: sticky; left: 0; z-index: 2; border-right: 2px solid #0066cc; padding: 0 4px; font-size: 13px; white-space: nowrap; width: 110px; overflow: hidden; text-overflow: ellipsis; }
-        
-        /* STANDARD MARKS INPUT (Display Block + Exact Line-Height for perfect centering) */
+
+        /* MARKS INPUTS */
         .marks-input { width: 44px; height: 22px; border: 1px solid #bbb; border-radius: 3px; text-align: center; font-size: 12px; font-weight: 900; outline: none; margin: 0 auto; display: block; padding: 0; box-sizing: border-box; line-height: 20px; }
         .marks-input:disabled { color: #888; }
 
-        /* ENGLISH CELL PROPORTIONS */
-        .dual-box { display: flex; flex-direction: column; gap: 4px; padding: 0; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 0; }
+        .dual-box { display: flex; flex-direction: column; gap: 6px; padding: 0; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; margin: 0; }
         .dual-inputs { display: flex; flex-direction: row; gap: 2px; justify-content: center; width: 100%; }
-        
-        /* MINI BOX LAYOUT (Display Block + Exact Line-Height) */
         .marks-input-mini { width: 26px; height: 20px; font-size: 11px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-weight: 900; outline: none; padding: 0; margin: 0; box-sizing: border-box; display: block; line-height: 18px; }
-        
-        /* TOTAL BOX SIZE TO MATCH STANDARDIZED COLUMNS (Display Block + Exact Line-Height) */
         .dual-total { width: 44px; height: 22px; font-size: 12px; font-weight: 900; color: #004c99; background: #eef6ff; border: 1px solid #bbb; border-radius: 3px; display: block; text-align: center; margin: 0 auto; padding: 0; box-sizing: border-box; line-height: 20px; }
 
         .footer-row { background: #cbdff2; font-weight: 900; border-top: 2px solid #0066cc; position: sticky; bottom: 0; z-index: 3; }
@@ -241,7 +234,6 @@
         .stat-label { font-size: 0.62rem; font-weight: 900; color: #0066cc; text-transform: uppercase; margin-bottom: 2px; }
         .stat-value { font-size: 0.8rem; font-weight: 900; }
 
-        /* CAPSULE SHAPED PILLS */
         .print-badge { display: inline-block; padding: 2px 8px; border-radius: 50px; font-weight: 800; font-size: 0.55rem; margin: 1px 2px; border: 1px solid rgba(0,0,0,0.1); }
         #dash-pct .print-badge { padding: 3px 15px; font-size: 0.72rem; border-width: 1.5px; margin: 1px 0; }
         #dash-div { font-weight: 900; font-size: 0.8rem; }
@@ -258,33 +250,18 @@
         .text-red { color: #dc3545 !important; text-decoration: underline; }
         .text-danger { color: #dc3545 !important; }
         .text-green { color: #28a745 !important; }
-        
+
         /* OVERLAYS & SHEETS */
         .sheet-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; }
         .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; transform: translateY(100%); transition: 0.25s ease-out; z-index: 1001; padding: 15px 15px calc(15px + env(safe-area-inset-bottom)) 15px; box-sizing: border-box; max-height: 80vh; overflow-y: auto; }
         .bottom-sheet.active { transform: translateY(0); }
         .opt-btn { padding: 14px; background: #f0f4f8; border-radius: 8px; font-weight: bold; font-size: 1rem; text-align: center; margin-bottom: 8px; }
 
-        /* --- FIXED: COMPACT & SMALL POPUP DIALOG --- */
-        .dialog-box { 
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); 
-            background: white; padding: 20px 15px; border-radius: 12px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5); width: 75%; max-width: 280px; 
-            text-align: center; z-index: 2000; opacity: 0; pointer-events: none; transition: all 0.2s ease-out; 
-        }
+        .dialog-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: white; padding: 20px 15px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); width: 75%; max-width: 280px; text-align: center; z-index: 2000; opacity: 0; pointer-events: none; transition: all 0.2s ease-out; }
         .dialog-box.active { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
-        
-        .dialog-msg { 
-            font-size: 0.85rem; /* Drastically reduced size */
-            font-weight: 900; color: #0066cc; margin-bottom: 18px; line-height: 1.35; text-align: center; 
-        }
-        
+        .dialog-msg { font-size: 0.85rem; font-weight: 900; color: #0066cc; margin-bottom: 18px; line-height: 1.35; text-align: center; }
         .dialog-btns { display: flex; justify-content: center; gap: 10px; }
-        .dialog-btn { 
-            flex: 1; padding: 10px; border: none; border-radius: 6px; 
-            font-weight: 900; font-size: 0.75rem; /* Smaller button text */
-            text-transform: uppercase; cursor: pointer; transition: transform 0.1s; 
-        }
+        .dialog-btn { flex: 1; padding: 10px; border: none; border-radius: 6px; font-weight: 900; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; transition: transform 0.1s; }
         .dialog-btn:active { transform: scale(0.95); }
         .dialog-btn-cancel { background: #eee; color: #666; }
         .dialog-btn-ok { background: #0066cc; color: white; }
@@ -297,28 +274,28 @@
 <div class="app-wrapper">
     <div id="page-title" class="page active">
         <div class="launch-card">
-            
+
             <div class="app-subtitle">Automated Student Assessment <br> Protocol</div>
 
             <div class="title-btn-group">
                 <div class="btn-go-wrapper" onclick="startApp(this.querySelector('.btn-go'))">
                     <div class="btn-go">Start Grading</div>
                 </div>
-                
+
                 <div class="btn-up-wrapper" onclick="checkForUpdates()">
                     <div id="update-badge" class="update-badge"></div>
                     <div class="btn-up">
-                        <span>Update<br>App</span> 
+                        <span>Update<br>App</span>
                     </div>
                 </div>
             </div>
 
             <div class="launch-footer">
-                <div class="developer-credit">Developed by CS Lab • v1.3.62</div>
+                <div class="developer-credit">Developed by CS Labs • v1.4.3</div>
                 <div class="footer-links">
                     <span onclick="showPopup('This tool operates entirely offline. No personal student data is transmitted, collected, or stored externally.', false, null, '#0066cc', 'Understood')">Privacy Policy</span>
                     |
-                    <span onclick="showPopup('For institutional use only. Ensure manual verification of all calculated academic records before final submission.<br><br>Contact us: <a href=&quot;mailto:support@cslabs999.com&quot; style=&quot;color: #004c99; text-decoration: underline;&quot;>support@cslabs999.com</a>', false, null, '#0066cc', 'Close')">Terms of Service</span>
+                    <span onclick="showPopup('For institutional use only. Ensure manual verification of all calculated academic records before final submission.<br><br>For any queries and service requests, Contact us: <a href=&quot;mailto:cslabs999@gmail.com&quot; style=&quot;color: #004c99; text-decoration: underline;&quot;>cslabs999@gmail.com</a>', false, null, '#0066cc', 'Close')">Terms of Service</span>
                 </div>
             </div>
 
@@ -410,13 +387,15 @@
     </div>
 </div>
 
-<input type="file" id="file-loader" style="display:none" onchange="importData(event)" accept=".json">
+<input type="file" id="file-loader" style="display:none;" onchange="importData(event)" accept=".json, .txt">
 
 <script>
-    const LOCAL_HTML_VERSION = 62; 
-    const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json"; 
-    
-    let needsHtmlUpdate = false; 
+    const LOCAL_HTML_VERSION = 143;
+    const UPDATE_JSON_URL = "https://raw.githubusercontent.com/allmodeai/Report-m-app-updates/main/update.json";
+
+    let needsHtmlUpdate = false;
+    let lastSavedFileName = "";
+
     const classOptions = ['Nursery', 'LKG', 'UKG', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
     const validGrades = ['A', 'A+', 'A++', 'B', 'B+', 'B++', 'C', 'C+', 'C++', 'D', 'Ab'];
 
@@ -475,17 +454,17 @@
             const originalHTML = btnElement.innerHTML;
             btnElement.style.animation = "none";
             btnElement.innerHTML = `<span style="opacity: 0.8; letter-spacing: 2px;">LOADING...</span>`;
-            
+
             setTimeout(() => {
                 document.getElementById('page-title').style.display = 'none';
                 document.getElementById('page-grading').style.display = 'flex';
                 renderTable();
                 loadCache();
                 if(!safeGetItem('marksCache')) calculateAll();
-                
+
                 btnElement.innerHTML = originalHTML;
                 btnElement.style.animation = "pulse-glow 3s infinite ease-in-out";
-            }, 400); 
+            }, 400);
         }
     }
 
@@ -495,10 +474,9 @@
         checkVisualUpdate();
     }
 
-    // FULLY CORRECTED LOGIC TO LOAD DYNAMIC POPUPS
     let popupCallback = null;
     function showPopup(msg, showCancel, callback, okColor, okText) {
-        document.getElementById('dialog-msg').innerHTML = msg; 
+        document.getElementById('dialog-msg').innerHTML = msg;
         document.getElementById('dialog-btn-cancel').style.display = showCancel ? 'block' : 'none';
         var okBtn = document.getElementById('dialog-btn-ok');
         okBtn.style.background = okColor || '#0066cc';
@@ -530,9 +508,9 @@
                 let hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.id = `subj-val-${sIdx}`; hidden.value = subj.name;
                 sCell.appendChild(trigger); sCell.appendChild(hidden);
             } else { sCell.innerText = subj.name; }
-            
+
             for (let i = 0; i <= 5; i++) {
-                let cell = row.insertCell(); 
+                let cell = row.insertCell();
                 let inputId = `in-${sIdx}-${i}`;
                 if(subj.type === 'numeric') {
                     if(subj.dual) {
@@ -545,10 +523,11 @@
                         [i1, i2].forEach(inp => {
                             inp.inputMode = 'numeric';
                             inp.oninput = function() { validateNumeric(this, 100, true); calculateAll(); autoSave(); };
+                            inp.onblur = function() { handleBlur(this); calculateAll(); autoSave(); };
                         });
 
                         inputContainer.appendChild(i1); inputContainer.appendChild(i2);
-                        
+
                         let sumDisplay = document.createElement('div');
                         sumDisplay.className = 'dual-total';
                         sumDisplay.id = `${inputId}-sum`;
@@ -561,6 +540,7 @@
                         let input = document.createElement('input'); input.type = 'text'; input.inputMode = 'numeric';
                         input.className = 'marks-input'; input.id = inputId;
                         input.oninput = function() { validateNumeric(this, subj.max, false); calculateAll(); autoSave(); };
+                        input.onblur = function() { handleBlur(this); calculateAll(); autoSave(); };
                         cell.appendChild(input);
                     }
                 } else {
@@ -574,26 +554,42 @@
         });
     }
 
+    /* INPUT VALIDATION FUNCTION */
     function validateNumeric(el, max, isDual = false) {
         if (el.value.indexOf('--') !== -1) { el.value = 'Ab'; }
         if (el.value !== 'Ab' && el.value !== '-') { el.value = el.value.replace(/[^0-9]/g, ''); }
-        if (el.value !== '' && parseFloat(el.value) > max) { el.value = ''; }
+
+        // RESET IF MORE THAN TWO ZEROS TYPED ('000')
+        if (el.value === '000' || el.value.startsWith('000')) {
+            el.value = '';
+        }
+
+        if (el.value !== '' && el.value !== 'Ab' && parseFloat(el.value) > max) { el.value = ''; }
         if (!isDual) applyMarkStyling(el, max);
     }
 
+    /* FORMAT SINGLE DIGIT INPUT ON BLUR (PAD WITH LEADING ZERO) */
+    function handleBlur(el) {
+        if (el.value !== 'Ab' && el.value !== '' && el.value !== '-') {
+            if (el.value.length === 1 && /^[0-9]$/.test(el.value)) {
+                el.value = '0' + el.value;
+            }
+        }
+    }
+
     function calculateAll() {
-        let activeNumericCount = 0; let failCount = 0; let grandSum = 0; 
+        let activeNumericCount = 0; let failCount = 0; let grandSum = 0;
         let coreFails = []; let langFails = []; let dataCompleted = true;
         let columnTotals = [0,0,0,0,0,0]; let columnMaxPossible = [0,0,0,0,0,0];
-        
+
         const tableBody = document.getElementById('tableBody');
-        
+
         activeSubjects.forEach((subj, sIdx) => {
             let subjName = subj.name;
             let hiddenInp = document.getElementById(`subj-val-${sIdx}`);
             if(hiddenInp) subjName = hiddenInp.value;
             const row = tableBody.rows[sIdx];
-            
+
             let effectiveMax = subj.max;
             let effectiveDual = subj.dual;
 
@@ -606,7 +602,7 @@
                 let elA = document.getElementById(`in-${sIdx}-${i}-a`);
                 let elB = document.getElementById(`in-${sIdx}-${i}-b`);
                 let elS = document.getElementById(`in-${sIdx}-${i}`);
-                
+
                 if (subjName === 'N/A') {
                     if(elA) elA.disabled = true; if(elB) elB.disabled = true; if(elS) elS.disabled = true;
                 } else {
@@ -629,7 +625,7 @@
                 if(subjName === 'N/A') for(let i=7; i<=10; i++) row.cells[i].innerText = '-';
                 return;
             }
-            
+
             activeNumericCount++;
             const getV = (i) => {
                 if(effectiveDual) {
@@ -638,7 +634,7 @@
                     let sum = 0;
                     sum += (v1 === 'Ab' || v1 === '-' || v1 === '') ? 0 : parseFloat(v1);
                     sum += (v2 === 'Ab' || v2 === '-' || v2 === '') ? 0 : parseFloat(v2);
-                    
+
                     let sumDisplay = document.getElementById(`in-${sIdx}-${i}-sum`);
                     if(sumDisplay) {
                         sumDisplay.innerText = sum;
@@ -660,7 +656,7 @@
             for(let i=0; i<=5; i++) {
                 columnTotals[i] += getV(i);
                 columnMaxPossible[i] += effectiveMax;
-                
+
                 if(subj.dual) {
                     let elA = document.getElementById(`in-${sIdx}-${i}-a`);
                     let elB = document.getElementById(`in-${sIdx}-${i}-b`);
@@ -668,17 +664,21 @@
                         elA.classList.remove('text-red');
                         elB.classList.remove('text-red');
                         let sumBox = document.getElementById(`in-${sIdx}-${i}-sum`);
-                        if(sumBox) sumBox.style.display = effectiveDual ? 'block' : 'none';
-                        
+                        if(sumBox) {
+                            sumBox.style.display = effectiveDual ? 'block' : 'none';
+                            sumBox.classList.remove('text-red');
+                        }
+
                         if (effectiveDual) {
                             let v1 = elA.value, v2 = elB.value;
                             let n1 = (v1 === 'Ab' || v1 === '-' || v1 === '') ? 0 : parseFloat(v1);
                             let n2 = (v2 === 'Ab' || v2 === '-' || v2 === '') ? 0 : parseFloat(v2);
-                            
+
                             if (v1 !== '' || v2 !== '') {
                                 if (n1 + n2 < 80) {
                                     if (v1 !== '' && n1 < 40) elA.classList.add('text-red');
                                     if (v2 !== '' && n2 < 40) elB.classList.add('text-red');
+                                    if (sumBox) sumBox.classList.add('text-red');
                                 }
                             }
                         } else {
@@ -694,10 +694,10 @@
             const q25 = Math.round(((getV(1) + getV(3)) / 2 / effectiveMax) * 25);
             const a50 = Math.round((getV(5) / effectiveMax) * 50);
             const total = m25 + q25 + a50;
-            
+
             row.cells[7].innerText = m25; row.cells[8].innerText = q25; row.cells[9].innerText = a50; row.cells[10].innerText = total;
             row.cells[10].classList.toggle('text-red', total < 40);
-            
+
             let rowFilled = true;
             for(let i=0; i<=5; i++) {
                 if(effectiveDual) {
@@ -708,7 +708,7 @@
                     if(document.getElementById(`in-${sIdx}-${i}`).value === "") rowFilled = false;
                 }
             }
-            
+
             if(rowFilled) {
                 if(total < 40) {
                     if(subj.exempt) langFails.push({ name: subjName, type: 'exempt' });
@@ -717,7 +717,7 @@
             } else { dataCompleted = false; }
             grandSum += total;
         });
-        
+
         for (let i = 0; i < 6; i++) {
             document.getElementById(`gt-${i}`).innerText = columnTotals[i];
             let pct = columnMaxPossible[i] > 0 ? ((columnTotals[i]/columnMaxPossible[i])*100).toFixed(1) : 0;
@@ -733,11 +733,11 @@
     }
 
     function updateDashboard(avg, failedList, coreFailCount, complete) {
-        const statusEl = document.getElementById('dash-status'); 
-        const pctEl = document.getElementById('dash-pct'); 
+        const statusEl = document.getElementById('dash-status');
+        const pctEl = document.getElementById('dash-pct');
         const divEl = document.getElementById('dash-div');
         const pill = (txt, bg, clr, brd) => `<div class="print-badge" style="background:${bg}; color:${clr}; border-color:${brd}">${txt}</div>`;
-        
+
         let currentClass = document.getElementById('stu-class-val').value;
         let nextClassHTML = "";
         if (currentClass && currentClass !== '-') {
@@ -747,101 +747,189 @@
             }
         }
 
-        if (!complete) { 
+        if (!complete) {
             statusEl.innerHTML = "AWAITED"; statusEl.style.color = "";
-            pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--"; 
-        } else { 
-            let isFailed = (avg < 40 || coreFailCount >= 3); 
-            let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3"); 
-            pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr); 
-            if (isFailed) { 
-                statusEl.innerHTML = "FAILED"; statusEl.style.color = "#dc3545"; divEl.innerText = "--"; 
-            } else { 
-                statusEl.innerHTML = `<div style="font-size: 0.75rem;">PROMOTED</div>` + nextClassHTML; 
-                statusEl.style.color = "#28a745"; divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd"); 
-            } 
+            pctEl.innerHTML = pill("--%", "#fff", "#666", "#ddd"); divEl.innerText = "--";
+        } else {
+            let isFailed = (avg < 40 || coreFailCount >= 3);
+            let pctClr = avg >= 60 ? "#28a745" : (avg < 40 ? "#dc3545" : "#0056b3");
+            pctEl.innerHTML = pill(avg.toFixed(1) + "%", "#fff", pctClr, pctClr);
+            if (isFailed) {
+                statusEl.innerHTML = "FAILED"; statusEl.style.color = "#dc3545"; divEl.innerText = "--";
+            } else {
+                statusEl.innerHTML = `<div style="font-size: 0.75rem;">PROMOTED</div>` + nextClassHTML;
+                statusEl.style.color = "#28a745"; divEl.innerText = avg >= 60 ? "1st" : (avg >= 45 ? "2nd" : "3rd");
+            }
         }
         renderFails(failedList);
     }
 
-    function renderFails(list) { 
-        const el = document.getElementById('dash-fails'); el.innerHTML = ''; 
-        if(list.length === 0) { el.innerText = "NONE"; return; } 
-        list.forEach(item => { 
-            let b = document.createElement('span'); b.className = 'print-badge'; 
+    function renderFails(list) {
+        const el = document.getElementById('dash-fails'); el.innerHTML = '';
+        if(list.length === 0) { el.innerText = "NONE"; return; }
+        list.forEach(item => {
+            let b = document.createElement('span'); b.className = 'print-badge';
             let color = item.type === 'exempt' ? '#28a745' : '#dc3545';
             b.style.color = color; b.style.backgroundColor = 'transparent'; b.style.border = `1px solid ${color}`;
-            b.innerText = item.name; el.appendChild(b); 
-        }); 
+            b.innerText = item.name; el.appendChild(b);
+        });
     }
-    
-    function applyMarkStyling(input, max) { 
-        input.classList.remove('text-red'); 
-        if (input.value !== '' && !isNaN(input.value)) { 
-            if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red'); 
-        } 
+
+    function applyMarkStyling(input, max) {
+        input.classList.remove('text-red');
+        if (input.value !== '' && !isNaN(input.value)) {
+            if ((parseFloat(input.value)/max)*100 < 40) input.classList.add('text-red');
+        }
     }
-    
-    function openSheet(title, options, targetId) { 
-        document.getElementById('sheet-title').innerText = title; 
-        const container = document.getElementById('options-container'); container.innerHTML = ''; 
-        options.forEach(opt => { 
-            const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt; 
-            btn.onclick = () => { 
-                let input = document.getElementById(targetId); if(input) input.value = opt; 
-                let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt; 
-                closeSheet(); calculateAll(); autoSave(); 
-            }; 
-            container.appendChild(btn); 
-        }); 
-        document.getElementById('overlay').style.display = 'block'; 
-        document.getElementById('sheet').classList.add('active'); 
+
+    function openSheet(title, options, targetId) {
+        document.getElementById('sheet-title').innerText = title;
+        const container = document.getElementById('options-container'); container.innerHTML = '';
+        options.forEach(opt => {
+            const btn = document.createElement('div'); btn.className = 'opt-btn'; btn.innerText = opt;
+            btn.onclick = () => {
+                let input = document.getElementById(targetId); if(input) input.value = opt;
+                let trig = document.getElementById(targetId.replace('-val', '-trigger')); if(trig) trig.innerText = opt;
+                closeSheet(); calculateAll(); autoSave();
+            };
+            container.appendChild(btn);
+        });
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('sheet').classList.add('active');
     }
     function closeSheet() { document.getElementById('sheet').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; }
-    
-    function switchMode(m) { 
-        if (currentMode === m) return; 
+
+    function switchMode(m) {
+        if (currentMode === m) return;
         showPopup("Switching modes will clear current data. Continue?", true, () => {
-            currentMode = m; 
-            document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
-            document.getElementById('btn-'+m.toLowerCase()).classList.add('active'); 
+            currentMode = m;
+            lastSavedFileName = "";
+            if (typeof AndroidBridge !== "undefined" && AndroidBridge.clearActiveFile) {
+                AndroidBridge.clearActiveFile();
+            }
+            document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-'+m.toLowerCase()).classList.add('active');
             resetLocalInputs(); renderTable(); calculateAll(); autoSave();
         });
     }
 
     function resetLocalInputs() { safeRemoveItem('marksCache'); document.querySelectorAll('input').forEach(inp => { if(inp.type !== 'hidden') inp.value = ''; }); document.querySelectorAll('.select-trigger').forEach(trig => trig.innerText = '-'); }
-    
-    function autoSave() { 
-        const data = { mode: currentMode, student: { name: document.getElementById('stu-name').value, roll: document.getElementById('stu-roll').value, class: document.getElementById('stu-class-val').value, sec: document.getElementById('stu-sec-val').value }, marks: [] }; 
-        document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value})); 
-        safeSetItem('marksCache', JSON.stringify(data)); 
+
+    function autoSave() {
+        const data = {
+            mode: currentMode,
+            lastSavedFileName: lastSavedFileName,
+            student: {
+                name: document.getElementById('stu-name').value,
+                roll: document.getElementById('stu-roll').value,
+                class: document.getElementById('stu-class-val').value,
+                sec: document.getElementById('stu-sec-val').value
+            },
+            marks: []
+        };
+        document.querySelectorAll('input[id^="in-"]').forEach(i => data.marks.push({id: i.id, val: i.value}));
+        safeSetItem('marksCache', JSON.stringify(data));
     }
-    
-    function loadCache() { 
-        const saved = safeGetItem('marksCache'); if(!saved) return; 
-        const data = JSON.parse(saved); currentMode = data.mode || 'PMS'; 
-        document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active')); 
-        document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active'); 
-        document.getElementById('stu-name').value = data.student.name || ''; 
-        document.getElementById('stu-roll').value = data.student.roll || ''; 
-        document.getElementById('stu-class-val').value = data.student.class || ''; 
-        document.getElementById('stu-class-trigger').innerText = data.student.class || '-'; 
-        document.getElementById('stu-sec-val').value = data.student.sec || ''; 
-        document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-'; 
-        data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; }); 
-        calculateAll(); 
+
+    function loadCache() {
+        const saved = safeGetItem('marksCache'); if(!saved) return;
+        const data = JSON.parse(saved); currentMode = data.mode || 'PMS';
+        lastSavedFileName = data.lastSavedFileName || "";
+        document.querySelectorAll('.header-toggle-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-'+currentMode.toLowerCase()).classList.add('active');
+        document.getElementById('stu-name').value = data.student.name || '';
+        document.getElementById('stu-roll').value = data.student.roll || '';
+        document.getElementById('stu-class-val').value = data.student.class || '';
+        document.getElementById('stu-class-trigger').innerText = data.student.class || '-';
+        document.getElementById('stu-sec-val').value = data.student.sec || '';
+        document.getElementById('stu-sec-trigger').innerText = data.student.sec || '-';
+        data.marks.forEach(m => { let el = document.getElementById(m.id); if(el) el.value = m.val; });
+        calculateAll();
     }
-    
-    function downloadBackup() { 
-        const data = safeGetItem('marksCache'); if(!data) { showPopup("No data to save!", false, null, '#0066cc'); return; } 
-        const name = document.getElementById('stu-name').value || "Report"; 
-        if (typeof AndroidBridge !== "undefined") AndroidBridge.saveBackup(data, `${name}_Backup.json`); 
+
+    function downloadBackup() {
+        const data = safeGetItem('marksCache');
+        if(!data) { showPopup("No data to save!", false, null, '#0066cc'); return; }
+
+        let name = document.getElementById('stu-name').value.trim() || "Student";
+        let stuClass = document.getElementById('stu-class-val').value;
+        if (!stuClass || stuClass === '-') stuClass = "Class";
+
+        const fileName = `${name}_(${stuClass}).json`;
+
+        let msg = "";
+        let btnTxt = "";
+
+        if (lastSavedFileName === fileName) {
+            msg = `Save and overwrite existing file?<br><br><span style="color:#666; font-size:0.9rem;">${fileName}</span>`;
+            btnTxt = "Overwrite";
+        } else {
+            msg = `Save new file?<br><br><span style="color:#666; font-size:0.9rem;">${fileName}</span>`;
+            btnTxt = "Save";
+        }
+
+        showPopup(msg, true, async () => {
+            lastSavedFileName = fileName;
+            autoSave();
+            if (typeof AndroidBridge !== "undefined") {
+                AndroidBridge.saveBackup(data, fileName);
+            } else {
+                try {
+                    if (window.showSaveFilePicker) {
+                        const fileHandle = await window.showSaveFilePicker({
+                            suggestedName: fileName,
+                            types: [{ description: 'JSON File', accept: {'application/json': ['.json']} }]
+                        });
+                        const writable = await fileHandle.createWritable();
+                        await writable.write(data);
+                        await writable.close();
+                    } else {
+                        const blob = new Blob([data], {type: "application/json"});
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = fileName;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    }
+                } catch (err) {
+                    console.log("Save cancelled");
+                }
+            }
+        }, '#28a745', btnTxt);
     }
-    function importData(event) { const reader = new FileReader(); reader.onload = (e) => { safeSetItem('marksCache', e.target.result); loadCache(); }; reader.readAsText(event.target.files[0]); }
-    
-    function clearAllData() { showPopup("Erase all data?", true, () => { resetLocalInputs(); renderTable(); calculateAll(); }); }
+
+    function importData(event) {
+        const file = event.target.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+                data.lastSavedFileName = file.name;
+                safeSetItem('marksCache', JSON.stringify(data));
+                loadCache();
+            } catch (err) {}
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    }
+
+    function clearAllData() {
+        showPopup("Erase all data?", true, () => {
+            lastSavedFileName = "";
+            if (typeof AndroidBridge !== "undefined" && AndroidBridge.clearActiveFile) {
+                AndroidBridge.clearActiveFile();
+            }
+            resetLocalInputs();
+            renderTable();
+            calculateAll();
+            autoSave();
+        });
+    }
+
     function printReport() { if (typeof AndroidBridge !== "undefined") AndroidBridge.printPDF(); else window.print(); }
-    
+
     function checkForUpdates() {
         if (needsHtmlUpdate) {
             document.getElementById('update-badge').style.display = 'none';

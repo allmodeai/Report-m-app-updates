@@ -1,11 +1,6 @@
 {
-  "versionCode": 7,
-  "versionName": "1.4.3",
-  "updateUrl": "https://github.com/allmodeai/Report-m-app-updates/releases/download/v1.4.3/Report_Maker_v1.4.3.apk",
-  "htmlVersion": 143
-  "releaseNotes": [
-    "Added Storage Access Framework (SAF) integration for reliable file saving.",
-    "Enabled silent overwrite support for HTML and PDF report generation.",
-    "Improved input validation and general UI stability."
-  ]
+  "versionCode": 8,
+  "versionName": "1.4.4",
+  "updateUrl": "https://github.com/allmodeai/Report-m-app-updates/releases/download/v1.4.4/Report_Maker_v1.4.4.apk",
+  "htmlVersion": 144
 }
